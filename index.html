@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>國語句型練習室</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+@font-face{font-family:"EduKai";src:local("TW-MOE-Std-Kai"),local("教育部標準楷書"),url("fonts/edukai-4.0.woff2") format("woff2");font-display:swap}
+/* Layout: 作文簿綠格紙當底，上方是選單列，下方分「教學／測驗」兩個分頁；例句用楷體，連接詞用螢光筆標示 */
+:root{
+  --bg:#f5f9f6; --paper:#ffffff; --ink:#1c2925; --muted:#5b6d66; --line:#d3e4da; --grid:#e4efe8;
+  --accent:#23744f; --accent-ink:#ffffff; --accent-soft:#e2f1e8;
+  --mark:#ffe27a; --mark-ink:#1c2925;
+  --ok:#1f7a45; --ok-soft:#e1f4e7; --bad:#b4362c; --bad-soft:#fbe7e4;
+  --c-並列:#2f6fb5; --c-連貫:#7a4fb0; --c-轉折:#c2410c; --c-因果:#0f766e; --c-條件:#a16207; --c-假設:#be185d; --c-遞進:#4d7c0f; --c-目的:#475569; --c-選擇:#0e7490;
+  --f-display:"EduKai","LXGW WenKai TC","BiauKai","DFKai-SB","KaiTi","Noto Serif TC",serif;
+  --f-body:"EduKai","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111916; --paper:#18221e; --ink:#e4eee8; --muted:#9db1a8; --line:#2b3d35; --grid:#1c2924;
+  --accent:#5fc493; --accent-ink:#0d1512; --accent-soft:#1d3329;
+  --mark:#6e5a10; --mark-ink:#fff6cf;
+  --ok:#6fd398; --ok-soft:#173326; --bad:#ff8f84; --bad-soft:#3a1d1a;
+  --c-並列:#7fb2ee; --c-連貫:#b99ae6; --c-轉折:#fb9a63; --c-因果:#5fd3c6; --c-條件:#e8bd50; --c-假設:#f48fbf; --c-遞進:#a6d65f; --c-目的:#aab7c8; --c-選擇:#5cc9e0;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111916; --paper:#18221e; --ink:#e4eee8; --muted:#9db1a8; --line:#2b3d35; --grid:#1c2924;
+  --accent:#5fc493; --accent-ink:#0d1512; --accent-soft:#1d3329;
+  --mark:#6e5a10; --mark-ink:#fff6cf;
+  --ok:#6fd398; --ok-soft:#173326; --bad:#ff8f84; --bad-soft:#3a1d1a;
+  --c-並列:#7fb2ee; --c-連貫:#b99ae6; --c-轉折:#fb9a63; --c-因果:#5fd3c6; --c-條件:#e8bd50; --c-假設:#f48fbf; --c-遞進:#a6d65f; --c-目的:#aab7c8; --c-選擇:#5cc9e0;
+  color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;}
+.wrap{max-width:960px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{display:flex;gap:16px;align-items:flex-start;justify-content:space-between}
+.brand{min-width:0}
+.eyebrow{font-size:13px;letter-spacing:.12em;color:var(--accent);font-weight:700}
+h1{font-family:var(--f-display);font-size:clamp(28px,6vw,40px);line-height:1.2;margin:4px 0 6px;text-wrap:balance}
+.sub{color:var(--muted);margin:0;font-size:15px}
+.qr{flex:none;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.qr #qrSmall{width:76px;height:76px}
+.qr #qrSmall img,.qr #qrSmall canvas{width:76px!important;height:76px!important}
+.qr span{font-size:11px;color:#3d4f48;letter-spacing:.05em}
+.qr:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.picker{margin-top:20px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.picker label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-weight:500;min-width:0}
+.picker .step{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:12px;margin-right:4px}
+select{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+.range-row{display:flex;gap:6px;align-items:center}
+.range-row select{flex:1;min-width:0}
+.summary{grid-column:1/-1;font-size:14px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+.summary b{color:var(--ink)}
+@media (max-width:640px){.picker{grid-template-columns:1fr 1fr}.picker label.range{grid-column:1/-1}}
+
+.tabs{display:flex;gap:8px;margin:22px 0 14px}
+.tab{font:inherit;font-weight:700;font-size:17px;border:2px solid var(--accent);background:var(--paper);color:var(--accent);border-radius:999px;padding:8px 22px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+
+.panel{display:flex;flex-direction:column;gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card h2{font-family:var(--f-display);font-size:24px;margin:0 0 8px}
+.card h3{font-family:var(--f-display);font-size:20px;margin:0}
+.intro p{margin:6px 0}
+.formula{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0;font-family:var(--f-display);font-size:19px}
+.formula .box{border:2px solid var(--accent);border-radius:8px;padding:2px 10px;background:var(--accent-soft)}
+.formula .glue{background:var(--mark);color:var(--mark-ink);border-radius:4px;padding:2px 8px}
+
+.viewtoggle{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--muted)}
+.chipbtn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:4px 14px;cursor:pointer}
+.chipbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
+
+.catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.cat{border:1px solid var(--line);border-left:5px solid var(--cc);border-radius:8px;padding:10px 12px;background:var(--paper)}
+.cat b{color:var(--cc);font-size:17px}
+.cat p{margin:4px 0 0;font-size:14px}
+.cat .tip{color:var(--muted)}
+
+.group-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.group-h small{color:var(--muted)}
+.pat{border-top:1px dashed var(--line);padding:12px 0 4px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:12px}
+.pat:first-of-type{border-top:0}
+.pat .name{font-family:var(--f-display);font-size:21px;font-weight:700;line-height:1.3}
+.pill{display:inline-block;font-size:13px;font-weight:700;color:var(--cc);border:1.5px solid var(--cc);border-radius:999px;padding:0 10px;margin-top:4px;font-family:var(--f-body)}
+.lessontag{display:inline-block;font-size:12px;color:var(--muted);margin-left:4px;font-family:var(--f-body);font-weight:400}
+.ex{font-family:var(--f-display);font-size:18px;margin:0 0 6px;line-height:1.8}
+.ex .src{font-family:var(--f-body);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-right:6px;vertical-align:2px}
+mark{background:var(--mark);color:var(--mark-ink);border-radius:3px;padding:0 2px;font-weight:700}
+.note{font-size:14px;color:var(--muted);background:var(--bg);border-radius:6px;padding:6px 10px;margin:4px 0 0}
+@media (max-width:640px){.pat{grid-template-columns:1fr;gap:4px}}
+.empty{color:var(--muted);text-align:center;padding:30px}
+
+/* quiz */
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.progress{display:flex;gap:4px;flex-wrap:wrap}
+.dot{width:22px;height:8px;border-radius:4px;background:var(--line)}
+.dot.ok{background:var(--ok)}.dot.bad{background:var(--bad)}.dot.now{background:var(--accent);opacity:.5}
+.qtype{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em}
+.qtext{font-family:var(--f-display);font-size:22px;line-height:1.9;margin:8px 0 14px}
+.blank{display:inline-block;min-width:3.2em;border-bottom:2.5px solid var(--accent);margin:0 3px;text-align:center;color:var(--accent);font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:520px){.opts{grid-template-columns:1fr}}
+.opt{font:inherit;font-size:19px;font-family:var(--f-display);text-align:left;border:2px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;align-items:center}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-family:var(--f-body);font-size:14px;font-weight:700}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt:disabled{cursor:default}
+.feedback{margin-top:14px;border-radius:8px;padding:10px 14px;font-size:15px}
+.feedback.ok{background:var(--ok-soft);color:var(--ok)}
+.feedback.bad{background:var(--bad-soft);color:var(--bad)}
+.feedback .why{color:var(--ink);display:block;margin-top:4px}
+.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;font-size:16px;border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:10px 24px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.score{font-family:var(--f-display);font-size:56px;color:var(--accent);line-height:1;margin:10px 0}
+.review{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.review .item{border-left:4px solid var(--bad);padding:6px 12px;background:var(--bg);border-radius:0 6px 6px 0;font-size:15px}
+.review .item .s{font-family:var(--f-display);font-size:17px}
+
+.overlay{position:fixed;inset:0;background:rgba(10,20,16,.7);display:grid;place-items:center;z-index:50;padding:20px}
+.overlay .inner{background:#fff;border-radius:16px;padding:22px;text-align:center;color:#1c2925;max-width:92vw}
+.overlay #qrBig{width:min(320px,70vw);height:min(320px,70vw);margin:0 auto}
+.overlay #qrBig img,.overlay #qrBig canvas{width:100%!important;height:100%!important}
+.overlay p{font-family:var(--f-display);font-size:22px;margin:12px 0 0}
+/* 類別卡：點一下看記憶動畫 */
+button.cat{font:inherit;text-align:left;color:var(--ink);cursor:pointer;width:100%}
+button.cat:hover{border-color:var(--cc)}
+.cat .play{display:inline-block;margin-top:6px;font-size:13px;font-weight:700;color:var(--cc)}
+.amodal{position:fixed;inset:0;background:rgba(10,20,16,.55);display:grid;place-items:center;z-index:40;padding:20px}
+.abox{background:var(--paper);color:var(--ink);border-radius:16px;max-width:520px;width:100%;padding:20px;border-top:6px solid var(--cc);max-height:92vh;overflow:auto}
+.abox h3{font-family:var(--f-display);font-size:26px;margin:0;color:var(--cc)}
+.abox .d{margin:4px 0 0}
+.stage{margin:12px 0;background:var(--bg);border-radius:12px;padding:8px;color:var(--cc)}
+.stage svg{display:block;width:100%;height:auto}
+.stage text{fill:var(--ink);font-family:var(--f-display);font-size:15px;text-anchor:middle}
+.stage .lab{font-size:13px;fill:var(--muted);font-family:var(--f-body)}
+.stage .shape{fill:var(--paper);stroke:currentColor;stroke-width:3}
+.stage .solid{fill:currentColor}
+.stage .ln{fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.stage .dim{stroke:var(--line)}
+.abox .memo{font-family:var(--f-display);font-size:20px;text-align:center;margin:4px 0}
+.abox .exs{font-family:var(--f-display);font-size:17px;background:var(--bg);border-radius:8px;padding:8px 12px;margin:10px 0 0}
+.abox .exs small{font-family:var(--f-body);color:var(--muted);font-size:12px;display:block}
+.stage *{transform-box:view-box}
+.go .s1{animation:popIn .5s both}
+.go .s2{animation:popIn .5s .6s both}
+.go .s3{animation:popIn .5s 1.2s both}
+.go .s4{animation:popIn .5s 1.8s both}
+.go .draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.2s .2s forwards}
+@keyframes popIn{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+/* 並列：手牽手並排站 */
+.go .parL{animation:parL 2.4s both}.go .parR{animation:parR 2.4s both}
+@keyframes parL{0%{transform:translateX(-150px);opacity:0}40%{transform:none;opacity:1}80%{transform:none}88%{transform:translateY(-12px)}100%{transform:none}}
+@keyframes parR{0%{transform:translateX(150px);opacity:0}40%{transform:none;opacity:1}80%{transform:none}88%{transform:translateY(-12px)}100%{transform:none}}
+.go .hand{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .4s 1.1s forwards}
+/* 連貫：排隊往前走 */
+.go .walker{animation:walk 2.4s 2.2s both}
+@keyframes walk{0%{transform:translateX(0);opacity:0}10%{opacity:1}100%{transform:translateX(220px);opacity:1}}
+/* 轉折：路轉彎 */
+.go .sign{transform-origin:200px 62px;animation:popIn .5s 1s both}
+/* 因果：推倒骨牌 */
+.go .domA{transform-origin:116px 130px;animation:fallA 1.2s .5s both}
+.go .domB{transform-origin:216px 130px;animation:fallB .7s .98s both cubic-bezier(.5,0,.9,.5)}
+@keyframes fallA{0%{transform:none;animation-timing-function:cubic-bezier(.5,0,.9,.5)}40%{transform:rotate(58deg)}100%{transform:rotate(80deg)}}
+@keyframes fallB{to{transform:rotate(85deg)}}
+/* 條件：鑰匙開燈 */
+.go .key{animation:keyIn 1.2s both}
+@keyframes keyIn{0%{transform:translateX(-90px)}70%{transform:none}85%{transform:rotate(0)}100%{transform:none}}
+.go .bulb{animation:bulbOn .4s 1.3s both}
+@keyframes bulbOn{from{fill:var(--paper)}to{fill:#ffd54a}}
+.go .rays{animation:fadeIn .4s 1.5s both}
+/* 假設：想像泡泡 */
+.go .think{stroke-dasharray:8 6;animation:fadeIn .6s .9s both,march 3s linear 1s infinite}
+@keyframes march{to{stroke-dashoffset:-56}}
+/* 遞進：爬樓梯 */
+.go .ball{animation:climb 2.4s .3s both}
+@keyframes climb{0%{transform:translate(0,0)}15%{transform:translate(35px,-50px)}30%{transform:translate(70px,-35px)}45%{transform:translate(105px,-85px)}60%{transform:translate(140px,-70px)}75%{transform:translate(175px,-120px)}90%,100%{transform:translate(210px,-105px)}}
+/* 目的：射中靶心 */
+.go .arrow{animation:shoot .8s .4s both cubic-bezier(.4,0,1,1)}
+@keyframes shoot{from{transform:translateX(-200px);opacity:0}20%{opacity:1}to{transform:none;opacity:1}}
+.go .target{transform-origin:265px 85px;animation:wob .4s 1.2s both}
+@keyframes wob{0%,100%{transform:none}30%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}}
+/* 選擇：岔路選一條 */
+.go .chooser{animation:choose 2.6s .2s both}
+@keyframes choose{0%{transform:none}35%,55%{transform:translateX(120px)}100%{transform:translate(260px,-48px)}}
+.go .q{transform-origin:150px 55px;animation:popIn .3s 1s both,fadeOut .3s 1.7s forwards}
+@keyframes fadeOut{to{opacity:0}}
+.go .pick{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .8s 1.6s forwards}
+.go .notpick{animation:dimOut .5s 1.6s forwards}
+@keyframes dimOut{to{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.stage *{animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important}}
+footer{margin-top:28px;font-size:13px;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion:no-preference){.opt,.tab,.chipbtn{transition:background .15s,border-color .15s}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="eyebrow">國語・複句句型</div>
+      <h1>句型練習室</h1>
+      <p class="sub">選好版本、年級和課次，先看教學，再來挑戰小測驗。</p>
+    </div>
+    <div class="qr" id="qrBtn" role="button" tabindex="0" aria-label="放大 QR code" hidden>
+      <div id="qrSmall"></div><span>掃我練習</span>
+    </div>
+  </header>
+
+  <section class="picker" aria-label="選擇範圍">
+    <label for="selVer"><span><i class="step">1</i>版本</span>
+      <select id="selVer"></select></label>
+    <label for="selGrade"><span><i class="step">2</i>年級</span>
+      <select id="selGrade"></select></label>
+    <label class="range" for="selFrom" style="grid-column:span 2"><span><i class="step">3</i>課次範圍</span>
+      <div class="range-row"><select id="selFrom" aria-label="從第幾課"></select><span>到</span><select id="selTo" aria-label="到第幾課"></select></div></label>
+    <div class="summary" id="summary"></div>
+  </section>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tabLearn" aria-selected="true">教學</button>
+    <button class="tab" role="tab" id="tabQuiz" aria-selected="false">測驗</button>
+  </nav>
+
+  <section class="panel" id="panelLearn"></section>
+  <section class="panel" id="panelQuiz" hidden></section>
+
+  <footer>標黃色的字就是句型的關鍵詞。</footer>
+</div>
+
+<div class="amodal" id="aModal" hidden><div class="abox" id="aBox" role="dialog" aria-modal="true"></div></div>
+<div class="overlay" id="overlay" hidden>
+  <div class="inner"><div id="qrBig"></div><p>用平板或手機掃描，一起來練習！</p></div>
+</div>
+
+<script>
+const SHARE_URL = "https://teacher-liujikan.github.io/sentence-patterns/";
+const VERSIONS = [
+  {id:"nani", name:"南一", data:{"3上": {"categories": {"並列": {"def": "兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。", "tip": "像兩個好朋友手牽手，並排站。"}, "連貫": {"def": "事情按照先後順序一件接一件發生。", "tip": "先做這個，接著做那個，像排隊一樣。"}, "轉折": {"def": "後半句說的和前半句想的不一樣，意思轉了一個彎。", "tip": "看到「卻、但、不過、可是」，意思就要轉彎了。"}, "因果": {"def": "一半說原因，一半說結果。", "tip": "問問自己：為什麼？結果怎樣？"}, "條件": {"def": "有了前面的條件，才會出現後面的結果。", "tip": "條件做到了，結果就跟著來。"}, "假設": {"def": "先想像一種還沒發生的情況，再說會怎麼樣。", "tip": "「如果」就是先假裝一下。"}, "遞進": {"def": "後半句比前半句更進一步，意思一層比一層深。", "tip": "像爬樓梯，一階比一階高。"}, "目的": {"def": "說明做一件事是為了什麼，或是為了避免什麼。", "tip": "問問自己：做這件事想得到什麼？"}, "選擇": {"def": "在兩件以上的事情裡，選出其中一個。", "tip": "看到「或、或是、是……還是……、與其……不如……」，就是要做選擇。"}}, "lessons": [{"no": 1, "unit": "第壹單元　快樂上學去", "title": "你好，新朋友", "patterns": [{"p": "……卻……", "cat": "轉折", "kw": ["卻"], "ex": ["我是小雲雀，沒有多彩的羽衣，卻有清脆的歌聲。", "蝴蝶看起來很柔弱，卻有飛行數百公里遠的能力。"]}, {"p": "一邊……一邊……", "cat": "並列", "kw": ["一邊", "一邊"], "ex": ["我喜歡一邊唱歌，一邊停留半空中。", "我常常一邊聽音樂，一邊寫作業。"]}, {"p": "……再……", "cat": "連貫", "kw": ["再"], "ex": ["我是風，最喜歡四處旅行。帶你去聞百合的花香，帶你去看成群的綿羊，再送你平安回地面的家。", "烤肉時，爸爸用木炭生完火後，再把肉放到架上烤。"]}]}, {"no": 2, "unit": "第壹單元　快樂上學去", "title": "我們的約定", "patterns": [{"p": "因為……", "cat": "因果", "kw": ["因為"], "ex": ["因為大家發言很熱烈，讓我寫得很辛苦。", "因為連日下雨，場地溼滑，樂樂棒球比賽不得不延後。"]}, {"p": "……但……", "cat": "轉折", "kw": ["但"], "ex": ["這些約定是用來提醒我們，但同學們的臉上卻幾家歡樂幾家愁。", "馬拉松運動十分艱苦，但哥哥還是努力跑完全程。"]}, {"p": "……不過……", "cat": "轉折", "kw": ["不過"], "ex": ["對我來說，上課認真不聊天有點難，因為我的好朋友阿福就坐在旁邊。不過，我們已經是三年級的學生了，我一定會努力做到，學會自己管好自己。", "佛跳牆非常美味可口，不過作法及材料十分繁複。"]}]}, {"no": 3, "unit": "第壹單元　快樂上學去", "title": "下課十分鐘", "patterns": [{"p": "有……也有……", "cat": "並列", "kw": ["有", "也有"], "ex": ["教室裡，有人靜靜的看書，也有人在一起聊天。", "春天的花園裡，有蜜蜂嗡嗡採蜜，也有蝴蝶翩翩起舞，洋溢著生命的喜悅。"]}, {"p": "有……還有……", "cat": "並列", "kw": ["有", "還有"], "ex": ["畫糖的攤位上擺有可愛的兔子糖畫，還有七十二變的孫悟空造型。"], "srcs": ["補充"]}, {"p": "有時……有時……", "cat": "並列", "kw": ["有時", "有時"], "ex": ["有時沒踢好，球就會從腳邊溜走；有時踢準了，球就會很聽話的朝球門飛去。", "月亮有著多樣的面貌，有時像圓圓的白球，有時像彎彎的香蕉。"]}, {"p": "當……就得……", "cat": "條件", "kw": ["當", "就得"], "note": "「就得」的「得」有必須的意思，是條件下產生的必要結果，所以是條件複句。", "ex": ["當上課鐘聲一響，我們就得和足球說再見。", "當時針指到九的時候，弟弟就得乖乖上床睡覺。"]}]}, {"no": 4, "unit": "第貳單元　更好的自己", "title": "一顆黑點", "patterns": [{"p": "……於是……", "cat": "連貫", "kw": ["於是"], "ex": ["今天放學回家，爸爸發現我悶悶不樂，便輕聲問我怎麼了？於是，我把煩惱說出來。", "叔叔在書店看到古籍，於是毫不猶豫的把它買下來。"]}, {"p": "雖然……但……", "cat": "轉折", "kw": ["雖然", "但"], "ex": ["雖然新同學的大嗓門是你眼中的黑點，但它也有可以欣賞的一面呢！", "雖然這家餐廳的餐點便宜又美味，但停車不方便，讓顧客非常困擾。"]}]}, {"no": 5, "unit": "第貳單元　更好的自己", "title": "火大了", "patterns": [{"p": "……也……", "cat": "並列", "kw": ["也"], "ex": ["他們頭頂上的龍角變成「菱角」，白牙變成黑牙，臉也烏黑一片。", "妹妹全身髒兮兮的，像個小泥人，連提在手上的鞋子也沾滿泥水。"]}]}, {"no": 6, "unit": "第貳單元　更好的自己", "title": "我該怎麼辦？", "patterns": [{"p": "……不然……", "cat": "假設", "kw": ["不然"], "ex": ["幸好我動作快，不然全身就溼透了！", "出發旅行前要先查好地圖，不然會很容易迷路。"]}, {"p": "已經……接下來……", "cat": "連貫", "kw": ["已經", "接下來"], "ex": ["你已經向卡片說對不起，接下來該想想怎樣處理問題。", "工作人員已經將會場布置完畢，接下來就是等待貴賓們光臨了。"]}, {"p": "只要……就……", "cat": "條件", "kw": ["只要", "就"], "ex": ["只要卡片變回漂亮的樣子，小主人就會原諒你。", "每天只要太陽一升起，就會聽見奶奶飼養的雞群啼叫的聲音。"]}, {"p": "如果……", "cat": "假設", "kw": ["如果"], "ex": ["如果剪一些小花片，貼在有汙點的地方，不知道這種方法可不可行？", "如果將牆上的塗鴉重新粉刷，就可以將房子恢復原本的面貌。"]}]}, {"no": 7, "unit": "第參單元　人物拍立得", "title": "最年輕的奶奶", "patterns": [{"p": "不是……也不是……", "cat": "並列", "kw": ["不是", "也不是"], "ex": ["手背上的不是星座，也不是藏寶圖，是我老了啦！", "用功讀書不是為了父母，也不是為了老師，而是為了自己的將來。"]}, {"p": "雖然……可是……", "cat": "轉折", "kw": ["雖然", "可是"], "ex": ["雖然奶奶說：「手背上的不是星座，也不是藏寶圖，是我老了啦！」可是在我心中，她充滿活力和創意，是全世界最年輕的奶奶。", "雖然觀光可以帶來效益，可是遊客隨手亂扔的垃圾，總是讓管理員搖頭嘆息。"]}]}, {"no": 8, "unit": "第參單元　人物拍立得", "title": "魔「髮」哥哥", "patterns": [{"p": "……所以……", "cat": "因果", "kw": ["所以"], "ex": ["每一次讓他剪完頭髮，心情一定會很好，所以大家都叫他「魔『髮』哥哥」。", "明翰一向喜歡閱讀各類書籍，所以寫作文時總是文思泉湧。"]}]}, {"no": 9, "unit": "第參單元　人物拍立得", "title": "穿白袍的醫生伯伯", "patterns": []}, {"no": 10, "unit": "第肆單元　與動物有約", "title": "唉呀！誤會大了", "patterns": [{"p": "如果……可能會……", "cat": "假設", "kw": ["如果", "可能會"], "ex": ["你曾經被人誤會嗎？如果把這個問題拿來問動物，牠們可能會說：「數也數不清！」", "運動後出汗，如果沒有確實保暖，可能會著涼。"]}, {"p": "不是……而是……", "cat": "並列", "kw": ["不是", "而是"], "ex": ["北極熊的毛根本不是白色的，而是透明的！", "哥哥努力跑步不是為了參加比賽，而是為了鍛鍊自己。"]}, {"p": "因為……才……", "cat": "因果", "kw": ["因為", "才"], "ex": ["北極熊的毛本身是透明的，因為光線反射，才會讓我們的眼睛誤以為是白色的。", "因為前方道路施工，才導致車輛無法進出。"]}, {"p": "如果……會……", "cat": "假設", "kw": ["如果", "會"], "ex": ["如果北極熊脫下那身「白大衣」，你會發現牠的皮膚就像牠的眼珠子一樣黑呵！", "如果學生對學校有歸屬感，就會喜歡上學。"]}, {"p": "不但……還……", "cat": "遞進", "kw": ["不但", "還"], "ex": ["豬不但有極好的記憶力和方向感，還喜歡聽音樂，也是游泳高手呢！", "哥哥不但穿了嶄新的西裝，還剪了頭髮，換了一個新造型。"]}, {"p": "因為……所以……", "cat": "因果", "kw": ["因為", "所以"], "ex": ["在這世界上，還有許許多多的動物，因為我們對牠們了解得太少，所以有了很大的誤會。", "這幾天因為寒流來襲，所以氣溫偏低。"]}]}, {"no": 11, "unit": "第肆單元　與動物有約", "title": "石虎的告白", "patterns": [{"p": "……還……", "cat": "遞進", "kw": ["還"], "ex": ["這裡氣候溫暖多雨，充滿綠意，還住著穿山甲、野兔等動物。", "心瑜擅長跳舞，還曾經代表學校出去比賽，真是厲害！"]}, {"p": "越來越……也越來越……", "cat": "並列", "kw": ["越來越", "也越來越"], "ex": ["人類把我們的家園占為己有，使我們的生活空間越來越小，食物來源也越來越少。", "弟弟每天認真練習溜直排輪，速度越來越快，技巧也越來越純熟。"]}]}, {"no": 12, "unit": "第肆單元　與動物有約", "title": "昆蟲的保命妙招", "patterns": [{"p": "……但是……", "cat": "轉折", "kw": ["但是"], "ex": ["昆蟲的種類多、數量多，但是大部分體型小，常受到攻擊。", "糖果很好吃，但是吃多了容易蛀牙。"]}, {"p": "……因此……", "cat": "因果", "kw": ["因此"], "ex": ["昆蟲大部分體型小，常受到攻擊。因此，牠們演化出各種保命妙招。", "表哥喜歡閱讀科學方面的書籍，因此班上同學叫他「科學博士」。"]}, {"p": "……以免……", "cat": "目的", "kw": ["以免"], "ex": ["有些昆蟲會讓自身外形和四周景物十分相像，以免被敵人發現。", "媽媽叮嚀我出門時記得帶雨傘，以免突然下雨被淋溼。"]}, {"p": "為了……", "cat": "目的", "kw": ["為了"], "ex": ["為了找到逃命的機會，昆蟲會用各種高明的演技來保命。", "為了在演講比賽得名，小貝每天都認真練習，做好充足準備。"]}, {"p": "是……更是……", "cat": "遞進", "kw": ["是", "更是"], "ex": ["這是大自然奇妙的現象，更是生命力的表現。", "爸爸是我的啟蒙老師，更是影響我最深的人。"]}]}]}, "4上": {"categories": {"並列": {"def": "兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。", "tip": "像兩個好朋友手牽手，並排站。"}, "連貫": {"def": "事情按照先後順序一件接一件發生。", "tip": "先做這個，接著做那個，像排隊一樣。"}, "轉折": {"def": "後半句說的和前半句想的不一樣，意思轉了一個彎。", "tip": "看到「卻、但、不過、可是」，意思就要轉彎了。"}, "因果": {"def": "一半說原因，一半說結果。", "tip": "問問自己：為什麼？結果怎樣？"}, "條件": {"def": "有了前面的條件，才會出現後面的結果。", "tip": "條件做到了，結果就跟著來。"}, "假設": {"def": "先想像一種還沒發生的情況，再說會怎麼樣。", "tip": "「如果」就是先假裝一下。"}, "遞進": {"def": "後半句比前半句更進一步，意思一層比一層深。", "tip": "像爬樓梯，一階比一階高。"}, "目的": {"def": "說明做一件事是為了什麼，或是為了避免什麼。", "tip": "問問自己：做這件事想得到什麼？"}, "選擇": {"def": "在兩件以上的事情裡，選出其中一個。", "tip": "看到「或、或是、是……還是……、與其……不如……」，就是要做選擇。"}}, "lessons": [{"no": 1, "unit": "第壹單元　生活好滋味", "title": "窗口邊的臺灣欒樹", "patterns": [{"p": "……然後……", "cat": "連貫", "kw": ["然後"], "ex": ["每天一早打開窗戶，風一吹，臺灣欒樹就像在和我們揮手，然後靜靜的守在窗口旁，等待我們放學回家。", "小女孩看見媽媽，立刻跑過去抱住她親了一口，然後甜甜的笑了起來。"]}, {"p": "先是……幾週後……", "cat": "連貫", "kw": ["先是", "幾週後"], "ex": ["秋天是臺灣欒樹最多采多姿的時節。先是樹上開滿一簇一簇的黃花，幾週後，轉成淡紅色的果實。", "這棵樹的枝椏上先是冒出綠芽，幾週後就長出了茂密的綠葉。"]}, {"p": "……或……", "cat": "選擇", "kw": ["或"], "ex": ["我們在窗邊擺了一張特別長的書桌，每天晚上全家人坐在窗前話家常，或做著自己喜歡的事，它們只是靜靜相伴。", "你可以跟哥哥出門打球，或留在家裡，和我們一起做餅乾。"]}, {"p": "……因而……", "cat": "因果", "kw": ["因而"], "ex": ["有了窗口邊的臺灣欒樹，我家因而充滿藝術氣息。", "表哥喜歡閱讀科學方面的書籍，因而有「科學小博士」的稱號。"]}]}, {"no": 2, "unit": "第壹單元　生活好滋味", "title": "奶奶的排骨粥", "patterns": [{"p": "……因此……", "cat": "因果", "kw": ["因此"], "ex": ["那些日子裡我難以進食，因此，奶奶特別花心思，為我煮了湯鮮味美的排骨粥。", "李大哥時常幫助街坊鄰居，因此，當他遇到困難時，大家都願意伸出援手。"]}, {"p": "即使……也……", "cat": "假設", "kw": ["即使", "也"], "ex": ["奶奶煮的粥湯底清甜，即使放涼了，也一樣美味無比。", "即使這件事情難以完成，小安也會盡最大的力量去做好它。"]}, {"p": "因為……所以……", "cat": "因果", "kw": ["因為", "所以"], "ex": ["因為奶奶的兩排牙齒早就換成假牙，所以容易入口的排骨粥，就成了她常做的拿手好菜。", "因為連日豪雨而土石崩落，所以這條山路目前禁止車輛通行。"]}, {"p": "……於是……", "cat": "連貫", "kw": ["於是"], "ex": ["成長中的我，特別容易肚子餓。於是，每天清晨，「牙齒不好的人」又一起享用特餐。", "今天的氣候宜人，於是，我決定出門踏青。"]}, {"p": "……卻……", "cat": "轉折", "kw": ["卻"], "ex": ["現在的我，有一口整齊漂亮的牙齒，奶奶卻連假牙都沒辦法戴上了。", "看起來瘦弱的小明能扛起教室的桌子，小華卻連椅子都搬不動。"]}, {"p": "一邊……一邊……", "cat": "並列", "kw": ["一邊", "一邊"], "ex": ["奶奶一邊看著我喝粥，一邊開心又滿足的笑著。", "老闆一邊介紹商品，一邊幫客人結帳，忙得不可開交。"]}]}, {"no": 3, "unit": "第壹單元　生活好滋味", "title": "充滿希望的五味屋", "patterns": [{"p": "……同時……", "cat": "並列", "kw": ["同時"], "ex": ["五味屋是一間二手商店，同時是社區孩子重要的學習場所。", "這個房間是爸爸的書房，同時是爸爸的工作室。"]}, {"p": "除了……還……", "cat": "遞進", "kw": ["除了", "還"], "ex": ["五味屋的孩子可以透過工作來得到點數，而存下來的點數，除了能換取日用品，還可以取得到外地參加學習活動的機會。", "這臺洗衣機除了能清洗衣服外，還能烘乾衣物。"]}, {"p": "讓……也讓……", "cat": "並列", "kw": ["讓", "也讓"], "ex": ["這本「點數存摺」，讓孩子建立了「靠自己努力獲得機會」的工作態度，也讓他們相信——有能力可以成為更好的自己。", "這次的大地震讓無數建物倒塌，也讓人們擔驚受怕，留下心理陰影。"]}, {"p": "只要……就……", "cat": "條件", "kw": ["只要", "就"], "ex": ["人只要願意參與，事情就有「可能」。", "只要你願意面對挑戰，就有突破自我極限的可能。"]}]}, {"no": 4, "unit": "第貳單元　超級臺灣隊", "title": "玉山之歌", "patterns": []}, {"no": 5, "unit": "第貳單元　超級臺灣隊", "title": "高舉臺灣之光", "patterns": [{"p": "雖然……卻……", "cat": "轉折", "kw": ["雖然", "卻"], "ex": ["您雖然個子小，卻有著大大的力量，克服種種困難，成為舉重國手。", "媽媽雖然工作很忙，卻很關心我的學習，每天都會陪我做功課。"]}, {"p": "……然而……", "cat": "轉折", "kw": ["然而"], "ex": ["舉重時，您要竭盡全力，不斷練習，還得忍受競技運動帶來的傷害。然而，您始終保持樂觀正面的想法，不輕言放棄，樂於接受挑戰。", "努力學習固然重要，然而沒有健康的身體，一切便是空談。"]}, {"p": "無論……總有……", "cat": "條件", "kw": ["無論", "總有"], "ex": ["我和您一樣，無論成功或失敗，總有家人、老師在背後支持，讓我又有了努力下去的勇氣。", "無論遇到多少考驗，阿幸總有方法可以成功克服難關。"]}, {"p": "除了……也……", "cat": "並列", "kw": ["除了", "也"], "ex": ["我希望自己跟您一樣，除了保有勇氣面對學習及練舞時的困難，也希望成為有愛心的人，為人們舉起一道溫暖的光。", "老師除了教導我們課本上的知識，也教導我們做人處事的正確態度。"]}]}, {"no": 6, "unit": "第貳單元　超級臺灣隊", "title": "臺灣的驕傲", "patterns": [{"p": "雖然……但……", "cat": "轉折", "kw": ["雖然", "但"], "ex": ["西螺大橋雖然已不是亞洲第一長橋，但仍是西螺最「紅」的地標。", "雖然這次的考試有點困難，但我沒有放棄，反而更仔細的再三檢查。"]}, {"p": "無論……都……", "cat": "條件", "kw": ["無論", "都"], "ex": ["這座金融大樓，無論白天或黑夜，它都是人們仰望的臺灣驕傲。", "一旦訂下目標，無論事情有多困難，我都會盡心盡力的去完成。"]}, {"p": "除了……更……", "cat": "遞進", "kw": ["除了", "更"], "ex": ["對國內外的觀光客來說，臺北一〇一除了是重要地標，每年跨年煙火更是吸引全世界的注意。", "這間賣場除了販賣生鮮食品，更提供現做的熟食。"]}, {"p": "因為……", "cat": "因果", "kw": ["因為"], "ex": ["因為它們曾讓全世界看見，看見臺灣是如此令人驚羨。", "因為上班途中碰到車禍塞車，阿興最終遲到了。"]}]}, {"no": 7, "unit": "第參單元　小小觀察家", "title": "到此「藝」遊", "patterns": [{"p": "有人……有人……", "cat": "並列", "kw": ["有人", "有人"], "ex": ["街上有許多特色小店，大家各自挑著喜歡的紀念品，有人買了圓滾滾的金魚造型香包，有人買了五顏六色的捏麵人……。", "公園有寬廣的草地和樹蔭，有人沿著綠樹成蔭的步道散步，有人坐在草地上野餐。"]}]}, {"no": 8, "unit": "第參單元　小小觀察家", "title": "四季的頭髮", "patterns": []}, {"no": 9, "unit": "第參單元　小小觀察家", "title": "阿白觀察記", "patterns": [{"p": "不只是……還是……", "cat": "遞進", "kw": ["不只是", "還是"], "ex": ["觀察了好幾天，我發現阿白不只是歌唱家，還是舞林高手呢！", "哥哥不只是田徑隊的隊員，還是籃球隊的隊長。"]}, {"p": "像……又像……", "cat": "並列", "kw": ["像", "又像"], "ex": ["在輕快叫聲中，牠快速振動微微張開的雙翅，雙腳碎步走動，看起來像林間的舞者，又像動力十足的戰鬥機。", "中秋節晚上，皎潔的月亮像一面鏡子，又像一個大圓盤。"]}, {"p": "為了……", "cat": "目的", "kw": ["為了"], "ex": ["三到五月是白頭翁的求偶季節，為了吸引母鳥，公鳥會賣力的表演。", "為了迎接新年的到來，家家戶戶忙著大掃除。"]}, {"p": "一……立即……", "cat": "連貫", "kw": ["一", "立即"], "ex": ["只要我一靠近，牠立即「一飛沖天」，一邊在空中繞圈，一邊唧唧唧的大聲叫。", "一有陌生人接近，這戶人家的小狗立即開始吠叫。"]}]}, {"no": 10, "unit": "第肆單元　跟著故事跑", "title": "老鼠嫁女兒", "patterns": [{"p": "如果……", "cat": "假設", "kw": ["如果"], "ex": ["如果碰到牆，要去哪兒都別想。", "如果明天天氣晴朗，媽媽就要在陽臺晒棉被。"]}, {"p": "既然……就……", "cat": "因果", "kw": ["既然", "就"], "ex": ["既然你們兩情相悅，就祝福你們吧！", "既然生病了，就應該請假，在家好好休息。"]}]}, {"no": 11, "unit": "第肆單元　跟著故事跑", "title": "豆粥婆婆", "patterns": [{"p": "等到……再……", "cat": "連貫", "kw": ["等到", "再"], "ex": ["等到冬至，我喝過豆粥，您再吃我好嗎？", "等到明年櫻花綻放，我們再相約出遊。"]}, {"p": "即便……也……", "cat": "假設", "kw": ["即便", "也"], "ex": ["即便老虎來了，我們也不怕！", "平時上課認真聽講，即便突然小考，也可以輕鬆應付。"]}, {"p": "不光……也……", "cat": "並列", "kw": ["不光", "也"], "ex": ["不光你們有辦法，我也有法子。", "不光蜜蜂會採蜜，有些蚊子也會吸食花蜜、露水。"]}, {"p": "先……接著……最後……", "cat": "連貫", "kw": ["先", "接著", "最後"], "ex": ["栗子先往虎頭敲了一記。接著，「ㄆㄚ！」的一聲，蛋打在老虎的眼睛上。最後，熱年糕跳起，封住虎口。", "每天回家，我先洗便當盒，接著把作業寫完，最後帶著小狗出門散步。"]}]}, {"no": 12, "unit": "第肆單元　跟著故事跑", "title": "戴斗笠的地藏", "patterns": [{"p": "只有……才……", "cat": "條件", "kw": ["只有", "才"], "ex": ["老爺爺聽了心想，只有賣了斗笠，才有錢買年糕。", "小華知道只有努力，才能實現父母對他的期望，於是，勇敢的朝著夢想向前進。"]}, {"p": "不但……反而……", "cat": "遞進", "kw": ["不但", "反而"], "ex": ["老婆婆不但沒有怪他，反而認為他做了好事。", "困難不但沒有嚇倒我們，反而激發了我們奮鬥的勇氣。"]}]}]}, "5上": {"categories": {"並列": {"def": "兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。", "tip": "像兩個好朋友手牽手，並排站。"}, "連貫": {"def": "事情按照先後順序一件接一件發生。", "tip": "先做這個，接著做那個，像排隊一樣。"}, "轉折": {"def": "後半句說的和前半句想的不一樣，意思轉了一個彎。", "tip": "看到「卻、但、不過、可是」，意思就要轉彎了。"}, "因果": {"def": "一半說原因，一半說結果。", "tip": "問問自己：為什麼？結果怎樣？"}, "條件": {"def": "有了前面的條件，才會出現後面的結果。", "tip": "條件做到了，結果就跟著來。"}, "假設": {"def": "先想像一種還沒發生的情況，再說會怎麼樣。", "tip": "「如果」就是先假裝一下。"}, "遞進": {"def": "後半句比前半句更進一步，意思一層比一層深。", "tip": "像爬樓梯，一階比一階高。"}, "目的": {"def": "說明做一件事是為了什麼，或是為了避免什麼。", "tip": "問問自己：做這件事想得到什麼？"}, "選擇": {"def": "在兩件以上的事情裡，選出其中一個。", "tip": "看到「或、或是、是……還是……、與其……不如……」，就是要做選擇。"}}, "lessons": [{"no": 1, "unit": "第壹單元　品格小學堂", "title": "幸福筆記本", "patterns": [{"p": "……接著……", "cat": "連貫", "kw": ["接著"], "ex": ["進門時，孩子們一擁而上，帶著燦爛的笑臉，給我大大的擁抱，接著興高采烈的分享當天在學校做的事。", "大掃除時，我們將桌椅搬出去，接著開始刷教室的地板。"]}, {"p": "即使……也……", "cat": "假設", "kw": ["即使", "也"], "ex": ["有時，即使遇上不好的事，也能有機會感受幸福。", "小可很期待明天開始的連假，即使可能下雨，也不減她想出遊的興致。"]}, {"p": "要是……就……", "cat": "假設", "kw": ["要是", "就"], "ex": ["要是能再謹慎一點，多注意死角，或是再找個更好停的車位，這樣的事也許就不會發生。", "要是這個假日天氣轉晴，我們全家就會去山上露營。"]}, {"p": "……或是……", "cat": "選擇", "kw": ["或是"], "ex": ["要是能再謹慎一點，多注意死角，或是再找個更好停的車位，這樣的事也許就不會發生。", "放學後，我想去文具店買文具，或是到書店買書。"]}, {"p": "沒有……也沒有……甚至……", "cat": "遞進", "kw": ["沒有", "也沒有", "甚至"], "ex": ["車主沒有責怪我，也沒有索取賠償，甚至分享停車技巧。", "妹妹因為生病，沒有食慾，也沒有精神，甚至連轉開瓶蓋的力氣都沒有。"]}]}, {"no": 2, "unit": "第壹單元　品格小學堂", "title": "做人做事做長久", "patterns": [{"p": "……才……", "cat": "連貫", "kw": ["才"], "ex": ["小師傅先將所有必用工具，一件件按使用順序在窗口下排好，才爬上鐵梯開始工作。", "裁縫師傅用粉筆在布料上做好記號後，才開始裁剪布料。"]}, {"p": "……再……", "cat": "連貫", "kw": ["再"], "ex": ["他以自備的小掃把清掃地板，再拿抹布清潔牆壁，表現非常敬業。", "寫作文時，要先擬好大綱，再開始下筆。"]}, {"p": "只要……可以……", "cat": "條件", "kw": ["只要", "可以"], "ex": ["只要保持他精確、完善的工作態度和服務精神，在累積更長久的經驗後，我們可以預見他的成功。", "只要同學間彼此關心、互相幫助，就可以建立良好的友誼。"]}]}, {"no": 3, "unit": "第壹單元　品格小學堂", "title": "孔雀錯了", "patterns": [{"p": "……尤其……", "cat": "遞進", "kw": ["尤其"], "ex": ["我念初中的時候，每回作文發下來，都是密密麻麻的連排紅圈圈。尤其是那個大大的「甲」字，好像張著四四方方的嘴在對我笑。", "爸爸很重視子女的教育，尤其是品行，要求特別嚴格。"]}, {"p": "如果……那麼……", "cat": "假設", "kw": ["如果", "那麼"], "ex": ["如果她的英文沒有這樣好，那麼我不就是全班第一個「文學家」了嗎？", "如果每天練跑時，我們能培養良好的默契，那麼就有機會贏得這場比賽。"]}, {"p": "如果……不就是……", "cat": "假設", "kw": ["如果", "不就是"], "ex": ["牠們心裡都想，如果同伴的羽毛沒有自己的美麗，自己不就是第一美了嗎？", "如果能不斷達成每次設定的目標，不就是一直在超越自己嗎？"]}]}, {"no": 4, "unit": "第貳單元　自然筆記", "title": "特別的海", "patterns": [{"p": "是……還是……", "cat": "選擇", "kw": ["是", "還是"], "ex": ["說到海，你會聯想到什麼樣的畫面呢？是被海風吹出的層層湛藍？還是擊打沿岸的道道白浪？", "提到中秋節，你先想到的是月餅，還是柚子呢？"]}, {"p": "……因此……", "cat": "因果", "kw": ["因此"], "ex": ["臺灣擁有大大小小的島，海因此成為輕易可見的風景。", "今日降雨機率偏高，因此出門要記得攜帶雨具。"]}, {"p": "不是……而是……", "cat": "並列", "kw": ["不是", "而是"], "ex": ["在龜山島前端流動的那片海水，竟然不是深濃的墨水藍，而是像牛奶一樣的乳白色。", "讀書不是為了讓父母開心，而是為了讓自己的未來有更多的選擇。"]}, {"p": "一會兒……一會兒……", "cat": "並列", "kw": ["一會兒", "一會兒"], "ex": ["格子忽大忽小，一會兒是長方形，一會兒是菱形。", "妹妹一會兒跑步，一會兒跳舞，真是體力過人。"]}, {"p": "由於……", "cat": "因果", "kw": ["由於"], "ex": ["由於地形與海流關係，西莒島沙灘與近旁小島之間的海在漲潮時，海浪會從不同的方向前來交會。這兩組交錯的波浪，一行一列，就形成了特殊的方格海。", "由於阿虎的努力與堅持，造就他今日的輝煌成就。"]}]}, {"no": 5, "unit": "第貳單元　自然筆記", "title": "漫遊花東", "patterns": [{"p": "時而……時而……", "cat": "並列", "kw": ["時而", "時而"], "ex": ["我們隨興的在太魯閣裡移動，時而欣賞窗外風光，時而下車走走看看。", "天上的雲朵變化萬千，時而像小狗，時而像小貓，真是有趣。"]}, {"p": "……卻是……", "cat": "轉折", "kw": ["卻是"], "ex": ["池上的稻米相當有名，綠油油的初夏，黃澄澄的金秋，是許多旅人難忘的景色，而我卻是頭一回見到。", "阿幸工作時總是不苟言笑，私底下卻是朋友公認的開心果。"]}]}, {"no": 6, "unit": "第貳單元　自然筆記", "title": "護送螃蟹過馬路", "patterns": [{"p": "……然後……", "cat": "連貫", "kw": ["然後"], "ex": ["海洋是螃蟹的育兒室，螃蟹媽媽會把寶寶放入海水中，寶寶們經過幾次脫殼後，就會變成小螃蟹，然後自行回到父母生活的地方。", "灰濛濛的天空颳起了風，然後雨就嘩啦啦的下了起來。"]}, {"p": "……然而……", "cat": "轉折", "kw": ["然而"], "ex": ["千百年來，這裡的陸蟹都是沿著同一路線去繁殖後代，然而這條路如今卻變得愈加漫長。", "阿興特別提早出門，然而因為大塞車，他還是遲到了。"]}, {"p": "讓……也讓……", "cat": "並列", "kw": ["讓", "也讓"], "ex": ["川流不息的車潮，讓許多使命未達的螃蟹命喪輪底，也讓數十萬個小生命，再也無法長大。", "養成運動的習慣，讓睡眠品質變得更好，也讓身體愈來愈健康。"]}, {"p": "有些……有些……", "cat": "並列", "kw": ["有些", "有些"], "ex": ["這些螃蟹順利過馬路，來到了海邊。有些螃蟹繼續向前，快步走入水中，有些則在沙石灘上停下了腳步。", "一早的教室裡，有些同學在閱讀區安靜的看課外讀物，有些同學在益智區輕聲的玩桌遊。"]}]}, {"no": 7, "unit": "第參單元　用心看世界", "title": "高第的魔法建築", "patterns": [{"p": "一……就……", "cat": "連貫", "kw": ["一", "就"], "ex": ["我曾經想像一走進建築物，就能進入森林探險、在海洋中悠遊，走上天臺，就能看見屋頂上有噴火龍。", "他打完球過於疲累，一回到家，就迅速的躺在床上睡著了。"]}, {"p": "不僅……還……", "cat": "遞進", "kw": ["不僅", "還"], "ex": ["外圍高入天際的立門和高塔，不僅造型獨特，還充滿精細又生動的雕刻，讓我看得目瞪口呆。", "偏食的小玉不僅長得十分瘦小，還常常生病。"]}, {"p": "不僅……更……", "cat": "遞進", "kw": ["不僅", "更"], "ex": ["親自參觀高第的建築，讓我不僅愛上他的奇思妙想，更佩服他對作品的投入與堅持。", "故宮不僅是收藏文物的寶庫，更是知識的殿堂。"]}]}, {"no": 8, "unit": "第參單元　用心看世界", "title": "嘗嘗我的家鄉味", "patterns": [{"p": "先……再……", "cat": "連貫", "kw": ["先", "再"], "ex": ["圓滾滾的大白菜／呼朋引伴　在大缸裡玩遊戲／先和鹽巴來個暖身操／拉拉筋、出出汗／再與辣椒、大蒜和菜頭／一層一層疊羅漢。", "晚餐時，我先吃一口青菜，再喝一口美味的味噌湯，感到十分滿足。"]}]}, {"no": 9, "unit": "第參單元　用心看世界", "title": "小小力量將世界照亮", "patterns": [{"p": "只要……也能……", "cat": "條件", "kw": ["只要", "也能"], "ex": ["只要願意跨出第一步，這世界也能被你照亮。", "只要我們互相幫助，再大的困難也能克服。"]}, {"p": "當……便……", "cat": "連貫", "kw": ["當", "便"], "ex": ["他聽到以後非常難過，當知道透過捐款能幫助非洲村落開挖水井，便努力的「賺錢」。", "當微風吹過，風鈴便隨風搖擺，發出清脆悅耳的聲響。"]}, {"p": "不但……還……", "cat": "遞進", "kw": ["不但", "還"], "ex": ["小萊恩不但把零用錢全部存下來，還幫家人做雜務，為鄰居送東西、打掃環境。", "那女孩不但會唱歌，還會跳舞，真是多才多藝。"]}]}, {"no": 10, "unit": "第肆單元　作家風華", "title": "男生說，女生說", "patterns": [{"p": "只有……才……", "cat": "條件", "kw": ["只有", "才"], "ex": ["有一個同學功課不會，大家就去幫他，因為只有同學才知道他哪裡不會。", "琪琪很懶惰，只有在媽媽提醒以後，才會去整理房間。"]}, {"p": "……於是……", "cat": "連貫", "kw": ["於是"], "ex": ["有一個同學生病，大家都擔心他，於是放學後，帶著兩顆蘋果結伴去慰問。", "下雨了，於是我穿上雨衣走路回家。"]}, {"p": "只要……立刻……", "cat": "條件", "kw": ["只要", "立刻"], "ex": ["大家都講點義氣，不記仇，肯認錯，不管發生了什麼爭執，只要有人勸，說一句「大家都是同學」，立刻就能化解。", "只要我難過，朋友立刻就會到我身邊安慰我。"]}, {"p": "有的……有的……", "cat": "並列", "kw": ["有的", "有的"], "ex": ["現在，這幾個同班同學都長大成人了，有的當了父親，有的當了母親，大家還常常聯繫，互相問候。", "牧場裡的牛有的在吃草，有的在散步，好愜意。"]}]}, {"no": 11, "unit": "第肆單元　作家風華", "title": "耶誕禮物", "patterns": [{"p": "每當……總是……", "cat": "條件", "kw": ["每當", "總是"], "ex": ["每當吉姆拖著疲倦的身體下班回家，黛拉總是心疼得趕緊走過去擁抱他。", "每當週末，我們家總是出門遊山玩水。"]}, {"p": "如果……一定會……", "cat": "假設", "kw": ["如果", "一定會"], "ex": ["如果埃及豔后住在他們家對面，黛拉一定會不時把她的長頭髮垂掛在窗口外，向埃及豔后炫耀，讓豔后的珍奇珠寶都黯然失色。", "如果地球會說話，它一定會告訴人類不要再破壞環境了。"]}, {"p": "為了……", "cat": "目的", "kw": ["為了"], "ex": ["人家為了給你買耶誕禮物，才把長髮賣掉的。", "哥哥為了通過考試，回到家就專心念書，不敢鬆懈。"]}, {"p": "不是……也不是……更不是……", "cat": "遞進", "kw": ["不是", "也不是", "更不是"], "ex": ["我不是難過，也不是生氣，更不是因為你把頭髮剪短而不愛你了。", "這座檯燈不是瑕疵品，也不是沒電，更不是故障，只是有些接觸不良罷了。"]}, {"p": "……同時……", "cat": "並列", "kw": ["同時"], "ex": ["黛拉把錶鍊拿給吉姆，同時對他說：「這份禮物現在也沒有用了。」", "姐姐聽著這位歌手的新歌，同時寫下自己的感想。"]}]}, {"no": 12, "unit": "第肆單元　作家風華", "title": "漫遊詩情", "patterns": [{"p": "只要……就……", "cat": "條件", "kw": ["只要", "就"], "ex": ["一早，我告別雲彩繚繞的白帝城，只要一天的時間，就能回到千里之外的江陵。", "只要水氣充足，加上低溫，合歡山上就有機會見到雪景。"]}]}]}, "6上": {"categories": {"並列": {"def": "兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。", "tip": "像兩個好朋友手牽手，並排站。"}, "連貫": {"def": "事情按照先後順序一件接一件發生。", "tip": "先做這個，接著做那個，像排隊一樣。"}, "轉折": {"def": "後半句說的和前半句想的不一樣，意思轉了一個彎。", "tip": "看到「卻、但、不過、可是」，意思就要轉彎了。"}, "因果": {"def": "一半說原因，一半說結果。", "tip": "問問自己：為什麼？結果怎樣？"}, "條件": {"def": "有了前面的條件，才會出現後面的結果。", "tip": "條件做到了，結果就跟著來。"}, "假設": {"def": "先想像一種還沒發生的情況，再說會怎麼樣。", "tip": "「如果」就是先假裝一下。"}, "遞進": {"def": "後半句比前半句更進一步，意思一層比一層深。", "tip": "像爬樓梯，一階比一階高。"}, "目的": {"def": "說明做一件事是為了什麼，或是為了避免什麼。", "tip": "問問自己：做這件事想得到什麼？"}, "選擇": {"def": "在兩件以上的事情裡，選出其中一個。", "tip": "看到「或、或是、是……還是……、與其……不如……」，就是要做選擇。"}}, "lessons": [{"no": 1, "unit": "第壹單元　美好時刻", "title": "在天晴了的時候", "patterns": []}, {"no": 2, "unit": "第壹單元　美好時刻", "title": "珍珠鳥", "patterns": [{"p": "雖然……卻……", "cat": "轉折", "kw": ["雖然", "卻"], "ex": ["小鳥的影子就在這中間隱約閃動，雖然看不清楚（有時連籠子也看不出），牠們可愛的鮮紅小嘴兒卻不時從綠葉中伸出來。", "今天雖然天氣陰沉，卻始終沒有下雨。"]}, {"p": "起先……隨後……", "cat": "連貫", "kw": ["起先", "隨後"], "ex": ["起先，這小傢伙只在籠子四周活動，隨後就在屋裡飛來飛去。", "起先，哥哥在短跑比賽中落後，隨後奮起直追，逆轉奪冠。"]}, {"p": "一會兒……一會兒……一會兒……", "cat": "並列", "kw": ["一會兒", "一會兒", "一會兒"], "ex": ["小傢伙一會兒落在櫃頂上，一會兒神氣十足的站在書架上，啄著書背上那些大文豪的名字，一會兒把燈繩撞得來回搖動，又趕忙逃到畫框上。", "最近的天氣讓人捉摸不定，一會兒豔陽高照，一會兒烏雲密布，一會兒又颳起怪風，吹得人都站不穩了。"]}, {"p": "只要……立即……", "cat": "條件", "kw": ["只要", "立即"], "ex": ["只要大鳥在籠子裡生氣的叫一聲，小傢伙立即飛回籠裡去。", "傍晚時，只要爸爸吆喝一聲，小狗立即跑到門口，準備一起出去散步。"]}, {"p": "先是……然後……再……", "cat": "連貫", "kw": ["先是", "然後", "再"], "ex": ["這小傢伙先是離我較遠，見我不去傷害牠，便一點一點挨近，然後蹦到我的杯子上，俯下頭來喝茶，再偏過臉看看我的反應。", "起床後，小柏先是刷牙洗臉，然後穿上校服，再下樓吃早餐。"]}]}, {"no": 3, "unit": "第壹單元　美好時刻", "title": "客至", "patterns": [{"p": "……因此……", "cat": "因果", "kw": ["因此"], "ex": ["家裡距離城鎮太遠，買不到更多的食材，因此飯菜不豐盛。", "近日詐騙案件四起，因此警政署呼籲民眾提高警覺，善用諮詢專線。"]}, {"p": "因……只好……", "cat": "因果", "kw": ["因", "只好"], "ex": ["因家中貧窮，未造新酒，只好拿沒有過濾的舊酒招待你。", "因天候不佳，我們只好臨時更改旅遊行程。"]}, {"p": "如果……可以……", "cat": "假設", "kw": ["如果", "可以"], "ex": ["如果你願意與隔壁的老翁共飲，我可以隔著籬笆呼喚，請他過來和我們一起喝完這幾杯。", "如果有更多的假期能夠運用，我可以為自己安排一次極光之旅。"]}]}, {"no": 4, "unit": "第貳單元　工作圖像", "title": "贏得喝采的輸家", "patterns": [{"p": "不是……而是……", "cat": "並列", "kw": ["不是", "而是"], "ex": ["那道氣球拱門不是終點，而是主辦單位設置的頒獎地點。", "酷暑時從樹下走過，淋在頭上的不是雨水，而是蟬的尿液。"]}, {"p": "只要……就……", "cat": "條件", "kw": ["只要", "就"], "ex": ["只要再幾步，我就能反敗為勝。", "只要平時做足防災演練，災害發生時就能即時應變。"]}, {"p": "……接著……", "cat": "連貫", "kw": ["接著"], "ex": ["穆太露出訝異的表情，接著繼續往前跑了起來，跑到那原本就屬於他的勝利終點。", "打掃外掃區時，我們先把落葉聚集成堆，接著倒進垃圾袋中。"]}, {"p": "沒有……但……", "cat": "轉折", "kw": ["沒有", "但"], "ex": ["你沒有成為優秀的運動員，但成了一個更優秀的人。", "姐姐出門時沒有忘記帶鑰匙，但忘了帶手機。"]}]}, {"no": 5, "unit": "第貳單元　工作圖像", "title": "哇！原來如此", "patterns": [{"p": "……不過……", "cat": "轉折", "kw": ["不過"], "ex": ["有些職業我們耳熟能詳，能大致描繪出它們的樣貌，不足為奇。不過，有些職業的工作內容，背後隱藏了一些祕密，解開後，可能會令你大吃一驚呵！", "這些糕點非常美味可口，不過所含熱量極高。"]}, {"p": "每當……總是……", "cat": "條件", "kw": ["每當", "總是"], "ex": ["每當發生火災時，消防員總是迅速趕往現場撲滅火勢，救援受困者。", "每當心情低落時，小笙總是出門散心，調適自己的心情。"]}, {"p": "若……無疑是……", "cat": "假設", "kw": ["若", "無疑是"], "ex": ["一部影片拍完，會產生大量的影像和聲音檔案，若沒有妥善安排，要找到同一幕的影音並將它們合在一起，無疑是大海撈針。", "凡事要勇於實踐，若瞻前顧後、舉棋不定，無疑是原地踏步。"]}, {"p": "……並……", "cat": "並列", "kw": ["並"], "ex": ["在拍攝現場，工作人員會利用「場記板」註明資訊，並藉由打板的聲音，提醒錄製的起始點。", "這名搶匪對犯行供認不諱，並交代了贓款的藏匿地點。"]}]}, {"no": 6, "unit": "第貳單元　工作圖像", "title": "登月先鋒", "patterns": [{"p": "……卻……", "cat": "轉折", "kw": ["卻"], "ex": ["這是我的一小步，卻是人類的一大步。", "這些善心捐款本是為了救濟災民，卻被不肖人士中飽私囊了。"]}, {"p": "……然而……", "cat": "轉折", "kw": ["然而"], "ex": ["西元一九六五年，阿姆斯壯加入一系列太空計畫。然而，要成為太空人並不容易。", "這間商場祭出許多促銷優惠，然而生意始終不見起色。"]}, {"p": "必須……還要……", "cat": "遞進", "kw": ["必須", "還要"], "ex": ["登月前，他必須進行不斷翻轉的無重力訓練、火箭發射和衝進大氣層的衝擊訓練，適應種種令人難耐的機械聲，還要身穿沉重的太空衣走上幾個小時。", "想要維持健康體態，必須按時運動，還要控制飲食攝取，才有成效。"]}]}, {"no": 7, "unit": "第參單元　問題解決", "title": "明智的抉擇", "patterns": [{"p": "不只……還……", "cat": "遞進", "kw": ["不只", "還"], "ex": ["人生不只要有目標，有時可能還不止一個目標。", "阿芳不只買了日語文法書，還報名日語線上課程，希望掌握這門語言。"]}, {"p": "有……也有……", "cat": "並列", "kw": ["有", "也有"], "ex": ["人生有很多面向，我們也有各種潛能及才藝，多重目標讓生活變得多采多姿。", "書房裡的展示櫃擺放著許多玩具，有汽車模型，也有怪獸公仔。"]}, {"p": "除了……還……更……", "cat": "遞進", "kw": ["除了", "還", "更"], "ex": ["他除了學校的功課外，還參加心算班，星期六學跆拳道，星期日學鋼琴，更抽空看自然科學叢書，打算三個月看完它……。", "媽媽的錢包中除了放現金，還放了信用卡，更放了一張全家福合照。"]}, {"p": "……然後……", "cat": "連貫", "kw": ["然後"], "ex": ["爺爺用一個很大的水壺裝滿水放在灶上，然後將幾根木柴放入灶內點燃。", "壽星將蛋糕切成數塊，然後分給在場的每一個人。"]}, {"p": "若……就……", "cat": "假設", "kw": ["若", "就"], "ex": ["若無法擁有更多時間或才能，就必須減少目標的量。", "若你不好好學習，程度就容易落後同年齡的人。"]}, {"p": "要……就必須……", "cat": "條件", "kw": ["要", "就必須"], "ex": ["當無法兼顧目標完成的質與量時，要維持或提高品質，首先就必須犧牲「量」。", "要快速解開這道數學題，就必須運用數學公式。"]}]}, {"no": 8, "unit": "第參單元　問題解決", "title": "飢渴好「火」伴", "patterns": [{"p": "……隨後……", "cat": "連貫", "kw": ["隨後"], "ex": ["隨後布萊恩回到洞穴，將那顆樺樹皮球剝開，排放在岩石底部。", "海面顫抖湧動，隨後躍出無數飛魚，貼著海面滑翔。"]}, {"p": "直到……才……", "cat": "條件", "kw": ["直到", "才"], "ex": ["當小樹枝燃燒穩定後，他出去找較大的木頭，直到大木頭也燒得很好，才鬆了口氣。", "直到謊言被戳破，大家才知道小鄒的真面目。"]}, {"p": "要是……就……", "cat": "假設", "kw": ["要是", "就"], "ex": ["要是能維持這堆小火，就可以防止豪豬等動物闖進來。", "要是再不下雨，水庫就可能面臨缺水危機。"]}, {"p": "既是……也是……", "cat": "並列", "kw": ["既是", "也是"], "ex": ["火，既是朋友，也是守衛。", "鳳見既是我的好友，也是我的學習榜樣。"]}]}, {"no": 9, "unit": "第參單元　問題解決", "title": "火燒連環船", "patterns": [{"p": "與其……不如……", "cat": "選擇", "kw": ["與其", "不如"], "ex": ["黃蓋主張敵我軍力懸殊，與其以寡擊眾，不如投降。", "與其將暑期作業拖到最後期限，不如在假期開始時就完成。"]}, {"p": "即使……也……", "cat": "假設", "kw": ["即使", "也"], "ex": ["將戰船以數十艘排成一列，頭尾都以鐵鍊鎖起來，船和船之間釘上寬木板，士兵就能像在地面上行走一樣平穩，即使在船上操練也不會感到暈眩。", "即使今天飄著濛濛細雨，也不減音樂祭遊客的熱情。"]}, {"p": "……也……", "cat": "並列", "kw": ["也"], "ex": ["赤壁一戰，讓孫權鞏固了江南的統治，劉備也藉機占領荊州大部分地區。", "阿丹聆聽舒緩的音樂調節情緒，也緩解了壓力。"]}]}, {"no": 10, "unit": "第肆單元　文學之窗", "title": "戲術", "patterns": [{"p": "固然……但……", "cat": "轉折", "kw": ["固然", "但"], "ex": ["魔術妙趣固然能勾起好奇，令人喝采，但作者僅以不到百字的篇幅呈現表演歷程，清楚交代人物、道具、場地、過程與心得，鉅細靡遺，更教人嘖嘖稱奇。", "網路固然為人們帶來許多資訊，但流竄的假訊息讓人防不勝防。"]}, {"p": "既……亦……", "cat": "並列", "kw": ["既", "亦"], "ex": ["「旋出、即有」既描繪白米瞬間出現的神奇，亦展現魔術手法的俐落。", "柏楊既擔任高中的教務主任，亦執教數學科目。"]}, {"p": "除了……更……", "cat": "遞進", "kw": ["除了", "更"], "ex": ["「頃刻兩席皆滿」，除了點出「又取又傾」的快速流暢，「滿」字更加強使人詫異的神奇效果。", "小千的魔術表演除了手法精妙，更獨創了許多新奇的魔術。"]}]}, {"no": 11, "unit": "第肆單元　文學之窗", "title": "紀念照", "patterns": [{"p": "……反而……", "cat": "轉折", "kw": ["反而"], "ex": ["我不時擔心的用手去抓，反而讓它更加紅腫。", "過度的訓練沒有增強阿璽的體能，反而損傷了他的身體。"]}, {"p": "又是……又是……", "cat": "並列", "kw": ["又是", "又是"], "ex": ["父親見我又是用冷水敷，又是愁眉苦臉的照鏡子，責罵我：「又不是要拍你的鼻子！」", "今晚屋外特別吵雜，又是汽、機車引擎噪音，又是鞭炮聲，讓居民怒不可遏。"]}, {"p": "是……還是……", "cat": "選擇", "kw": ["是", "還是"], "ex": ["不知道是以前的人都如此，還是只有我們家的人這麼做——擤過一次鼻涕的草紙絕對不會丟掉，而是收回衣袖裡，等風乾之後再度拿出來摺疊使用。", "這件商品不知是在連鎖超商，還是在大賣場購買會比較便宜。"]}]}, {"no": 12, "unit": "第肆單元　文學之窗", "title": "少年筆耕", "patterns": [{"p": "為了……", "cat": "目的", "kw": ["為了"], "ex": ["為了增加收入，最近爸爸兼職工作，為某雜誌社抄寫訂單，每五百張訂單可賺三個銅幣。", "為了找到理想的工作，阿直多方投遞履歷，接受面試。"]}, {"p": "一面……一面……", "cat": "並列", "kw": ["一面", "一面"], "ex": ["他一面寫一面側耳細聽動靜，當寫到一百七十張，算起來值一個銅幣，才停筆熄了燈，回到床上睡覺。", "弟弟一面洗澡，一面哼著不成調的曲子，心情似乎很愉快。"]}, {"p": "當……才……", "cat": "條件", "kw": ["當", "才"], "ex": ["他一面寫一面側耳細聽動靜，當寫到一百七十張，算起來值一個銅幣，才停筆熄了燈，回到床上睡覺。", "當我回到家並坐在沙發上，才感到真正放鬆。"]}, {"p": "……所以……", "cat": "因果", "kw": ["所以"], "ex": ["敘里奧心裡一陣緊張，幸好爸爸沒多說什麼，所以他還是一直做下去。", "今天有東北季風報到，所以溫度驟降。"]}, {"p": "只要……一定……", "cat": "條件", "kw": ["只要", "一定"], "ex": ["只要爸爸能再愛我，我一定好好用功，我這次真的下定決心了！", "只要更努力的訓練，球隊的成績一定會進步。"]}]}]}}},
+  {id:"kangxuan", name:"康軒", data:{}},
+  {id:"hanlin", name:"翰林", data:{}},
+];
+const GRADES = ["1上","1下","2上","2下","3上","3下","4上","4下","5上","5下","6上","6下"];
+const gradeName = g => ["","一","二","三","四","五","六"][+g[0]]+"年級"+(g[1]==="上"?"上學期":"下學期");
+const $ = id => document.getElementById(id);
+const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+let state = {ver:"nani", grade:"3上", from:1, to:6, view:"lesson"};
+try{ const s = JSON.parse(store.get("sp-state")||"null"); if(s) Object.assign(state,s); }catch(e){}
+
+function book(){ const v = VERSIONS.find(v=>v.id===state.ver); return v && v.data[state.grade]; }
+
+function fillSelectors(){
+  const has = v => Object.keys(v.data).length>0;
+  if(!VERSIONS.some(v=>v.id===state.ver && has(v))) state.ver = VERSIONS.find(has).id;
+  $("selVer").innerHTML = VERSIONS.map(v=>`<option value="${v.id}" ${has(v)?"":"disabled"}>${v.name}${has(v)?"":"（尚未建立）"}</option>`).join("");
+  $("selVer").value = state.ver;
+  const v = VERSIONS.find(v=>v.id===state.ver) || VERSIONS[0];
+  $("selGrade").innerHTML = GRADES.map(g=>`<option value="${g}" ${v.data[g]?"":"disabled"}>${gradeName(g)}${v.data[g]?"":"（尚未建立）"}</option>`).join("");
+  if(!v.data[state.grade]) state.grade = Object.keys(v.data)[0];
+  $("selGrade").value = state.grade;
+  const ls = book().lessons;
+  const opt = ls.map(l=>`<option value="${l.no}">第${l.no}課 ${l.title}</option>`).join("");
+  $("selFrom").innerHTML = opt; $("selTo").innerHTML = opt;
+  const max = ls[ls.length-1].no;
+  state.from = Math.min(Math.max(1,state.from),max); state.to = Math.min(Math.max(state.from,state.to),max);
+  $("selFrom").value = state.from; $("selTo").value = state.to;
+}
+
+function selected(){
+  const b = book(); const out = [];
+  b.lessons.filter(l=>l.no>=state.from && l.no<=state.to).forEach(l=>l.patterns.forEach(p=>out.push({...p, lesson:l})));
+  return out;
+}
+
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+// 依序在句子中找出關鍵詞位置
+function locate(s, kws){
+  const pos=[]; let from=0;
+  for(const k of kws){ const i=s.indexOf(k,from); if(i<0) return null; pos.push([i,i+k.length]); from=i+k.length; }
+  return pos;
+}
+function highlight(s,kws){
+  let pos = locate(s,kws);
+  if(!pos){ pos=[]; let from=0; for(const k of kws){const i=s.indexOf(k,from); if(i>=0){pos.push([i,i+k.length]);from=i+k.length;}} }
+  let out="",last=0; for(const [a,b] of pos){ out+=esc(s.slice(last,a))+"<mark>"+esc(s.slice(a,b))+"</mark>"; last=b; }
+  return out+esc(s.slice(last));
+}
+const cc = cat => `style="--cc:var(--c-${cat})"`;
+
+function renderSummary(){
+  const pats = selected(); const cats = [...new Set(pats.map(p=>p.cat))];
+  const v = VERSIONS.find(v=>v.id===state.ver);
+  $("summary").innerHTML = `目前範圍：<b>${v.name}版・${gradeName(state.grade)}・第${state.from}～${state.to}課</b>，共 <b>${pats.length}</b> 個句型，包含 ${cats.length} 種複句。`;
+}
+
+function renderLearn(){
+  const pats = selected(); const C = book().categories;
+  if(!pats.length){ $("panelLearn").innerHTML = `<div class="card empty">這個範圍沒有句型，換幾課看看吧！</div>`; return; }
+  const cats = Object.keys(C).filter(c=>pats.some(p=>p.cat===c));
+  let h = `<div class="card intro"><h2>什麼是複句？</h2>
+    <p>把兩個（或更多）意思相關的句子，用<b>關鍵詞</b>連起來，變成一個比較長、意思更完整的句子，就叫做<b>複句</b>。</p>
+    <div class="formula"><span class="box">句子一</span><span class="glue">關鍵詞</span><span class="box">句子二</span><span>＝ 複句</span></div>
+    <p>看到關鍵詞，就能猜出兩個句子是什麼關係。這個範圍會學到 ${cats.length} 種：</p>
+    <div class="catgrid">${cats.map(c=>`<button class="cat" data-anim="${c}" ${cc(c)}><b>${c}複句</b><p>${C[c].def}</p><p class="tip">小提示：${C[c].tip}</p><span class="play">▶ 點我看記憶動畫</span></button>`).join("")}</div></div>`;
+  h += `<div class="viewtoggle">排列方式：<button class="chipbtn" data-view="lesson" aria-pressed="${state.view==="lesson"}">依課次</button><button class="chipbtn" data-view="cat" aria-pressed="${state.view==="cat"}">依複句類別</button></div>`;
+  const patHTML = (p,showLesson) => `<div class="pat" ${cc(p.cat)}>
+      <div><div class="name">${p.p}</div><span class="pill">${p.cat}複句</span>${showLesson?`<span class="lessontag">第${p.lesson.no}課</span>`:""}</div>
+      <div>${p.ex.map((e,i)=>`<p class="ex"><span class="src">${p.srcs?p.srcs[i]:(i?"補充":"課文")}</span>${highlight(e,p.kw)}</p>`).join("")}
+      ${p.note?`<p class="note">注意：${p.note}</p>`:""}</div></div>`;
+  if(state.view==="lesson"){
+    book().lessons.filter(l=>l.no>=state.from&&l.no<=state.to).forEach(l=>{
+      h += `<div class="card"><div class="group-h"><h3>第${l.no}課　${l.title}</h3><small>${l.unit}</small></div>
+        ${l.patterns.length? l.patterns.map(p=>patHTML({...p,lesson:l},false)).join("") : `<p class="note">這一課沒有列出句型。</p>`}</div>`;
+    });
+  } else {
+    cats.forEach(c=>{
+      const ps = pats.filter(p=>p.cat===c);
+      h += `<div class="card"><div class="group-h"><h3 style="color:var(--c-${c})">${c}複句</h3><small>${C[c].def}</small></div>${ps.map(p=>patHTML(p,true)).join("")}</div>`;
+    });
+  }
+  $("panelLearn").innerHTML = h;
+  $("panelLearn").querySelectorAll("[data-anim]").forEach(b=>b.onclick=()=>openAnim(b.dataset.anim));
+  $("panelLearn").querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{state.view=b.dataset.view;save();renderLearn();});
+}
+
+/* ---------- 測驗 ---------- */
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+// 填空題時，意思容易互通的類別不拿來當干擾選項
+const CLOSE = [["假設","條件"],["並列","遞進"],["因果","目的"]];
+// 太萬用的單字（很多句子放進去都通），不當干擾選項
+const FLEX = ["也","還","再","但","不過"];
+const close = (a,b) => a===b || CLOSE.some(([x,y])=>(a===x&&b===y)||(a===y&&b===x));
+const kwLabel = p => p.kw.join("……");
+
+function buildQuiz(){
+  const pats = selected(); if(!pats.length) return [];
+  const all = book().lessons.flatMap(l=>l.patterns);
+  const cats = Object.keys(book().categories);
+  const items = [];
+  pats.forEach(p=>p.ex.forEach(e=>{
+    items.push({kind:"cat",p,e});
+    if(locate(e,p.kw)) items.push({kind:"fill",p,e});
+  }));
+  // 盡量讓每個句型都出現、兩種題型混合
+  let pool = shuffle(items), chosen=[], usedEx=new Set(), usedPat=new Map();
+  for(const round of [1,2,3]){
+    for(const it of pool){
+      if(chosen.length>=10) break;
+      if(chosen.includes(it)) continue;
+      const n = usedPat.get(it.p.p)||0;
+      if(round===1 && (n>0 || usedEx.has(it.e))) continue;
+      if(round===2 && usedEx.has(it.e)) continue;
+      chosen.push(it); usedEx.add(it.e); usedPat.set(it.p.p,n+1);
+    }
+  }
+  return shuffle(chosen).map(it=>{
+    if(it.kind==="cat"){
+      const opts = shuffle([it.p.cat, ...shuffle(cats.filter(c=>c!==it.p.cat)).slice(0,3)]);
+      return {...it, q:highlight(it.e,it.p.kw), opts:opts.map(c=>c+"複句"), ans:it.p.cat+"複句",
+        why:`關鍵詞是「${kwLabel(it.p)}」，${book().categories[it.p.cat].def}`};
+    }
+    const pos = locate(it.e,it.p.kw); let q="",last=0;
+    pos.forEach(([a,b])=>{ q+=esc(it.e.slice(last,a))+`<span class="blank">？</span>`; last=b; }); q+=esc(it.e.slice(last));
+    const right = it.p.kw.join("／");
+    const seen = new Set([right]);
+    // 干擾選項：不同類別、空格數一樣的優先；單一個字太萬用，不拿來當干擾
+    const cands = shuffle(all.filter(o=>!close(o.cat,it.p.cat)));
+    const same = cands.filter(o=>o.kw.length===it.p.kw.length), rest = cands.filter(o=>o.kw.length!==it.p.kw.length);
+    const wrong=[]; for(const o of [...same,...rest]){ const s=o.kw.join("／"); if(!seen.has(s) && s.length>1 && !FLEX.includes(s)){seen.add(s);wrong.push(s);} if(wrong.length===3) break; }
+    return {...it, q, opts:shuffle([right,...wrong]), ans:right,
+      why:`這是「${it.p.p}」的${it.p.cat}複句。完整句子：${it.e}`};
+  });
+}
+
+let quiz=null;
+function startQuiz(){ quiz={qs:buildQuiz(), i:0, res:[]}; renderQuiz(); }
+function renderQuiz(){
+  const P = $("panelQuiz");
+  if(!quiz || !quiz.qs.length){ P.innerHTML = `<div class="card empty">這個範圍沒有句型可以出題，換幾課看看吧！</div>`; return; }
+  const {qs,i,res} = quiz;
+  const dots = qs.map((_,k)=>`<span class="dot ${res[k]===true?"ok":res[k]===false?"bad":k===i?"now":""}"></span>`).join("");
+  if(i>=qs.length){
+    const n = res.filter(Boolean).length;
+    const msg = n===qs.length?"全對！你是句型小達人":n>=qs.length*0.8?"很棒！再看一下錯的題目就更完美了。":n>=qs.length*0.6?"不錯喔！回到教學頁複習一下吧。":"別灰心，先回教學頁看看關鍵詞，再來挑戰！";
+    const wrongs = qs.map((q,k)=>({q,k})).filter(x=>res[x.k]===false);
+    P.innerHTML = `<div class="card" style="text-align:center"><div class="qtype">測驗結果</div>
+      <div class="score">${n} / ${qs.length}</div><p>${msg}</p><div class="progress" style="justify-content:center">${dots}</div>
+      ${wrongs.length?`<div class="review" style="text-align:left"><b>訂正一下：</b>${wrongs.map(({q})=>`<div class="item"><div class="s">${highlight(q.e,q.p.kw)}</div>正確答案：${q.ans}</div>`).join("")}</div>`:""}
+      <div class="actions" style="justify-content:center"><button class="btn ghost" id="goLearn">回教學複習</button><button class="btn" id="again">再測一次</button></div></div>`;
+    $("again").onclick=startQuiz; $("goLearn").onclick=()=>switchTab("learn");
+    return;
+  }
+  const q = qs[i]; const done = res[i]!==undefined;
+  P.innerHTML = `<div class="card"><div class="qhead"><span class="qtype">第 ${i+1} 題／共 ${qs.length} 題・${q.kind==="cat"?"判斷複句類別":"填入關鍵詞"}</span><div class="progress">${dots}</div></div>
+    <p style="margin:10px 0 0;color:var(--muted);font-size:15px">${q.kind==="cat"?"下面這個句子是哪一種複句？（黃色是關鍵詞）":"空格裡應該填入哪一組關鍵詞？"}</p>
+    <div class="qtext">${q.q}</div>
+    <div class="opts">${q.opts.map((o,k)=>`<button class="opt" data-o="${esc(o)}" ${done?"disabled":""}><span class="k">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`).join("")}</div>
+    <div id="fb"></div>
+    <div class="actions"><button class="btn" id="next" ${done?"":"hidden"}>${i===qs.length-1?"看結果":"下一題"}</button></div></div>`;
+  P.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    if(quiz.res[i]!==undefined) return;
+    const ok = b.dataset.o===q.ans; quiz.res[i]=ok;
+    P.querySelectorAll(".opt").forEach(x=>{x.disabled=true; if(x.dataset.o===q.ans) x.classList.add("right");});
+    if(!ok) b.classList.add("wrong");
+    $("fb").innerHTML = `<div class="feedback ${ok?"ok":"bad"}"><b>${ok?"答對了！":"再想想，正確答案是「"+esc(q.ans)+"」"}</b><span class="why">${esc(q.why)}</span></div>`;
+    P.querySelector(".progress").innerHTML = qs.map((_,k)=>`<span class="dot ${quiz.res[k]===true?"ok":quiz.res[k]===false?"bad":k===i?"now":""}"></span>`).join("");
+    $("next").hidden=false; $("next").focus();
+  });
+  $("next").onclick=()=>{quiz.i++; renderQuiz(); window.scrollTo({top:$("panelQuiz").offsetTop-20});};
+}
+
+function switchTab(t){
+  const learn = t==="learn";
+  $("tabLearn").setAttribute("aria-selected",learn); $("tabQuiz").setAttribute("aria-selected",!learn);
+  $("panelLearn").hidden=!learn; $("panelQuiz").hidden=learn;
+  if(!learn && !quiz) startQuiz();
+}
+function save(){ store.set("sp-state", JSON.stringify(state)); }
+function refresh(){ fillSelectors(); renderSummary(); renderLearn(); quiz=null; if(!$("panelQuiz").hidden) startQuiz(); save(); }
+
+$("selVer").onchange=e=>{state.ver=e.target.value;refresh();};
+$("selGrade").onchange=e=>{state.grade=e.target.value;refresh();};
+$("selFrom").onchange=e=>{state.from=+e.target.value; if(state.to<state.from) state.to=state.from; refresh();};
+$("selTo").onchange=e=>{state.to=+e.target.value; if(state.to<state.from) state.from=state.to; refresh();};
+$("tabLearn").onclick=()=>switchTab("learn");
+$("tabQuiz").onclick=()=>switchTab("quiz");
+
+// QR code
+if(SHARE_URL.startsWith("http") && window.QRCode){
+  $("qrBtn").hidden=false;
+  new QRCode($("qrSmall"),{text:SHARE_URL,width:152,height:152,correctLevel:QRCode.CorrectLevel.M});
+  let big=false;
+  const open=()=>{ $("overlay").hidden=false; if(!big){ new QRCode($("qrBig"),{text:SHARE_URL,width:480,height:480,correctLevel:QRCode.CorrectLevel.M}); big=true; } };
+  $("qrBtn").onclick=open; $("qrBtn").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}};
+  $("overlay").onclick=()=>{$("overlay").hidden=true;};
+}
+/* ---------- 類別記憶動畫 ---------- */
+const ANIM = {
+  "並列": {memo:"兩個好朋友手牽手，一樣高、一樣重要", svg:`
+    <line x1="20" y1="128" x2="300" y2="128" class="ln dim"/>
+    <g class="parL"><circle cx="118" cy="88" r="36" class="shape"/><text x="118" y="94">事情一</text></g>
+    <g class="parR"><circle cx="202" cy="88" r="36" class="shape"/><text x="202" y="94">事情二</text></g>
+    <line class="ln hand" pathLength="1" x1="144" y1="114" x2="176" y2="114"/>
+    <text class="lab" x="160" y="156">並排站，沒有誰比較大</text>`},
+  "連貫": {memo:"先做這個，接著做那個，像排隊一樣", svg:`
+    <g class="s1"><rect x="18" y="45" width="76" height="52" rx="10" class="shape"/><text x="56" y="77">先</text></g>
+    <g class="s2"><path class="ln" d="M100 71 H114 M108 64 L115 71 L108 78"/><rect x="122" y="45" width="76" height="52" rx="10" class="shape"/><text x="160" y="77">接著</text></g>
+    <g class="s3"><path class="ln" d="M204 71 H218 M212 64 L219 71 L212 78"/><rect x="226" y="45" width="76" height="52" rx="10" class="shape"/><text x="264" y="77">最後</text></g>
+    <circle class="solid walker" cx="50" cy="125" r="9"/>
+    <text class="lab" x="160" y="158">一件接一件，順序不能亂</text>`},
+  "轉折": {memo:"看到「卻、但、不過」，意思就要轉彎", svg:`
+    <path class="ln draw" pathLength="1" d="M20 62 H185 Q200 62 200 80 V140 M188 128 L200 142 L212 128"/>
+    <text class="lab" x="95" y="48">前半句往這邊說</text>
+    <text class="lab" x="258" y="112">後半句轉彎了</text>
+    <g class="sign"><circle cx="200" cy="62" r="22" class="solid"/><text x="200" y="68" style="fill:var(--paper);font-weight:700">但</text></g>`},
+  "因果": {memo:"推倒第一塊（原因），第二塊就倒了（結果）", svg:`
+    <line x1="40" y1="130" x2="290" y2="130" class="ln dim"/>
+    <rect class="shape domA" x="92" y="50" width="24" height="80" rx="4"/>
+    <rect class="shape domB" x="192" y="50" width="24" height="80" rx="4"/>
+    <text x="104" y="156">原因</text><text x="204" y="156" class="s3">結果</text>
+    <text class="lab s2" x="160" y="38">所以……</text>`},
+  "條件": {memo:"條件做到了（鑰匙插進去），結果就跟著來（燈亮了）", svg:`
+    <g class="key"><circle cx="70" cy="80" r="16" class="shape"/><path class="ln" d="M86 80 H140 M126 80 V92 M138 80 V90"/></g>
+    <rect x="146" y="52" width="56" height="58" rx="10" class="shape"/><circle cx="174" cy="76" r="7" class="solid"/><path class="ln" d="M174 80 V94"/>
+    <path class="ln" d="M202 81 H232"/>
+    <circle cx="262" cy="72" r="24" class="shape bulb" style="stroke:#c79a00"/><rect x="252" y="96" width="20" height="12" rx="3" class="shape"/>
+    <g class="rays"><path class="ln" style="stroke:#e0a800" d="M262 36 V26 M290 46 L298 38 M234 46 L226 38 M298 72 H308 M226 72 H216"/></g>
+    <text x="120" y="146">條件</text><text x="262" y="146" class="rays">結果</text>`},
+  "假設": {memo:"「如果」就是先假裝一下，虛線表示還沒發生", svg:`
+    <circle cx="58" cy="122" r="22" class="shape"/><circle cx="51" cy="118" r="3" class="solid"/><circle cx="65" cy="118" r="3" class="solid"/>
+    <circle cx="92" cy="96" r="5" class="shape s1"/><circle cx="110" cy="80" r="8" class="shape s2"/>
+    <ellipse cx="215" cy="66" rx="95" ry="48" class="shape think"/>
+    <text x="215" y="60" class="s3">如果……</text><text x="215" y="86" class="s4">會怎麼樣？</text>`},
+  "遞進": {memo:"像爬樓梯，一階比一階高", svg:`
+    <path class="ln" d="M20 150 H90 V115 H160 V80 H230 V45 H305"/>
+    <circle class="solid ball" cx="55" cy="139" r="10"/>
+    <text class="lab" x="55" y="168">第一層</text><text class="lab s2" x="125" y="133">更進一層</text><text class="lab s3" x="195" y="98">再更進一層</text>`},
+  "目的": {memo:"箭射向靶心：做這件事，就是為了它", svg:`
+    <g class="target"><circle cx="265" cy="85" r="50" class="shape"/><circle cx="265" cy="85" r="32" class="shape"/><circle cx="265" cy="85" r="13" class="solid"/></g>
+    <g class="arrow"><path class="ln" d="M104 85 H258"/><path class="ln" d="M244 75 L258 85 L244 95"/><path class="ln" d="M96 74 L108 85 L96 96 M108 74 L120 85 L108 96"/></g>
+    <text class="lab" x="70" y="60">做這件事</text><text x="265" y="158">為了這個</text>`},
+  "選擇": {memo:"走到岔路，兩條路只能選一條", svg:`
+    <path class="ln" d="M20 100 H150"/>
+    <path class="ln notpick" d="M150 100 L295 148"/>
+    <path class="ln dim" d="M150 100 L295 52"/><path class="ln pick" pathLength="1" d="M150 100 L295 52"/>
+    <circle class="solid chooser" cx="30" cy="100" r="10"/>
+    <g class="q"><circle cx="150" cy="55" r="17" class="shape"/><text x="150" y="61">？</text></g>
+    <text class="lab" x="280" y="32">選這條</text><text class="lab" x="280" y="168">或那條</text>`}
+};
+function openAnim(cat){
+  const A = ANIM[cat], C = book().categories[cat]; if(!A) return;
+  const ex = selected().find(p=>p.cat===cat);
+  $("aBox").style.setProperty("--cc",`var(--c-${cat})`);
+  $("aBox").innerHTML = `<h3>${cat}複句</h3><p class="d">${C.def}</p>
+    <div class="stage" id="aStage"></div>
+    <p class="memo">${A.memo}</p>
+    ${ex?`<div class="exs"><small>這個範圍的例句・${ex.p}（第${ex.lesson.no}課）</small>${highlight(ex.ex[0],ex.kw)}</div>`:""}
+    <div class="actions"><button class="btn ghost" id="aAgain">再播一次</button><button class="btn" id="aClose">知道了</button></div>`;
+  const play = () => { $("aStage").innerHTML = `<svg viewBox="0 0 320 175" role="img" aria-label="${cat}複句記憶動畫"><g class="go">${A.svg}</g></svg>`; };
+  play();
+  $("aAgain").onclick = play;
+  $("aClose").onclick = closeAnim;
+  $("aModal").hidden = false; $("aClose").focus();
+}
+function closeAnim(){ $("aModal").hidden = true; $("aStage") && ($("aStage").innerHTML=""); }
+$("aModal").onclick = e => { if(e.target.id==="aModal") closeAnim(); };
+document.addEventListener("keydown", e => { if(e.key==="Escape" && !$("aModal").hidden) closeAnim(); });
+
+refresh();
+</script>
+
+</body>
+</html>
