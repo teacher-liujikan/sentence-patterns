@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 @font-face{font-family:"EduKai";src:local("TW-MOE-Std-Kai"),local("教育部標準楷書"),url("fonts/edukai-4.0.woff2") format("woff2");font-display:swap}
 /* Layout: 作文簿綠格紙當底，上方是選單列，下方分「教學／測驗」兩個分頁；例句用楷體，連接詞用螢光筆標示 */
@@ -47,6 +46,13 @@ header.top{display:flex;gap:16px;align-items:flex-start;justify-content:space-be
 .eyebrow{font-size:13px;letter-spacing:.12em;color:var(--accent);font-weight:700}
 h1{font-family:var(--f-display);font-size:clamp(28px,6vw,40px);line-height:1.2;margin:4px 0 6px;text-wrap:balance}
 .sub{color:var(--muted);margin:0;font-size:15px}
+.tools{display:flex;gap:8px;align-items:stretch;flex:none}
+.dl{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:92px;background:var(--accent);color:var(--accent-ink);border-radius:var(--r);text-decoration:none;font-weight:700;font-size:14px;line-height:1.25;text-align:center;padding:6px}
+.dl svg{width:26px;height:26px}
+.dl small{font-size:11px;font-weight:500;opacity:.9}
+.dl:hover{filter:brightness(1.08)}
+.dl:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (max-width:480px){.dl{width:76px;font-size:13px}}
 .qr{flex:none;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 .qr #qrSmall{width:76px;height:76px}
 .qr #qrSmall img,.qr #qrSmall canvas{width:76px!important;height:76px!important}
@@ -216,8 +222,13 @@ footer{margin-top:28px;font-size:13px;color:var(--muted);text-align:center}
       <h1>句型練習室</h1>
       <p class="sub">選好版本、年級和課次，先看教學，再來挑戰小測驗。</p>
     </div>
-    <div class="qr" id="qrBtn" role="button" tabindex="0" aria-label="放大 QR code" hidden>
-      <div id="qrSmall"></div><span>掃我練習</span>
+    <div class="tools">
+      <a class="dl" id="dlBtn" href="worksheet-nani-3a-L1-6.pdf" download="南一三上第1-6課複句句型練習單.pdf" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>學習單<br><small>PDF 下載</small></span></a>
+      <div class="qr" id="qrBtn" role="button" tabindex="0" aria-label="放大 QR code" hidden>
+        <div id="qrSmall"></div><span>掃我練習</span>
+      </div>
     </div>
   </header>
 
@@ -239,7 +250,7 @@ footer{margin-top:28px;font-size:13px;color:var(--muted);text-align:center}
   <section class="panel" id="panelLearn"></section>
   <section class="panel" id="panelQuiz" hidden></section>
 
-  <footer>標黃色的字就是句型的關鍵詞。</footer>
+  <footer>標黃色的字就是句型的關鍵詞。<span id="fontNote"><br>字型：教育部標準楷書（中華民國教育部，CC BY-ND 3.0 臺灣）</span></footer>
 </div>
 
 <div class="amodal" id="aModal" hidden><div class="abox" id="aBox" role="dialog" aria-modal="true"></div></div>
@@ -247,6 +258,7 @@ footer{margin-top:28px;font-size:13px;color:var(--muted);text-align:center}
   <div class="inner"><div id="qrBig"></div><p>用平板或手機掃描，一起來練習！</p></div>
 </div>
 
+<script>window.QRCode=function(el){el.innerHTML='<img alt="QR code" style="image-rendering:pixelated" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAV4AAAFeAQAAAADlUEq3AAAC8klEQVR4Xu1bQY6jQAy0F6Q9gpQHzFPID/ZJ+7XwlDxgpHCMFOSVy+0GksOglUYyGfuQCSTKNF2U7bINC+22+dfurxJRfnlt37cbJBf/RyI3fds96rlGaJCHf949vm8Z+cv/DTfJpRO1R0VQhIZbI3IhfVFAYZdEcGuB7rqZmXsiGj9EferMICINoKTayMzpGJ8tEILVplYdKOg3M5+7O/PfCmOGtpgcbJ+WxcNt9nPTSUC9ahHvuq/s7desaDXwnZrEfDKN/ScJTT3J2BNbpjqUhPXtd+OgFzixWiGepabjh2agGgzHngif8zkFQshMpq0EUwMbyzseri3SmXou9WDEmKJqoig+SApkoCKqJnAIIqrp4UGdzH474gW6elcVaECZFHSDogeqqQdjelHT8QsRzaDojYgAFPIwORjUiwJBr7qYHnQY9a9WbEDJRDAqggpPKYl6GQ24eYV0VV87Yph4+zVXBwqPibD4XM+22KiAvv1uHPECSxnNKtuWfDr9zKyqZqge8QJ/yJqZ+0ag3lESRSazVvndndXb/pDd2GlBdqOEQPQhBkFjaSEdkhg40OwuvVoYBK0/6A3Bkr+YjlffCWhTD0ZGcAmBpt6ViLVRX5OYVBMvFoaDlr+4aChS0B3oIg+zJhNWD0IqFPoVRb/w0hFMNRGYg6boTTkg8KEmY5DBd3qtNPVgyKpaS9Qh+5xbGf9AD95ZaDppm7fVl5N5Vm3eB/H8uYyNWS6K6ZhSxTbl4JNOlqlmXTSyF/UBUR85rPW1l8nRvPnXFmQ3PASWidACY+kPorFUKJm5aNhcdDuz7Z3C2uYFEW3sNzkYk4PLzPaCZek41YKapquZi8bMRZ10NRgqoJv+YCmTJgeDIrgJx52IDWkPV4zZN8JnC4Z3DOYHid25jLVtZrYnhW3qdUq0edB41kOdAh6uvzEUnFsXMhd9fnbJe/SuEcs4W3rRoF50/fxg1RBlVq3Oi1rjMHPRkLloeTJil6UXjehF/wFUVE0QklM4kAAAAABJRU5ErkJggg==">'};QRCode.CorrectLevel={M:0};</script>
 <script>
 const SHARE_URL = "https://teacher-liujikan.github.io/sentence-patterns/";
 const VERSIONS = [
@@ -431,7 +443,9 @@ function switchTab(t){
   if(!learn && !quiz) startQuiz();
 }
 function save(){ store.set("sp-state", JSON.stringify(state)); }
-function refresh(){ fillSelectors(); renderSummary(); renderLearn(); quiz=null; if(!$("panelQuiz").hidden) startQuiz(); save(); }
+const PDF_URL = "worksheet-nani-3a-L1-6.pdf";
+function updateDl(){ const b=$("dlBtn"); if(!b) return; b.hidden = !(PDF_URL.endsWith(".pdf") && state.ver==="nani" && state.grade==="3上"); }
+function refresh(){ updateDl(); fillSelectors(); renderSummary(); renderLearn(); quiz=null; if(!$("panelQuiz").hidden) startQuiz(); save(); }
 
 $("selVer").onchange=e=>{state.ver=e.target.value;refresh();};
 $("selGrade").onchange=e=>{state.grade=e.target.value;refresh();};
