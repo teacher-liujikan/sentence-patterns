@@ -3,540 +3,936 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>國語句型練習室</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<title>句型練習室</title>
+<meta name="description" content="國小國語複句句型：選版本、選年段，看句型和複句分類，還有配對遊戲和學力檢測大亂鬥。">
 <style>
-@font-face{font-family:"EduKai";src:local("TW-MOE-Std-Kai"),local("教育部標準楷書"),url("fonts/edukai-4.0.woff2") format("woff2");font-display:swap}
-/* Layout: 作文簿綠格紙當底，上方是選單列，下方分「教學／測驗」兩個分頁；例句用楷體，連接詞用螢光筆標示 */
-:root{
-  --bg:#f5f9f6; --paper:#ffffff; --ink:#1c2925; --muted:#5b6d66; --line:#d3e4da; --grid:#e4efe8;
-  --accent:#23744f; --accent-ink:#ffffff; --accent-soft:#e2f1e8;
-  --mark:#ffe27a; --mark-ink:#1c2925;
-  --ok:#1f7a45; --ok-soft:#e1f4e7; --bad:#b4362c; --bad-soft:#fbe7e4;
-  --c-並列:#2f6fb5; --c-連貫:#7a4fb0; --c-轉折:#c2410c; --c-因果:#0f766e; --c-條件:#a16207; --c-假設:#be185d; --c-遞進:#4d7c0f; --c-目的:#475569; --c-選擇:#0e7490;
-  --f-display:"EduKai","LXGW WenKai TC","BiauKai","DFKai-SB","KaiTi","Noto Serif TC",serif;
-  --f-body:"EduKai","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-  --r:10px;
+@font-face{
+  font-family:"EduKai";
+  src:url("fonts/edukai-4.0.woff2") format("woff2"),
+      url("https://teacher-liujikan.github.io/sentence-patterns/fonts/edukai-4.0.woff2") format("woff2");
+  font-display:swap;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#111916; --paper:#18221e; --ink:#e4eee8; --muted:#9db1a8; --line:#2b3d35; --grid:#1c2924;
-  --accent:#5fc493; --accent-ink:#0d1512; --accent-soft:#1d3329;
-  --mark:#6e5a10; --mark-ink:#fff6cf;
-  --ok:#6fd398; --ok-soft:#173326; --bad:#ff8f84; --bad-soft:#3a1d1a;
-  --c-並列:#7fb2ee; --c-連貫:#b99ae6; --c-轉折:#fb9a63; --c-因果:#5fd3c6; --c-條件:#e8bd50; --c-假設:#f48fbf; --c-遞進:#a6d65f; --c-目的:#aab7c8; --c-選擇:#5cc9e0;
-  color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#111916; --paper:#18221e; --ink:#e4eee8; --muted:#9db1a8; --line:#2b3d35; --grid:#1c2924;
-  --accent:#5fc493; --accent-ink:#0d1512; --accent-soft:#1d3329;
-  --mark:#6e5a10; --mark-ink:#fff6cf;
-  --ok:#6fd398; --ok-soft:#173326; --bad:#ff8f84; --bad-soft:#3a1d1a;
-  --c-並列:#7fb2ee; --c-連貫:#b99ae6; --c-轉折:#fb9a63; --c-因果:#5fd3c6; --c-條件:#e8bd50; --c-假設:#f48fbf; --c-遞進:#a6d65f; --c-目的:#aab7c8; --c-選擇:#5cc9e0;
-  color-scheme:dark}
+:root{
+  color-scheme:light;
+  --bg:#fdf6e9; --paper:#fffdf8; --ink:#3a2e22; --soft:#7a6a58; --line:#eadfcb;
+  --accent:#e2703a; --accent2:#2f8f83; --good:#2e9d5b; --bad:#d64545; --gold:#f2b632;
+  --radius:18px; --shadow:0 4px 0 rgba(90,60,30,.12), 0 8px 24px rgba(90,60,30,.08);
+  --c-並列:#3b82c4; --c-連貫:#2e9d5b; --c-轉折:#e2703a; --c-因果:#d64545; --c-條件:#8a63d2;
+  --c-假設:#1e9fb0; --c-遞進:#d4508f; --c-目的:#b8860b; --c-選擇:#4c5fd5;
+}
 *{box-sizing:border-box}
-[hidden]{display:none!important}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:28px 28px;}
-.wrap{max-width:960px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-header.top{display:flex;gap:16px;align-items:flex-start;justify-content:space-between}
-.brand{min-width:0}
-.eyebrow{font-size:13px;letter-spacing:.12em;color:var(--accent);font-weight:700}
-h1{font-family:var(--f-display);font-size:clamp(28px,6vw,40px);line-height:1.2;margin:4px 0 6px;text-wrap:balance}
-.sub{color:var(--muted);margin:0;font-size:15px}
-.tools{display:flex;gap:8px;align-items:stretch;flex:none}
-.dl{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:92px;background:var(--accent);color:var(--accent-ink);border-radius:var(--r);text-decoration:none;font-weight:700;font-size:14px;line-height:1.25;text-align:center;padding:6px}
-.dl svg{width:26px;height:26px}
-.dl small{font-size:11px;font-weight:500;opacity:.9}
-.dl:hover{filter:brightness(1.08)}
-.dl:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-@media (max-width:480px){.dl{width:76px;font-size:13px}}
-.qr{flex:none;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
-.qr #qrSmall{width:76px;height:76px}
-.qr #qrSmall img,.qr #qrSmall canvas{width:76px!important;height:76px!important}
-.qr span{font-size:11px;color:#3d4f48;letter-spacing:.05em}
-.qr:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"EduKai","TW-Kai","標楷體","DFKai-SB","BiauKai","Kaiti TC",serif;
+  font-size:20px;line-height:1.6;
+  background-image:radial-gradient(#f3e6cc 1px,transparent 1.5px);background-size:22px 22px;}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px 40px}
+header.top{position:sticky;top:0;z-index:20;background:rgba(253,246,233,.94);backdrop-filter:blur(6px);
+  border-bottom:2px dashed var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px}
+.logo{font-size:28px;font-weight:700;letter-spacing:2px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.logo .ic{width:40px;height:40px;border-radius:12px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:24px;box-shadow:0 3px 0 #b8501f}
+.spacer{flex:1}
+.iconbtn{border:2px solid var(--line);background:var(--paper);border-radius:14px;min-width:48px;height:48px;padding:0 12px;font-size:18px}
+.iconbtn:active{transform:translateY(2px)}
+.hidden{display:none!important}
+h2{font-size:26px;margin:28px 0 12px;display:flex;align-items:center;gap:10px}
+h2 .num{width:36px;height:36px;border-radius:50%;background:var(--accent2);color:#fff;display:grid;place-items:center;font-size:20px;flex:none}
+.hint{color:var(--soft);font-size:17px;margin:-4px 0 12px}
 
-.picker{margin-top:20px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.picker label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-weight:500;min-width:0}
-.picker .step{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:12px;margin-right:4px}
-select{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
-.range-row{display:flex;gap:6px;align-items:center}
-.range-row select{flex:1;min-width:0}
-.summary{grid-column:1/-1;font-size:14px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
-.summary b{color:var(--ink)}
-@media (max-width:640px){.picker{grid-template-columns:1fr 1fr}.picker label.range{grid-column:1/-1}}
+/* home */
+.hero{margin:24px 0 8px;padding:22px;border-radius:24px;background:var(--paper);box-shadow:var(--shadow);border:2px solid var(--line)}
+.hero h1{margin:0 0 6px;font-size:32px}
+.hero p{margin:0;color:var(--soft);font-size:18px}
+.choices{display:flex;flex-wrap:wrap;gap:12px}
+.choice{min-width:118px;min-height:62px;padding:10px 18px;border-radius:16px;border:3px solid var(--line);background:var(--paper);font-size:22px;box-shadow:0 3px 0 var(--line);position:relative}
+.choice small{display:block;font-size:14px;color:var(--soft);line-height:1.2}
+.choice.on{border-color:var(--accent);background:#fff1e6;box-shadow:0 3px 0 var(--accent)}
+.choice.on::after{content:"✔";position:absolute;top:-10px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:15px;display:grid;place-items:center}
+.choice:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.grades{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.grades .choice{min-width:0;padding:8px 4px}
+.mini-row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.linkbtn{border:none;background:none;color:var(--accent2);text-decoration:underline;font-size:18px;padding:6px 4px}
+.range{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:20px}
+.range select{font:inherit;font-size:20px;padding:6px 10px;border-radius:12px;border:2px solid var(--line);background:var(--paper)}
+.go-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.bigbtn{border:none;border-radius:22px;padding:18px 20px;font-size:26px;color:#fff;background:var(--accent);box-shadow:0 6px 0 #b8501f;min-height:84px;line-height:1.3}
+.bigbtn small{display:block;font-size:16px;opacity:.9}
+.bigbtn:active{transform:translateY(4px);box-shadow:0 2px 0 #b8501f}
+.bigbtn:disabled{filter:grayscale(.8);opacity:.6}
+.bigbtn.brawl{background:linear-gradient(135deg,#6a3fd1,#d4508f);box-shadow:0 6px 0 #4a2a99}
+.bigbtn.brawl:active{box-shadow:0 2px 0 #4a2a99}
 
-.tabs{display:flex;gap:8px;margin:22px 0 14px}
-.tab{font:inherit;font-weight:700;font-size:17px;border:2px solid var(--accent);background:var(--paper);color:var(--accent);border-radius:999px;padding:8px 22px;cursor:pointer}
-.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+/* main */
+.crumb{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 10px}
+.tag{display:inline-block;padding:2px 12px;border-radius:999px;background:#efe4cf;font-size:17px}
+.tabs{display:flex;gap:8px;margin:8px 0 18px;border-bottom:3px solid var(--line);overflow-x:auto}
+.tab{border:none;background:none;padding:12px 18px;font-size:22px;border-radius:14px 14px 0 0;color:var(--soft);white-space:nowrap}
+.tab.on{background:var(--paper);color:var(--ink);box-shadow:0 -3px 0 var(--accent) inset;font-weight:700}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.seg button{border:none;background:var(--paper);padding:8px 16px;font-size:18px}
+.seg button.on{background:var(--accent2);color:#fff}
 
-.panel{display:flex;flex-direction:column;gap:16px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px}
-.card h2{font-family:var(--f-display);font-size:24px;margin:0 0 8px}
-.card h3{font-family:var(--f-display);font-size:20px;margin:0}
-.intro p{margin:6px 0}
-.formula{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0;font-family:var(--f-display);font-size:19px}
-.formula .box{border:2px solid var(--accent);border-radius:8px;padding:2px 10px;background:var(--accent-soft)}
-.formula .glue{background:var(--mark);color:var(--mark-ink);border-radius:4px;padding:2px 8px}
+.group{background:var(--paper);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden;border:2px solid var(--line)}
+.group-h{padding:10px 16px;font-size:22px;display:flex;align-items:center;gap:10px;color:#fff}
+.group-h .cnt{margin-left:auto;font-size:16px;background:rgba(255,255,255,.25);padding:0 10px;border-radius:999px}
+.group-h.plain{background:#f5ead6;color:var(--ink)}
+.plist{list-style:none;margin:0;padding:6px 10px}
+.plist li{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+.plist li:last-child{border-bottom:none}
+.pat{font-size:24px;letter-spacing:1px}
+.pat .kw{color:var(--ink);background:linear-gradient(transparent 55%,#ffe27a 55%);padding:0 2px;font-weight:700}
+.pat .dots{color:#b5a58e}
+.badge{display:inline-block;padding:1px 12px;border-radius:999px;color:#fff;font-size:17px;white-space:nowrap}
+.where{margin-left:auto;font-size:15px;color:var(--soft)}
 
-.viewtoggle{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--muted)}
-.chipbtn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:4px 14px;cursor:pointer}
-.chipbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
+/* category cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.ccard{background:var(--paper);border-radius:22px;box-shadow:var(--shadow);border:3px solid var(--cc);overflow:hidden;display:flex;flex-direction:column}
+.ccard .stage{background:color-mix(in srgb,var(--cc) 12%,#fff);cursor:pointer;position:relative}
+.ccard .stage svg{display:block;width:100%;height:auto}
+.ccard .replay{position:absolute;right:8px;bottom:6px;font-size:14px;background:rgba(255,255,255,.8);border-radius:999px;padding:0 10px;color:var(--soft)}
+.ccard .body{padding:12px 16px 14px}
+.ccard h3{margin:0;font-size:28px;color:var(--cc)}
+.ccard .def{margin:4px 0 8px;font-size:18px}
+.ccard .tip{background:color-mix(in srgb,var(--cc) 10%,#fff);border-left:5px solid var(--cc);padding:6px 10px;border-radius:8px;font-size:18px}
+.ccard .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ccard .chips span{border:2px solid color-mix(in srgb,var(--cc) 40%,#fff);border-radius:10px;padding:0 8px;font-size:18px}
+.ccard .none{color:var(--soft);font-size:16px;margin-top:8px}
 
-.catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
-.cat{border:1px solid var(--line);border-left:5px solid var(--cc);border-radius:8px;padding:10px 12px;background:var(--paper)}
-.cat b{color:var(--cc);font-size:17px}
-.cat p{margin:4px 0 0;font-size:14px}
-.cat .tip{color:var(--muted)}
+/* svg animation helpers */
+svg .a{transform-box:fill-box}
+svg text{font-family:inherit}
+.play .bounce{animation:bounce .5s ease-in-out 0s 4}
+@keyframes bounce{50%{transform:translateY(-10px)}}
+.play .heart{animation:pop 2s ease-out .4s both}
+@keyframes pop{0%{opacity:0;transform:scale(.2)}30%{opacity:1;transform:scale(1.2)}50%{transform:scale(1)}100%{opacity:1}}
+.play .fadeup{animation:pop 1s ease-out both}
+.play .lit1{animation:lit .4s ease-out .3s both}
+.play .lit2{animation:lit .4s ease-out 1.1s both}
+.play .lit3{animation:lit .4s ease-out 1.9s both}
+@keyframes lit{from{opacity:0}to{opacity:1}}
+.play .hop{animation:hop3 2.2s ease-in-out both}
+@keyframes hop3{0%{transform:translate(0,0)}12%{transform:translate(28px,-28px)}25%{transform:translate(56px,0)}37%{transform:translate(56px,0)}50%{transform:translate(84px,-28px)}62%{transform:translate(112px,0)}100%{transform:translate(112px,0)}}
+.play .draw{animation:draw 1.8s ease-in-out both}
+@keyframes draw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+.play .turnsign{animation:pop .8s ease-out .8s both}
+.play .arrowhead{animation:lit .2s 1.7s both}
+.play .dom1{animation:fall .45s ease-in .3s both}
+.play .dom2{animation:fall .45s ease-in .7s both}
+.play .dom3{animation:fall .45s ease-in 1.1s both}
+@keyframes fall{to{transform:rotate(68deg)}}
+.play .res{animation:pop .8s ease-out 1.5s both}
+.play .key{animation:keyin 1.2s ease-in-out both}
+@keyframes keyin{0%{transform:translateX(-60px)}70%{transform:translateX(0) rotate(0)}100%{transform:translateX(0) rotate(90deg)}}
+.play .shackle{animation:open .5s ease-out 1.2s both}
+@keyframes open{to{transform:translateY(-14px)}}
+.play .star{animation:pop 1s ease-out 1.6s both}
+.play .dot1{animation:lit .3s .2s both}.play .dot2{animation:lit .3s .5s both}
+.play .cloud{animation:pop .9s ease-out .8s both}
+.play .climb{animation:climb 2.4s ease-in-out both}
+@keyframes climb{0%{transform:translate(0,0)}15%{transform:translate(20px,-42px)}25%{transform:translate(40px,-28px)}40%{transform:translate(58px,-72px)}50%{transform:translate(76px,-58px)}65%{transform:translate(96px,-102px)}75%{transform:translate(114px,-88px)}100%{transform:translate(114px,-88px)}}
+.play .flag{animation:pop .8s ease-out 1.9s both}
+.play .arrow{animation:shoot 1s cubic-bezier(.3,.7,.4,1) both}
+@keyframes shoot{from{transform:translateX(-110px)}to{transform:translateX(0)}}
+.play .target{animation:wob .4s ease-in-out 1s 2}
+@keyframes wob{50%{transform:rotate(-6deg)}}
+.play .walker{animation:walk 2.4s ease-in-out both}
+@keyframes walk{0%{transform:translate(0,0)}35%{transform:translate(0,-40px)}55%{transform:translate(0,-40px)}100%{transform:translate(-38px,-78px)}}
+.play .signA{animation:blink .3s 1s 3 alternate}
+.play .signB{animation:blink .3s 1.15s 3 alternate}
+@keyframes blink{to{opacity:.25}}
 
-.group-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.group-h small{color:var(--muted)}
-.pat{border-top:1px dashed var(--line);padding:12px 0 4px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:12px}
-.pat:first-of-type{border-top:0}
-.pat .name{font-family:var(--f-display);font-size:21px;font-weight:700;line-height:1.3}
-.pill{display:inline-block;font-size:13px;font-weight:700;color:var(--cc);border:1.5px solid var(--cc);border-radius:999px;padding:0 10px;margin-top:4px;font-family:var(--f-body)}
-.lessontag{display:inline-block;font-size:12px;color:var(--muted);margin-left:4px;font-family:var(--f-body);font-weight:400}
-.ex{font-family:var(--f-display);font-size:18px;margin:0 0 6px;line-height:1.8}
-.ex .src{font-family:var(--f-body);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-right:6px;vertical-align:2px}
-mark{background:var(--mark);color:var(--mark-ink);border-radius:3px;padding:0 2px;font-weight:700}
-.note{font-size:14px;color:var(--muted);background:var(--bg);border-radius:6px;padding:6px 10px;margin:4px 0 0}
-@media (max-width:640px){.pat{grid-template-columns:1fr;gap:4px}}
-.empty{color:var(--muted);text-align:center;padding:30px}
+/* game hub */
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.gtile{border:3px solid var(--line);background:var(--paper);border-radius:22px;padding:16px;text-align:left;box-shadow:var(--shadow);min-height:150px;display:flex;flex-direction:column;gap:4px}
+.gtile .em{font-size:44px;line-height:1}
+.gtile b{font-size:24px}
+.gtile span{font-size:17px;color:var(--soft)}
+.gtile:active{transform:translateY(3px)}
+.gtile.brawl{border-color:#8a63d2;background:linear-gradient(135deg,#f4edff,#ffe9f3)}
 
-/* quiz */
-.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.progress{display:flex;gap:4px;flex-wrap:wrap}
-.dot{width:22px;height:8px;border-radius:4px;background:var(--line)}
-.dot.ok{background:var(--ok)}.dot.bad{background:var(--bad)}.dot.now{background:var(--accent);opacity:.5}
-.qtype{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em}
-.qtext{font-family:var(--f-display);font-size:22px;line-height:1.9;margin:8px 0 14px}
-.blank{display:inline-block;min-width:3.2em;border-bottom:2.5px solid var(--accent);margin:0 3px;text-align:center;color:var(--accent);font-weight:700}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media (max-width:520px){.opts{grid-template-columns:1fr}}
-.opt{font:inherit;font-size:19px;font-family:var(--f-display);text-align:left;border:2px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;align-items:center}
-.opt:hover:not(:disabled){border-color:var(--accent)}
-.opt .k{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font-family:var(--f-body);font-size:14px;font-weight:700}
-.opt.right{border-color:var(--ok);background:var(--ok-soft)}
-.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+/* game screen */
+.gbar{display:flex;align-items:center;gap:10px;margin:16px 0;flex-wrap:wrap}
+#quitGame{white-space:nowrap}
+.gbar h3{margin:0;font-size:24px}
+.prog{flex:1;height:14px;background:#efe4cf;border-radius:999px;overflow:hidden;min-width:60px}
+.prog i{display:block;height:100%;background:var(--accent2);width:0;transition:width .3s}
+.hearts{font-size:22px;letter-spacing:2px}
+.panel{background:var(--paper);border-radius:24px;box-shadow:var(--shadow);border:2px solid var(--line);padding:22px;text-align:center}
+.qlabel{color:var(--soft);font-size:18px}
+.qbig{font-size:40px;margin:10px 0 18px;letter-spacing:2px}
+.qbig .blank{display:inline-block;min-width:2.4em;border-bottom:4px solid var(--accent);color:var(--accent)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{border:3px solid var(--line);background:#fff;border-radius:18px;font-size:26px;min-height:72px;padding:8px;box-shadow:0 4px 0 var(--line)}
+.opt:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.opt.right{border-color:var(--good);background:#e5f6ea;box-shadow:0 4px 0 var(--good)}
+.opt.wrong{border-color:var(--bad);background:#fde8e8;box-shadow:0 4px 0 var(--bad);animation:shake .4s}
 .opt:disabled{cursor:default}
-.feedback{margin-top:14px;border-radius:8px;padding:10px 14px;font-size:15px}
-.feedback.ok{background:var(--ok-soft);color:var(--ok)}
-.feedback.bad{background:var(--bad-soft);color:var(--bad)}
-.feedback .why{color:var(--ink);display:block;margin-top:4px}
-.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
-.btn{font:inherit;font-weight:700;font-size:16px;border:0;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:10px 24px;cursor:pointer}
-.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
-.score{font-family:var(--f-display);font-size:56px;color:var(--accent);line-height:1;margin:10px 0}
-.review{margin-top:12px;display:flex;flex-direction:column;gap:8px}
-.review .item{border-left:4px solid var(--bad);padding:6px 12px;background:var(--bg);border-radius:0 6px 6px 0;font-size:15px}
-.review .item .s{font-family:var(--f-display);font-size:17px}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:64px;margin-top:14px;font-size:20px}
+.feedback .ok{color:var(--good);font-size:24px}
+.feedback .no{color:var(--bad);font-size:24px}
+.nextbtn{margin-top:10px;border:none;background:var(--accent2);color:#fff;border-radius:16px;padding:10px 32px;font-size:22px;box-shadow:0 4px 0 #1f6a61}
+.combo{color:#d4508f;font-size:20px}
+.oddgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.oddgrid .opt{font-size:26px}
+.tf{display:flex;gap:16px;justify-content:center}
+.tf .opt{width:150px;font-size:44px}
 
-.overlay{position:fixed;inset:0;background:rgba(10,20,16,.7);display:grid;place-items:center;z-index:50;padding:20px}
-.overlay .inner{background:#fff;border-radius:16px;padding:22px;text-align:center;color:#1c2925;max-width:92vw}
-.overlay #qrBig{width:min(320px,70vw);height:min(320px,70vw);margin:0 auto}
-.overlay #qrBig img,.overlay #qrBig canvas{width:100%!important;height:100%!important}
-.overlay p{font-family:var(--f-display);font-size:22px;margin:12px 0 0}
-/* 類別卡：點一下看記憶動畫 */
-button.cat{font:inherit;text-align:left;color:var(--ink);cursor:pointer;width:100%}
-button.cat:hover{border-color:var(--cc)}
-.cat .play{display:inline-block;margin-top:6px;font-size:13px;font-weight:700;color:var(--cc)}
-.amodal{position:fixed;inset:0;background:rgba(10,20,16,.55);display:grid;place-items:center;z-index:40;padding:20px}
-.abox{background:var(--paper);color:var(--ink);border-radius:16px;max-width:520px;width:100%;padding:20px;border-top:6px solid var(--cc);max-height:92vh;overflow:auto}
-.abox h3{font-family:var(--f-display);font-size:26px;margin:0;color:var(--cc)}
-.abox .d{margin:4px 0 0}
-.stage{margin:12px 0;background:var(--bg);border-radius:12px;padding:8px;color:var(--cc)}
-.stage svg{display:block;width:100%;height:auto}
-.stage text{fill:var(--ink);font-family:var(--f-display);font-size:15px;text-anchor:middle}
-.stage .lab{font-size:13px;fill:var(--muted);font-family:var(--f-body)}
-.stage .shape{fill:var(--paper);stroke:currentColor;stroke-width:3}
-.stage .solid{fill:currentColor}
-.stage .ln{fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-.stage .dim{stroke:var(--line)}
-.abox .memo{font-family:var(--f-display);font-size:20px;text-align:center;margin:4px 0}
-.abox .exs{font-family:var(--f-display);font-size:17px;background:var(--bg);border-radius:8px;padding:8px 12px;margin:10px 0 0}
-.abox .exs small{font-family:var(--f-body);color:var(--muted);font-size:12px;display:block}
-.stage *{transform-box:view-box}
-.go .s1{animation:popIn .5s both}
-.go .s2{animation:popIn .5s .6s both}
-.go .s3{animation:popIn .5s 1.2s both}
-.go .s4{animation:popIn .5s 1.8s both}
-.go .draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.2s .2s forwards}
-@keyframes popIn{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-/* 並列：手牽手並排站 */
-.go .parL{animation:parL 2.4s both}.go .parR{animation:parR 2.4s both}
-@keyframes parL{0%{transform:translateX(-150px);opacity:0}40%{transform:none;opacity:1}80%{transform:none}88%{transform:translateY(-12px)}100%{transform:none}}
-@keyframes parR{0%{transform:translateX(150px);opacity:0}40%{transform:none;opacity:1}80%{transform:none}88%{transform:translateY(-12px)}100%{transform:none}}
-.go .hand{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .4s 1.1s forwards}
-/* 連貫：排隊往前走 */
-.go .walker{animation:walk 2.4s 2.2s both}
-@keyframes walk{0%{transform:translateX(0);opacity:0}10%{opacity:1}100%{transform:translateX(220px);opacity:1}}
-/* 轉折：路轉彎 */
-.go .sign{transform-origin:200px 62px;animation:popIn .5s 1s both}
-/* 因果：推倒骨牌 */
-.go .domA{transform-origin:116px 130px;animation:fallA 1.2s .5s both}
-.go .domB{transform-origin:216px 130px;animation:fallB .7s .98s both cubic-bezier(.5,0,.9,.5)}
-@keyframes fallA{0%{transform:none;animation-timing-function:cubic-bezier(.5,0,.9,.5)}40%{transform:rotate(58deg)}100%{transform:rotate(80deg)}}
-@keyframes fallB{to{transform:rotate(85deg)}}
-/* 條件：鑰匙開燈 */
-.go .key{animation:keyIn 1.2s both}
-@keyframes keyIn{0%{transform:translateX(-90px)}70%{transform:none}85%{transform:rotate(0)}100%{transform:none}}
-.go .bulb{animation:bulbOn .4s 1.3s both}
-@keyframes bulbOn{from{fill:var(--paper)}to{fill:#ffd54a}}
-.go .rays{animation:fadeIn .4s 1.5s both}
-/* 假設：想像泡泡 */
-.go .think{stroke-dasharray:8 6;animation:fadeIn .6s .9s both,march 3s linear 1s infinite}
-@keyframes march{to{stroke-dashoffset:-56}}
-/* 遞進：爬樓梯 */
-.go .ball{animation:climb 2.4s .3s both}
-@keyframes climb{0%{transform:translate(0,0)}15%{transform:translate(35px,-50px)}30%{transform:translate(70px,-35px)}45%{transform:translate(105px,-85px)}60%{transform:translate(140px,-70px)}75%{transform:translate(175px,-120px)}90%,100%{transform:translate(210px,-105px)}}
-/* 目的：射中靶心 */
-.go .arrow{animation:shoot .8s .4s both cubic-bezier(.4,0,1,1)}
-@keyframes shoot{from{transform:translateX(-200px);opacity:0}20%{opacity:1}to{transform:none;opacity:1}}
-.go .target{transform-origin:265px 85px;animation:wob .4s 1.2s both}
-@keyframes wob{0%,100%{transform:none}30%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}}
-/* 選擇：岔路選一條 */
-.go .chooser{animation:choose 2.6s .2s both}
-@keyframes choose{0%{transform:none}35%,55%{transform:translateX(120px)}100%{transform:translate(260px,-48px)}}
-.go .q{transform-origin:150px 55px;animation:popIn .3s 1s both,fadeOut .3s 1.7s forwards}
-@keyframes fadeOut{to{opacity:0}}
-.go .pick{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .8s 1.6s forwards}
-.go .notpick{animation:dimOut .5s 1.6s forwards}
-@keyframes dimOut{to{opacity:.25}}
-@media (prefers-reduced-motion:reduce){.stage *{animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important}}
-footer{margin-top:28px;font-size:13px;color:var(--muted);text-align:center}
-@media (prefers-reduced-motion:no-preference){.opt,.tab,.chipbtn{transition:background .15s,border-color .15s}}
+.panel.exam{text-align:left}
+.examtag{display:inline-block;margin:6px 0 8px;padding:2px 14px;border-radius:999px;background:linear-gradient(135deg,#6a3fd1,#d4508f);color:#fff;font-size:18px}
+.stem{font-size:21px;margin-bottom:10px}
+.examBox{border:2px solid var(--ink);padding:8px 12px;margin:0 0 14px;font-size:22px;border-radius:4px;background:#fff}
+.opts1{display:grid;gap:10px}
+.opts1 .opt{font-size:20px;text-align:left;min-height:56px;padding:8px 14px;line-height:1.5}
+.panel.exam .feedback{text-align:left}
+.examlist{margin:0 auto;border-collapse:collapse;font-size:17px;max-width:100%}
+.examlist th,.examlist td{border-bottom:1px dashed var(--line);padding:4px 10px;text-align:left}
+.examlist th{color:var(--soft);font-weight:normal}
+.examlist .nw{white-space:nowrap}.examlist small{color:var(--soft)}
+/* sort */
+.baskets{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.basket{border:3px dashed var(--cc);border-radius:20px;background:color-mix(in srgb,var(--cc) 8%,#fff);min-height:120px;padding:8px;font-size:22px;color:var(--cc);display:flex;flex-direction:column;align-items:center;gap:4px}
+.basket .bi{font-size:36px;line-height:1}
+.basket .got{font-size:15px;color:var(--ink);display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.basket .got span{background:#fff;border-radius:8px;padding:0 6px}
+.basket.ready{border-style:solid;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.03)}}
+.tiles{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tile{border:3px solid var(--line);background:#fff;border-radius:16px;font-size:24px;padding:8px 14px;box-shadow:0 4px 0 var(--line)}
+.tile.sel{border-color:var(--accent);background:#fff1e6;transform:translateY(-4px)}
+.tile.bye{animation:bye .4s forwards}
+@keyframes bye{to{transform:scale(0);opacity:0}}
+
+/* memory */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mcard{aspect-ratio:4/3;perspective:600px;border:none;background:none;padding:0}
+.mcard .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.mcard.flip .in,.mcard.done .in{transform:rotateY(180deg)}
+.mcard .f,.mcard .b{position:absolute;inset:0;border-radius:16px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:6px;font-size:22px;line-height:1.3}
+.mcard .f{background:repeating-linear-gradient(45deg,#f2b632,#f2b632 10px,#f5c55a 10px,#f5c55a 20px);color:#fff;font-size:34px;box-shadow:0 4px 0 #c48d14}
+.mcard .b{background:#fff;border:3px solid var(--line);transform:rotateY(180deg)}
+.mcard .b.cat{color:#fff;border:none;font-size:28px}
+.mcard.done .b{box-shadow:0 0 0 4px var(--good)}
+.stat{display:flex;gap:18px;justify-content:center;font-size:20px;margin-bottom:12px}
+
+/* bubbles */
+.pond{position:relative;height:460px;border-radius:24px;overflow:hidden;background:linear-gradient(#bfe8f2,#e9f8fb);border:3px solid #9fd6e3}
+.targetbar{text-align:center;font-size:24px;margin-bottom:10px}
+.targetbar .badge{font-size:24px;padding:2px 16px}
+.bubble{position:absolute;bottom:-90px;border:none;border-radius:50%;width:124px;height:124px;
+  background:radial-gradient(circle at 30% 30%,#fff,rgba(255,255,255,.75) 40%,rgba(180,225,240,.85));
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.9),0 4px 10px rgba(0,80,110,.15);
+  font-size:20px;line-height:1.2;padding:8px;animation:rise linear forwards}
+@keyframes rise{to{transform:translateY(-600px)}}
+.bubble.popgood{animation:popgood .35s forwards!important}
+@keyframes popgood{to{transform:scale(1.6);opacity:0}}
+.bubble.popbad{background:#fde8e8;animation:popbad .5s forwards!important}
+@keyframes popbad{30%{transform:translateX(-8px)}60%{transform:translateX(8px)}to{opacity:0}}
+.scorefloat{position:absolute;font-size:28px;font-weight:700;pointer-events:none;animation:floatup .8s forwards}
+@keyframes floatup{to{transform:translateY(-50px);opacity:0}}
+.countdown{font-size:24px}
+
+/* result */
+.result h3{font-size:34px;margin:6px 0}
+.stars{font-size:52px;letter-spacing:6px}
+.rank{display:inline-block;margin:8px 0;padding:6px 22px;border-radius:999px;background:linear-gradient(135deg,#6a3fd1,#d4508f);color:#fff;font-size:26px}
+.wronglist{text-align:left;margin:16px auto 0;max-width:560px}
+.wronglist li{margin:6px 0}
+.btnrow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.btn2{border:3px solid var(--line);background:#fff;border-radius:16px;padding:10px 22px;font-size:21px;box-shadow:0 4px 0 var(--line)}
+.btn2.primary{border-color:var(--accent2);background:var(--accent2);color:#fff;box-shadow:0 4px 0 #1f6a61}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(40,25,10,.45);display:grid;place-items:center;z-index:50;padding:16px}
+.modal .box{background:var(--paper);border-radius:24px;padding:22px;text-align:center;max-width:360px;width:100%}
+#qrbox{display:grid;place-items:center;margin:12px 0}
+#qrbox img,#qrbox canvas{width:240px!important;height:240px!important}
+.confetti{position:fixed;top:-20px;width:10px;height:16px;z-index:60;pointer-events:none;animation:conf linear forwards}
+@keyframes conf{to{transform:translateY(110vh) rotate(720deg)}}
+
+/* worksheet */
+.wsbtn{display:block;width:100%;margin-top:14px;border:3px dashed var(--accent2);background:var(--paper);color:var(--accent2);border-radius:18px;padding:12px;font-size:22px}
+.wsbtn:disabled{opacity:.45}
+.crumb .btn2{padding:4px 14px;font-size:18px}
+#ws{position:fixed;inset:0;z-index:80;background:#e9e4da;overflow:auto;display:none}
+#ws.open{display:block}
+#ws .bar{position:sticky;top:0;z-index:2;background:#fffdf8;border-bottom:2px solid var(--line);padding:10px 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
+#ws .bar .btn2{font-size:18px;padding:6px 16px}
+#ws .bar label{font-size:18px;display:flex;align-items:center;gap:4px}
+#ws .bar .tip{width:100%;text-align:center;font-size:15px;color:var(--soft)}
+.paper{width:210mm;max-width:100%;margin:16px auto;background:#fff;color:#000;padding:14mm;box-shadow:0 4px 18px rgba(0,0,0,.15);
+  font-family:"EduKai","TW-Kai","標楷體","DFKai-SB","BiauKai",serif;font-size:13.5pt;line-height:1.55}
+.paper h1{font-size:22pt;margin:0;text-align:center;letter-spacing:4px}
+.paper .sub{text-align:center;font-size:13pt;margin:2px 0 8px}
+.paper .who{display:flex;justify-content:flex-end;gap:18px;font-size:13pt;margin-bottom:6px}
+.paper .who span{border-bottom:1px solid #000;min-width:22mm;display:inline-block}
+.paper h2{font-size:15pt;margin:14px 0 8px;display:block}
+.paper .pat{font-size:inherit;letter-spacing:0;white-space:nowrap}
+.paper .pat .kw{background:none;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.paper .pat .dots{color:#000}
+.wsmatch{display:flex;justify-content:space-between;border:1.5px solid #000;border-radius:3mm;padding:4mm 6mm}
+.wsmatch .col{display:flex;flex-direction:column;justify-content:space-around;width:38%}
+.wsmatch .it{display:flex;align-items:center;gap:3mm;min-height:11mm}
+.wsmatch .l .it{justify-content:space-between}
+.wsmatch .dot{width:0;height:0;border:1.6mm solid #000;border-radius:50%;flex:none}
+.paper{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.wstable{width:100%;border-collapse:collapse;font-size:13pt}
+.wstable th,.wstable td{border:1px solid #000;padding:1.5mm 2mm;vertical-align:middle}
+.wstable th{background:#eee;font-weight:700}
+.wstable td.c{text-align:center;white-space:nowrap}
+.wstable .wl{border-bottom:1px dashed #777;height:8mm}
+.wstable tr{break-inside:avoid;page-break-inside:avoid}
+.wstable thead{display:table-header-group}
+.anspage{break-before:page;page-break-before:always;margin-top:10mm}
+#ws.noans .anspage{display:none}
+.anslist{columns:2;font-size:13pt}
+@media print{
+  @page{size:A4;margin:12mm}
+  html,body{background:#fff!important}
+  body>*:not(#ws){display:none!important}
+  #ws,#ws.open{position:static;display:block!important;overflow:visible;background:#fff}
+  #ws .bar{display:none!important}
+  .paper{width:auto;max-width:none;margin:0;padding:0;box-shadow:none}
+}
+@media (max-width:640px){.paper{padding:6mm;font-size:12pt}.wstable{font-size:11.5pt}}
+footer{text-align:center;color:var(--soft);font-size:15px;padding:20px 16px 30px;line-height:1.7}
+footer a{color:var(--soft)}
+
+@media (max-width:640px){
+  body{font-size:18px}
+  .grades{grid-template-columns:repeat(4,1fr)}
+  .go-row{grid-template-columns:1fr}
+  .qbig{font-size:32px}
+  .opt{font-size:22px;min-height:64px}
+  .baskets{gap:6px}.basket{font-size:18px;min-height:100px}
+  .mem{grid-template-columns:repeat(3,1fr)}
+  .mcard .b{font-size:18px}.mcard .b.cat{font-size:22px}
+  .bubble{width:104px;height:104px;font-size:17px}
+  .pat{font-size:21px}
+  .where{margin-left:0;width:100%}
+  .logo{font-size:23px}
+  .gbar .prog{order:5;flex-basis:100%}
+  .gbar h3{flex:1;font-size:21px}
+}
+@media (prefers-reduced-motion:reduce){.bubble{animation-duration:12s!important}}
 </style>
 </head>
 <body>
+<header class="top"><div class="wrap">
+  <div class="logo" id="logo"><span class="ic">句</span>句型練習室</div>
+  <div class="spacer"></div>
+  <button class="iconbtn" id="soundBtn" aria-label="音效開關">🔊</button>
+  <button class="iconbtn" id="qrBtn">QR code</button>
+</div></header>
 
+<main class="wrap">
+<!-- 首頁 -->
+<section id="home">
+  <div class="hero">
+    <h1>國小複句句型，一次看清楚</h1>
+    <p>選版本、選年段，就能看到所有句型和它們屬於哪一種複句，還能玩遊戲練習。</p>
+  </div>
+  <h2><span class="num">1</span>選版本</h2>
+  <div class="choices" id="verChoices"></div>
+  <h2><span class="num">2</span>選年段（可以選好幾個）</h2>
+  <div class="grades" id="gradeChoices"></div>
+  <div class="mini-row">
+    <button class="linkbtn" id="allGrades">全選有資料的年段</button>
+    <button class="linkbtn" id="noGrades">清除</button>
+  </div>
+  <div id="rangeBox" class="hidden">
+    <h2><span class="num">3</span>課次範圍（考試範圍可以在這裡選）</h2>
+    <div class="range">第 <select id="fromL"></select> 課 到 第 <select id="toL"></select> 課</div>
+  </div>
+  <div class="go-row">
+    <button class="bigbtn" id="goBtn" disabled>開始學習<small>句型總表・複句卡・遊戲區</small></button>
+    <button class="bigbtn brawl" id="brawlBtn">🏆 學力檢測大亂鬥<small>歷屆縣市學力檢測真題</small></button>
+  </div>
+  <button class="wsbtn" id="wsHomeBtn" disabled>📄 產生 A4 學習單（PDF）</button>
+</section>
 
-<div class="wrap">
-  <header class="top">
-    <div class="brand">
-      <div class="eyebrow">國語・複句句型</div>
-      <h1>句型練習室</h1>
-      <p class="sub">選好版本、年級和課次，先看教學，再來挑戰小測驗。</p>
-    </div>
-    <div class="tools">
-      <a class="dl" id="dlBtn" href="worksheet-nani-3a-L1-6.pdf" download="南一三上第1-6課複句句型練習單.pdf" hidden>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>學習單<br><small>PDF 下載</small></span></a>
-      <div class="qr" id="qrBtn" role="button" tabindex="0" aria-label="放大 QR code" hidden>
-        <div id="qrSmall"></div><span>掃我練習</span>
-      </div>
-    </div>
-  </header>
+<!-- 學習頁 -->
+<section id="main" class="hidden">
+  <div class="crumb"><span id="crumbTags"></span><button class="linkbtn" id="backHome">← 重新選擇</button><button class="btn2" id="wsBtn">📄 A4 學習單</button></div>
+  <div class="tabs">
+    <button class="tab on" data-tab="list">📋 句型總表</button>
+    <button class="tab" data-tab="cards">🎬 複句卡</button>
+    <button class="tab" data-tab="games">🎮 遊戲區</button>
+  </div>
+  <div id="tab-list">
+    <div class="seg" id="listMode"><button class="on" data-m="cat">依複句類別</button><button data-m="lesson">依課次</button></div>
+    <div id="listBox"></div>
+  </div>
+  <div id="tab-cards" class="hidden">
+    <p class="hint">點一下圖片，看記憶小動畫。</p>
+    <div class="cards" id="cardBox"></div>
+  </div>
+  <div id="tab-games" class="hidden">
+    <div class="games" id="gameBox"></div>
+  </div>
+</section>
 
-  <section class="picker" aria-label="選擇範圍">
-    <label for="selVer"><span><i class="step">1</i>版本</span>
-      <select id="selVer"></select></label>
-    <label for="selGrade"><span><i class="step">2</i>年級</span>
-      <select id="selGrade"></select></label>
-    <label class="range" for="selFrom" style="grid-column:span 2"><span><i class="step">3</i>課次範圍</span>
-      <div class="range-row"><select id="selFrom" aria-label="從第幾課"></select><span>到</span><select id="selTo" aria-label="到第幾課"></select></div></label>
-    <div class="summary" id="summary"></div>
-  </section>
+<!-- 遊戲 -->
+<section id="game" class="hidden">
+  <div class="gbar">
+    <button class="iconbtn" id="quitGame">← 離開</button>
+    <h3 id="gTitle"></h3>
+    <div class="prog"><i id="gProg"></i></div>
+    <span class="hearts" id="gHearts"></span>
+  </div>
+  <div id="gBody"></div>
+</section>
+</main>
 
-  <nav class="tabs" role="tablist">
-    <button class="tab" role="tab" id="tabLearn" aria-selected="true">教學</button>
-    <button class="tab" role="tab" id="tabQuiz" aria-selected="false">測驗</button>
-  </nav>
+<div id="ws"><div class="bar">
+  <button class="btn2 primary" id="wsPrint">🖨️ 存成 PDF／列印</button>
+  <button class="btn2" id="wsShuffle">🔀 換一組連連看</button>
+  <label><input type="checkbox" id="wsAns" checked> 附解答頁</label>
+  <button class="btn2" id="wsClose">關閉</button>
+  <div class="tip">按「存成 PDF／列印」後，印表機選「另存為 PDF」，紙張選 A4。</div>
+</div><div class="paper" id="wsPaper"></div></div>
+<div class="modal hidden" id="qrModal"><div class="box">
+  <b style="font-size:24px">掃描 QR code 開啟</b>
+  <div id="qrbox"></div>
+  <button class="btn2" id="qrClose">關閉</button>
+</div></div>
 
-  <section class="panel" id="panelLearn"></section>
-  <section class="panel" id="panelQuiz" hidden></section>
+<footer>
+  句型與複句分類依各版本「全冊句型總表」整理；本站不收錄課文原文。<br>
+  學力檢測大亂鬥的題目取自 111～115 年縣市學生學習能力檢測國語文科公開試題。<br>
+  字型：教育部標準楷書，<a href="https://creativecommons.org/licenses/by-nd/3.0/tw/" target="_blank" rel="noopener">CC BY-ND 3.0 臺灣</a>。
+</footer>
 
-  <footer>標黃色的字就是句型的關鍵詞。<span id="fontNote"><br>字型：教育部標準楷書（中華民國教育部，CC BY-ND 3.0 臺灣）</span></footer>
-</div>
-
-<div class="amodal" id="aModal" hidden><div class="abox" id="aBox" role="dialog" aria-modal="true"></div></div>
-<div class="overlay" id="overlay" hidden>
-  <div class="inner"><div id="qrBig"></div><p>用平板或手機掃描，一起來練習！</p></div>
-</div>
-
-<script>window.QRCode=function(el){el.innerHTML='<img alt="QR code" style="image-rendering:pixelated" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAV4AAAFeAQAAAADlUEq3AAAC8klEQVR4Xu1bQY6jQAy0F6Q9gpQHzFPID/ZJ+7XwlDxgpHCMFOSVy+0GksOglUYyGfuQCSTKNF2U7bINC+22+dfurxJRfnlt37cbJBf/RyI3fds96rlGaJCHf949vm8Z+cv/DTfJpRO1R0VQhIZbI3IhfVFAYZdEcGuB7rqZmXsiGj9EferMICINoKTayMzpGJ8tEILVplYdKOg3M5+7O/PfCmOGtpgcbJ+WxcNt9nPTSUC9ahHvuq/s7desaDXwnZrEfDKN/ScJTT3J2BNbpjqUhPXtd+OgFzixWiGepabjh2agGgzHngif8zkFQshMpq0EUwMbyzseri3SmXou9WDEmKJqoig+SApkoCKqJnAIIqrp4UGdzH474gW6elcVaECZFHSDogeqqQdjelHT8QsRzaDojYgAFPIwORjUiwJBr7qYHnQY9a9WbEDJRDAqggpPKYl6GQ24eYV0VV87Yph4+zVXBwqPibD4XM+22KiAvv1uHPECSxnNKtuWfDr9zKyqZqge8QJ/yJqZ+0ag3lESRSazVvndndXb/pDd2GlBdqOEQPQhBkFjaSEdkhg40OwuvVoYBK0/6A3Bkr+YjlffCWhTD0ZGcAmBpt6ViLVRX5OYVBMvFoaDlr+4aChS0B3oIg+zJhNWD0IqFPoVRb/w0hFMNRGYg6boTTkg8KEmY5DBd3qtNPVgyKpaS9Qh+5xbGf9AD95ZaDppm7fVl5N5Vm3eB/H8uYyNWS6K6ZhSxTbl4JNOlqlmXTSyF/UBUR85rPW1l8nRvPnXFmQ3PASWidACY+kPorFUKJm5aNhcdDuz7Z3C2uYFEW3sNzkYk4PLzPaCZek41YKapquZi8bMRZ10NRgqoJv+YCmTJgeDIrgJx52IDWkPV4zZN8JnC4Z3DOYHid25jLVtZrYnhW3qdUq0edB41kOdAh6uvzEUnFsXMhd9fnbJe/SuEcs4W3rRoF50/fxg1RBlVq3Oi1rjMHPRkLloeTJil6UXjehF/wFUVE0QklM4kAAAAABJRU5ErkJggg==">'};QRCode.CorrectLevel={M:0};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-const SHARE_URL = "https://teacher-liujikan.github.io/sentence-patterns/";
-const VERSIONS = [
-  {id:"nani", name:"南一", data:{"3上": {"categories": {"並列": {"def": "兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。", "tip": "像兩個好朋友手牽手，並排站。"}, "連貫": {"def": "事情按照先後順序一件接一件發生。", "tip": "先做這個，接著做那個，像排隊一樣。"}, "轉折": {"def": "後半句說的和前半句想的不一樣，意思轉了一個彎。", "tip": "看到「卻、但、不過、可是」，意思就要轉彎了。"}, "因果": {"def": "一半說原因，一半說結果。", "tip": "問問自己：為什麼？結果怎樣？"}, "條件": {"def": "有了前面的條件，才會出現後面的結果。", "tip": "條件做到了，結果就跟著來。"}, "假設": {"def": "先想像一種還沒發生的情況，再說會怎麼樣。", "tip": "「如果」就是先假裝一下。"}, "遞進": {"def": "後半句比前半句更進一步，意思一層比一層深。", "tip": "像爬樓梯，一階比一階高。"}, "目的": {"def": "說明做一件事是為了什麼，或是為了避免什麼。", "tip": "問問自己：做這件事想得到什麼？"}, "選擇": {"def": "在兩件以上的事情裡，選出其中一個。", "tip": "看到「或、或是、是……還是……、與其……不如……」，就是要做選擇。"}}, "lessons": [{"no": 1, "unit": "第壹單元　快樂上學去", "title": "你好，新朋友", "patterns": [{"p": "……卻……", "cat": "轉折", "kw": ["卻"], "ex": ["我是小雲雀，沒有多彩的羽衣，卻有清脆的歌聲。", "蝴蝶看起來很柔弱，卻有飛行數百公里遠的能力。"]}, {"p": "一邊……一邊……", "cat": "並列", "kw": ["一邊", "一邊"], "ex": ["我喜歡一邊唱歌，一邊停留半空中。", "我常常一邊聽音樂，一邊寫作業。"]}, {"p": "……再……", "cat": "連貫", "kw": ["再"], "ex": ["我是風，最喜歡四處旅行。帶你去聞百合的花香，帶你去看成群的綿羊，再送你平安回地面的家。", "烤肉時，爸爸用木炭生完火後，再把肉放到架上烤。"]}]}, {"no": 2, "unit": "第壹單元　快樂上學去", "title": "我們的約定", "patterns": [{"p": "因為……", "cat": "因果", "kw": ["因為"], "ex": ["因為大家發言很熱烈，讓我寫得很辛苦。", "因為連日下雨，場地溼滑，樂樂棒球比賽不得不延後。"]}, {"p": "……但……", "cat": "轉折", "kw": ["但"], "ex": ["這些約定是用來提醒我們，但同學們的臉上卻幾家歡樂幾家愁。", "馬拉松運動十分艱苦，但哥哥還是努力跑完全程。"]}, {"p": "……不過……", "cat": "轉折", "kw": ["不過"], "ex": ["對我來說，上課認真不聊天有點難，因為我的好朋友阿福就坐在旁邊。不過，我們已經是三年級的學生了，我一定會努力做到，學會自己管好自己。", "佛跳牆非常美味可口，不過作法及材料十分繁複。"]}]}, {"no": 3, "unit": "第壹單元　快樂上學去", "title": "下課十分鐘", "patterns": [{"p": "有……也有……", "cat": "並列", "kw": ["有", "也有"], "ex": ["教室裡，有人靜靜的看書，也有人在一起聊天。", "春天的花園裡，有蜜蜂嗡嗡採蜜，也有蝴蝶翩翩起舞，洋溢著生命的喜悅。"]}, {"p": "有……還有……", "cat": "並列", "kw": ["有", "還有"], "ex": ["畫糖的攤位上擺有可愛的兔子糖畫，還有七十二變的孫悟空造型。"], "srcs": ["補充"]}, {"p": "有時……有時……", "cat": "並列", "kw": ["有時", "有時"], "ex": ["有時沒踢好，球就會從腳邊溜走；有時踢準了，球就會很聽話的朝球門飛去。", "月亮有著多樣的面貌，有時像圓圓的白球，有時像彎彎的香蕉。"]}, {"p": "當……就得……", "cat": "條件", "kw": ["當", "就得"], "note": "「就得」的「得」有必須的意思，是條件下產生的必要結果，所以是條件複句。", "ex": ["當上課鐘聲一響，我們就得和足球說再見。", "當時針指到九的時候，弟弟就得乖乖上床睡覺。"]}]}, {"no": 4, "unit": "第貳單元　更好的自己", "title": "一顆黑點", "patterns": [{"p": "……於是……", "cat": "連貫", "kw": ["於是"], "ex": ["今天放學回家，爸爸發現我悶悶不樂，便輕聲問我怎麼了？於是，我把煩惱說出來。", "叔叔在書店看到古籍，於是毫不猶豫的把它買下來。"]}, {"p": "雖然……但……", "cat": "轉折", "kw": ["雖然", "但"], "ex": ["雖然新同學的大嗓門是你眼中的黑點，但它也有可以欣賞的一面呢！", "雖然這家餐廳的餐點便宜又美味，但停車不方便，讓顧客非常困擾。"]}]}, {"no": 5, "unit": "第貳單元　更好的自己", "title": "火大了", "patterns": [{"p": "……也……", "cat": "並列", "kw": ["也"], "ex": ["他們頭頂上的龍角變成「菱角」，白牙變成黑牙，臉也烏黑一片。", "妹妹全身髒兮兮的，像個小泥人，連提在手上的鞋子也沾滿泥水。"]}]}, {"no": 6, "unit": "第貳單元　更好的自己", "title": "我該怎麼辦？", "patterns": [{"p": "……不然……", "cat": "假設", "kw": ["不然"], "ex": ["幸好我動作快，不然全身就溼透了！", "出發旅行前要先查好地圖，不然會很容易迷路。"]}, {"p": "已經……接下來……", "cat": "連貫", "kw": ["已經", "接下來"], "ex": ["你已經向卡片說對不起，接下來該想想怎樣處理問題。", "工作人員已經將會場布置完畢，接下來就是等待貴賓們光臨了。"]}, {"p": "只要……就……", "cat": "條件", "kw": ["只要", "就"], "ex": ["只要卡片變回漂亮的樣子，小主人就會原諒你。", "每天只要太陽一升起，就會聽見奶奶飼養的雞群啼叫的聲音。"]}, {"p": "如果……", "cat": "假設", "kw": ["如果"], "ex": ["如果剪一些小花片，貼在有汙點的地方，不知道這種方法可不可行？", "如果將牆上的塗鴉重新粉刷，就可以將房子恢復原本的面貌。"]}]}, {"no": 7, "unit": "第參單元　人物拍立得", "title": "最年輕的奶奶", "patterns": [{"p": "不是……也不是……", "cat": "並列", "kw": ["不是", "也不是"], "ex": ["手背上的不是星座，也不是藏寶圖，是我老了啦！", "用功讀書不是為了父母，也不是為了老師，而是為了自己的將來。"]}, {"p": "雖然……可是……", "cat": "轉折", "kw": ["雖然", "可是"], "ex": ["雖然奶奶說：「手背上的不是星座，也不是藏寶圖，是我老了啦！」可是在我心中，她充滿活力和創意，是全世界最年輕的奶奶。", "雖然觀光可以帶來效益，可是遊客隨手亂扔的垃圾，總是讓管理員搖頭嘆息。"]}]}, {"no": 8, "unit": "第參單元　人物拍立得", "title": "魔「髮」哥哥", "patterns": [{"p": "……所以……", "cat": "因果", "kw": ["所以"], "ex": ["每一次讓他剪完頭髮，心情一定會很好，所以大家都叫他「魔『髮』哥哥」。", "明翰一向喜歡閱讀各類書籍，所以寫作文時總是文思泉湧。"]}]}, {"no": 9, "unit": "第參單元　人物拍立得", "title": "穿白袍的醫生伯伯", "patterns": []}, {"no": 10, "unit": "第肆單元　與動物有約", "title": "唉呀！誤會大了", "patterns": [{"p": "如果……可能會……", "cat": "假設", "kw": ["如果", "可能會"], "ex": ["你曾經被人誤會嗎？如果把這個問題拿來問動物，牠們可能會說：「數也數不清！」", "運動後出汗，如果沒有確實保暖，可能會著涼。"]}, {"p": "不是……而是……", "cat": "並列", "kw": ["不是", "而是"], "ex": ["北極熊的毛根本不是白色的，而是透明的！", "哥哥努力跑步不是為了參加比賽，而是為了鍛鍊自己。"]}, {"p": "因為……才……", "cat": "因果", "kw": ["因為", "才"], "ex": ["北極熊的毛本身是透明的，因為光線反射，才會讓我們的眼睛誤以為是白色的。", "因為前方道路施工，才導致車輛無法進出。"]}, {"p": "如果……會……", "cat": "假設", "kw": ["如果", "會"], "ex": ["如果北極熊脫下那身「白大衣」，你會發現牠的皮膚就像牠的眼珠子一樣黑呵！", "如果學生對學校有歸屬感，就會喜歡上學。"]}, {"p": "不但……還……", "cat": "遞進", "kw": ["不但", "還"], "ex": ["豬不但有極好的記憶力和方向感，還喜歡聽音樂，也是游泳高手呢！", "哥哥不但穿了嶄新的西裝，還剪了頭髮，換了一個新造型。"]}, {"p": "因為……所以……", "cat": "因果", "kw": ["因為", "所以"], "ex": ["在這世界上，還有許許多多的動物，因為我們對牠們了解得太少，所以有了很大的誤會。", "這幾天因為寒流來襲，所以氣溫偏低。"]}]}, {"no": 11, "unit": "第肆單元　與動物有約", "title": "石虎的告白", "patterns": [{"p": "……還……", "cat": "遞進", "kw": ["還"], "ex": ["這裡氣候溫暖多雨，充滿綠意，還住著穿山甲、野兔等動物。", "心瑜擅長跳舞，還曾經代表學校出去比賽，真是厲害！"]}, {"p": "越來越……也越來越……", "cat": "並列", "kw": ["越來越", "也越來越"], "ex": ["人類把我們的家園占為己有，使我們的生活空間越來越小，食物來源也越來越少。", "弟弟每天認真練習溜直排輪，速度越來越快，技巧也越來越純熟。"]}]}, {"no": 12, "unit": "第肆單元　與動物有約", "title": "昆蟲的保命妙招", "patterns": [{"p": "……但是……", "cat": "轉折", "kw": ["但是"], "ex": ["昆蟲的種類多、數量多，但是大部分體型小，常受到攻擊。", "糖果很好吃，但是吃多了容易蛀牙。"]}, {"p": "……因此……", "cat": "因果", "kw": ["因此"], "ex": ["昆蟲大部分體型小，常受到攻擊。因此，牠們演化出各種保命妙招。", "表哥喜歡閱讀科學方面的書籍，因此班上同學叫他「科學博士」。"]}, {"p": "……以免……", "cat": "目的", "kw": ["以免"], "ex": ["有些昆蟲會讓自身外形和四周景物十分相像，以免被敵人發現。", "媽媽叮嚀我出門時記得帶雨傘，以免突然下雨被淋溼。"]}, {"p": "為了……", "cat": "目的", "kw": ["為了"], "ex": ["為了找到逃命的機會，昆蟲會用各種高明的演技來保命。", "為了在演講比賽得名，小貝每天都認真練習，做好充足準備。"]}, {"p": "是……更是……", "cat": "遞進", "kw": ["是", "更是"], "ex": ["這是大自然奇妙的現象，更是生命力的表現。", "爸爸是我的啟蒙老師，更是影響我最深的人。"]}]}]}, "4上": {"categories": {"並列": {"def": "兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。", "tip": "像兩個好朋友手牽手，並排站。"}, "連貫": {"def": "事情按照先後順序一件接一件發生。", "tip": "先做這個，接著做那個，像排隊一樣。"}, "轉折": {"def": "後半句說的和前半句想的不一樣，意思轉了一個彎。", "tip": "看到「卻、但、不過、可是」，意思就要轉彎了。"}, "因果": {"def": "一半說原因，一半說結果。", "tip": "問問自己：為什麼？結果怎樣？"}, "條件": {"def": "有了前面的條件，才會出現後面的結果。", "tip": "條件做到了，結果就跟著來。"}, "假設": {"def": "先想像一種還沒發生的情況，再說會怎麼樣。", "tip": "「如果」就是先假裝一下。"}, "遞進": {"def": "後半句比前半句更進一步，意思一層比一層深。", "tip": "像爬樓梯，一階比一階高。"}, "目的": {"def": "說明做一件事是為了什麼，或是為了避免什麼。", "tip": "問問自己：做這件事想得到什麼？"}, "選擇": {"def": "在兩件以上的事情裡，選出其中一個。", "tip": "看到「或、或是、是……還是……、與其……不如……」，就是要做選擇。"}}, "lessons": [{"no": 1, "unit": "第壹單元　生活好滋味", "title": "窗口邊的臺灣欒樹", "patterns": [{"p": "……然後……", "cat": "連貫", "kw": ["然後"], "ex": ["每天一早打開窗戶，風一吹，臺灣欒樹就像在和我們揮手，然後靜靜的守在窗口旁，等待我們放學回家。", "小女孩看見媽媽，立刻跑過去抱住她親了一口，然後甜甜的笑了起來。"]}, {"p": "先是……幾週後……", "cat": "連貫", "kw": ["先是", "幾週後"], "ex": ["秋天是臺灣欒樹最多采多姿的時節。先是樹上開滿一簇一簇的黃花，幾週後，轉成淡紅色的果實。", "這棵樹的枝椏上先是冒出綠芽，幾週後就長出了茂密的綠葉。"]}, {"p": "……或……", "cat": "選擇", "kw": ["或"], "ex": ["我們在窗邊擺了一張特別長的書桌，每天晚上全家人坐在窗前話家常，或做著自己喜歡的事，它們只是靜靜相伴。", "你可以跟哥哥出門打球，或留在家裡，和我們一起做餅乾。"]}, {"p": "……因而……", "cat": "因果", "kw": ["因而"], "ex": ["有了窗口邊的臺灣欒樹，我家因而充滿藝術氣息。", "表哥喜歡閱讀科學方面的書籍，因而有「科學小博士」的稱號。"]}]}, {"no": 2, "unit": "第壹單元　生活好滋味", "title": "奶奶的排骨粥", "patterns": [{"p": "……因此……", "cat": "因果", "kw": ["因此"], "ex": ["那些日子裡我難以進食，因此，奶奶特別花心思，為我煮了湯鮮味美的排骨粥。", "李大哥時常幫助街坊鄰居，因此，當他遇到困難時，大家都願意伸出援手。"]}, {"p": "即使……也……", "cat": "假設", "kw": ["即使", "也"], "ex": ["奶奶煮的粥湯底清甜，即使放涼了，也一樣美味無比。", "即使這件事情難以完成，小安也會盡最大的力量去做好它。"]}, {"p": "因為……所以……", "cat": "因果", "kw": ["因為", "所以"], "ex": ["因為奶奶的兩排牙齒早就換成假牙，所以容易入口的排骨粥，就成了她常做的拿手好菜。", "因為連日豪雨而土石崩落，所以這條山路目前禁止車輛通行。"]}, {"p": "……於是……", "cat": "連貫", "kw": ["於是"], "ex": ["成長中的我，特別容易肚子餓。於是，每天清晨，「牙齒不好的人」又一起享用特餐。", "今天的氣候宜人，於是，我決定出門踏青。"]}, {"p": "……卻……", "cat": "轉折", "kw": ["卻"], "ex": ["現在的我，有一口整齊漂亮的牙齒，奶奶卻連假牙都沒辦法戴上了。", "看起來瘦弱的小明能扛起教室的桌子，小華卻連椅子都搬不動。"]}, {"p": "一邊……一邊……", "cat": "並列", "kw": ["一邊", "一邊"], "ex": ["奶奶一邊看著我喝粥，一邊開心又滿足的笑著。", "老闆一邊介紹商品，一邊幫客人結帳，忙得不可開交。"]}]}, {"no": 3, "unit": "第壹單元　生活好滋味", "title": "充滿希望的五味屋", "patterns": [{"p": "……同時……", "cat": "並列", "kw": ["同時"], "ex": ["五味屋是一間二手商店，同時是社區孩子重要的學習場所。", "這個房間是爸爸的書房，同時是爸爸的工作室。"]}, {"p": "除了……還……", "cat": "遞進", "kw": ["除了", "還"], "ex": ["五味屋的孩子可以透過工作來得到點數，而存下來的點數，除了能換取日用品，還可以取得到外地參加學習活動的機會。", "這臺洗衣機除了能清洗衣服外，還能烘乾衣物。"]}, {"p": "讓……也讓……", "cat": "並列", "kw": ["讓", "也讓"], "ex": ["這本「點數存摺」，讓孩子建立了「靠自己努力獲得機會」的工作態度，也讓他們相信——有能力可以成為更好的自己。", "這次的大地震讓無數建物倒塌，也讓人們擔驚受怕，留下心理陰影。"]}, {"p": "只要……就……", "cat": "條件", "kw": ["只要", "就"], "ex": ["人只要願意參與，事情就有「可能」。", "只要你願意面對挑戰，就有突破自我極限的可能。"]}]}, {"no": 4, "unit": "第貳單元　超級臺灣隊", "title": "玉山之歌", "patterns": []}, {"no": 5, "unit": "第貳單元　超級臺灣隊", "title": "高舉臺灣之光", "patterns": [{"p": "雖然……卻……", "cat": "轉折", "kw": ["雖然", "卻"], "ex": ["您雖然個子小，卻有著大大的力量，克服種種困難，成為舉重國手。", "媽媽雖然工作很忙，卻很關心我的學習，每天都會陪我做功課。"]}, {"p": "……然而……", "cat": "轉折", "kw": ["然而"], "ex": ["舉重時，您要竭盡全力，不斷練習，還得忍受競技運動帶來的傷害。然而，您始終保持樂觀正面的想法，不輕言放棄，樂於接受挑戰。", "努力學習固然重要，然而沒有健康的身體，一切便是空談。"]}, {"p": "無論……總有……", "cat": "條件", "kw": ["無論", "總有"], "ex": ["我和您一樣，無論成功或失敗，總有家人、老師在背後支持，讓我又有了努力下去的勇氣。", "無論遇到多少考驗，阿幸總有方法可以成功克服難關。"]}, {"p": "除了……也……", "cat": "並列", "kw": ["除了", "也"], "ex": ["我希望自己跟您一樣，除了保有勇氣面對學習及練舞時的困難，也希望成為有愛心的人，為人們舉起一道溫暖的光。", "老師除了教導我們課本上的知識，也教導我們做人處事的正確態度。"]}]}, {"no": 6, "unit": "第貳單元　超級臺灣隊", "title": "臺灣的驕傲", "patterns": [{"p": "雖然……但……", "cat": "轉折", "kw": ["雖然", "但"], "ex": ["西螺大橋雖然已不是亞洲第一長橋，但仍是西螺最「紅」的地標。", "雖然這次的考試有點困難，但我沒有放棄，反而更仔細的再三檢查。"]}, {"p": "無論……都……", "cat": "條件", "kw": ["無論", "都"], "ex": ["這座金融大樓，無論白天或黑夜，它都是人們仰望的臺灣驕傲。", "一旦訂下目標，無論事情有多困難，我都會盡心盡力的去完成。"]}, {"p": "除了……更……", "cat": "遞進", "kw": ["除了", "更"], "ex": ["對國內外的觀光客來說，臺北一〇一除了是重要地標，每年跨年煙火更是吸引全世界的注意。", "這間賣場除了販賣生鮮食品，更提供現做的熟食。"]}, {"p": "因為……", "cat": "因果", "kw": ["因為"], "ex": ["因為它們曾讓全世界看見，看見臺灣是如此令人驚羨。", "因為上班途中碰到車禍塞車，阿興最終遲到了。"]}]}, {"no": 7, "unit": "第參單元　小小觀察家", "title": "到此「藝」遊", "patterns": [{"p": "有人……有人……", "cat": "並列", "kw": ["有人", "有人"], "ex": ["街上有許多特色小店，大家各自挑著喜歡的紀念品，有人買了圓滾滾的金魚造型香包，有人買了五顏六色的捏麵人……。", "公園有寬廣的草地和樹蔭，有人沿著綠樹成蔭的步道散步，有人坐在草地上野餐。"]}]}, {"no": 8, "unit": "第參單元　小小觀察家", "title": "四季的頭髮", "patterns": []}, {"no": 9, "unit": "第參單元　小小觀察家", "title": "阿白觀察記", "patterns": [{"p": "不只是……還是……", "cat": "遞進", "kw": ["不只是", "還是"], "ex": ["觀察了好幾天，我發現阿白不只是歌唱家，還是舞林高手呢！", "哥哥不只是田徑隊的隊員，還是籃球隊的隊長。"]}, {"p": "像……又像……", "cat": "並列", "kw": ["像", "又像"], "ex": ["在輕快叫聲中，牠快速振動微微張開的雙翅，雙腳碎步走動，看起來像林間的舞者，又像動力十足的戰鬥機。", "中秋節晚上，皎潔的月亮像一面鏡子，又像一個大圓盤。"]}, {"p": "為了……", "cat": "目的", "kw": ["為了"], "ex": ["三到五月是白頭翁的求偶季節，為了吸引母鳥，公鳥會賣力的表演。", "為了迎接新年的到來，家家戶戶忙著大掃除。"]}, {"p": "一……立即……", "cat": "連貫", "kw": ["一", "立即"], "ex": ["只要我一靠近，牠立即「一飛沖天」，一邊在空中繞圈，一邊唧唧唧的大聲叫。", "一有陌生人接近，這戶人家的小狗立即開始吠叫。"]}]}, {"no": 10, "unit": "第肆單元　跟著故事跑", "title": "老鼠嫁女兒", "patterns": [{"p": "如果……", "cat": "假設", "kw": ["如果"], "ex": ["如果碰到牆，要去哪兒都別想。", "如果明天天氣晴朗，媽媽就要在陽臺晒棉被。"]}, {"p": "既然……就……", "cat": "因果", "kw": ["既然", "就"], "ex": ["既然你們兩情相悅，就祝福你們吧！", "既然生病了，就應該請假，在家好好休息。"]}]}, {"no": 11, "unit": "第肆單元　跟著故事跑", "title": "豆粥婆婆", "patterns": [{"p": "等到……再……", "cat": "連貫", "kw": ["等到", "再"], "ex": ["等到冬至，我喝過豆粥，您再吃我好嗎？", "等到明年櫻花綻放，我們再相約出遊。"]}, {"p": "即便……也……", "cat": "假設", "kw": ["即便", "也"], "ex": ["即便老虎來了，我們也不怕！", "平時上課認真聽講，即便突然小考，也可以輕鬆應付。"]}, {"p": "不光……也……", "cat": "並列", "kw": ["不光", "也"], "ex": ["不光你們有辦法，我也有法子。", "不光蜜蜂會採蜜，有些蚊子也會吸食花蜜、露水。"]}, {"p": "先……接著……最後……", "cat": "連貫", "kw": ["先", "接著", "最後"], "ex": ["栗子先往虎頭敲了一記。接著，「ㄆㄚ！」的一聲，蛋打在老虎的眼睛上。最後，熱年糕跳起，封住虎口。", "每天回家，我先洗便當盒，接著把作業寫完，最後帶著小狗出門散步。"]}]}, {"no": 12, "unit": "第肆單元　跟著故事跑", "title": "戴斗笠的地藏", "patterns": [{"p": "只有……才……", "cat": "條件", "kw": ["只有", "才"], "ex": ["老爺爺聽了心想，只有賣了斗笠，才有錢買年糕。", "小華知道只有努力，才能實現父母對他的期望，於是，勇敢的朝著夢想向前進。"]}, {"p": "不但……反而……", "cat": "遞進", "kw": ["不但", "反而"], "ex": ["老婆婆不但沒有怪他，反而認為他做了好事。", "困難不但沒有嚇倒我們，反而激發了我們奮鬥的勇氣。"]}]}]}, "5上": {"categories": {"並列": {"def": "兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。", "tip": "像兩個好朋友手牽手，並排站。"}, "連貫": {"def": "事情按照先後順序一件接一件發生。", "tip": "先做這個，接著做那個，像排隊一樣。"}, "轉折": {"def": "後半句說的和前半句想的不一樣，意思轉了一個彎。", "tip": "看到「卻、但、不過、可是」，意思就要轉彎了。"}, "因果": {"def": "一半說原因，一半說結果。", "tip": "問問自己：為什麼？結果怎樣？"}, "條件": {"def": "有了前面的條件，才會出現後面的結果。", "tip": "條件做到了，結果就跟著來。"}, "假設": {"def": "先想像一種還沒發生的情況，再說會怎麼樣。", "tip": "「如果」就是先假裝一下。"}, "遞進": {"def": "後半句比前半句更進一步，意思一層比一層深。", "tip": "像爬樓梯，一階比一階高。"}, "目的": {"def": "說明做一件事是為了什麼，或是為了避免什麼。", "tip": "問問自己：做這件事想得到什麼？"}, "選擇": {"def": "在兩件以上的事情裡，選出其中一個。", "tip": "看到「或、或是、是……還是……、與其……不如……」，就是要做選擇。"}}, "lessons": [{"no": 1, "unit": "第壹單元　品格小學堂", "title": "幸福筆記本", "patterns": [{"p": "……接著……", "cat": "連貫", "kw": ["接著"], "ex": ["進門時，孩子們一擁而上，帶著燦爛的笑臉，給我大大的擁抱，接著興高采烈的分享當天在學校做的事。", "大掃除時，我們將桌椅搬出去，接著開始刷教室的地板。"]}, {"p": "即使……也……", "cat": "假設", "kw": ["即使", "也"], "ex": ["有時，即使遇上不好的事，也能有機會感受幸福。", "小可很期待明天開始的連假，即使可能下雨，也不減她想出遊的興致。"]}, {"p": "要是……就……", "cat": "假設", "kw": ["要是", "就"], "ex": ["要是能再謹慎一點，多注意死角，或是再找個更好停的車位，這樣的事也許就不會發生。", "要是這個假日天氣轉晴，我們全家就會去山上露營。"]}, {"p": "……或是……", "cat": "選擇", "kw": ["或是"], "ex": ["要是能再謹慎一點，多注意死角，或是再找個更好停的車位，這樣的事也許就不會發生。", "放學後，我想去文具店買文具，或是到書店買書。"]}, {"p": "沒有……也沒有……甚至……", "cat": "遞進", "kw": ["沒有", "也沒有", "甚至"], "ex": ["車主沒有責怪我，也沒有索取賠償，甚至分享停車技巧。", "妹妹因為生病，沒有食慾，也沒有精神，甚至連轉開瓶蓋的力氣都沒有。"]}]}, {"no": 2, "unit": "第壹單元　品格小學堂", "title": "做人做事做長久", "patterns": [{"p": "……才……", "cat": "連貫", "kw": ["才"], "ex": ["小師傅先將所有必用工具，一件件按使用順序在窗口下排好，才爬上鐵梯開始工作。", "裁縫師傅用粉筆在布料上做好記號後，才開始裁剪布料。"]}, {"p": "……再……", "cat": "連貫", "kw": ["再"], "ex": ["他以自備的小掃把清掃地板，再拿抹布清潔牆壁，表現非常敬業。", "寫作文時，要先擬好大綱，再開始下筆。"]}, {"p": "只要……可以……", "cat": "條件", "kw": ["只要", "可以"], "ex": ["只要保持他精確、完善的工作態度和服務精神，在累積更長久的經驗後，我們可以預見他的成功。", "只要同學間彼此關心、互相幫助，就可以建立良好的友誼。"]}]}, {"no": 3, "unit": "第壹單元　品格小學堂", "title": "孔雀錯了", "patterns": [{"p": "……尤其……", "cat": "遞進", "kw": ["尤其"], "ex": ["我念初中的時候，每回作文發下來，都是密密麻麻的連排紅圈圈。尤其是那個大大的「甲」字，好像張著四四方方的嘴在對我笑。", "爸爸很重視子女的教育，尤其是品行，要求特別嚴格。"]}, {"p": "如果……那麼……", "cat": "假設", "kw": ["如果", "那麼"], "ex": ["如果她的英文沒有這樣好，那麼我不就是全班第一個「文學家」了嗎？", "如果每天練跑時，我們能培養良好的默契，那麼就有機會贏得這場比賽。"]}, {"p": "如果……不就是……", "cat": "假設", "kw": ["如果", "不就是"], "ex": ["牠們心裡都想，如果同伴的羽毛沒有自己的美麗，自己不就是第一美了嗎？", "如果能不斷達成每次設定的目標，不就是一直在超越自己嗎？"]}]}, {"no": 4, "unit": "第貳單元　自然筆記", "title": "特別的海", "patterns": [{"p": "是……還是……", "cat": "選擇", "kw": ["是", "還是"], "ex": ["說到海，你會聯想到什麼樣的畫面呢？是被海風吹出的層層湛藍？還是擊打沿岸的道道白浪？", "提到中秋節，你先想到的是月餅，還是柚子呢？"]}, {"p": "……因此……", "cat": "因果", "kw": ["因此"], "ex": ["臺灣擁有大大小小的島，海因此成為輕易可見的風景。", "今日降雨機率偏高，因此出門要記得攜帶雨具。"]}, {"p": "不是……而是……", "cat": "並列", "kw": ["不是", "而是"], "ex": ["在龜山島前端流動的那片海水，竟然不是深濃的墨水藍，而是像牛奶一樣的乳白色。", "讀書不是為了讓父母開心，而是為了讓自己的未來有更多的選擇。"]}, {"p": "一會兒……一會兒……", "cat": "並列", "kw": ["一會兒", "一會兒"], "ex": ["格子忽大忽小，一會兒是長方形，一會兒是菱形。", "妹妹一會兒跑步，一會兒跳舞，真是體力過人。"]}, {"p": "由於……", "cat": "因果", "kw": ["由於"], "ex": ["由於地形與海流關係，西莒島沙灘與近旁小島之間的海在漲潮時，海浪會從不同的方向前來交會。這兩組交錯的波浪，一行一列，就形成了特殊的方格海。", "由於阿虎的努力與堅持，造就他今日的輝煌成就。"]}]}, {"no": 5, "unit": "第貳單元　自然筆記", "title": "漫遊花東", "patterns": [{"p": "時而……時而……", "cat": "並列", "kw": ["時而", "時而"], "ex": ["我們隨興的在太魯閣裡移動，時而欣賞窗外風光，時而下車走走看看。", "天上的雲朵變化萬千，時而像小狗，時而像小貓，真是有趣。"]}, {"p": "……卻是……", "cat": "轉折", "kw": ["卻是"], "ex": ["池上的稻米相當有名，綠油油的初夏，黃澄澄的金秋，是許多旅人難忘的景色，而我卻是頭一回見到。", "阿幸工作時總是不苟言笑，私底下卻是朋友公認的開心果。"]}]}, {"no": 6, "unit": "第貳單元　自然筆記", "title": "護送螃蟹過馬路", "patterns": [{"p": "……然後……", "cat": "連貫", "kw": ["然後"], "ex": ["海洋是螃蟹的育兒室，螃蟹媽媽會把寶寶放入海水中，寶寶們經過幾次脫殼後，就會變成小螃蟹，然後自行回到父母生活的地方。", "灰濛濛的天空颳起了風，然後雨就嘩啦啦的下了起來。"]}, {"p": "……然而……", "cat": "轉折", "kw": ["然而"], "ex": ["千百年來，這裡的陸蟹都是沿著同一路線去繁殖後代，然而這條路如今卻變得愈加漫長。", "阿興特別提早出門，然而因為大塞車，他還是遲到了。"]}, {"p": "讓……也讓……", "cat": "並列", "kw": ["讓", "也讓"], "ex": ["川流不息的車潮，讓許多使命未達的螃蟹命喪輪底，也讓數十萬個小生命，再也無法長大。", "養成運動的習慣，讓睡眠品質變得更好，也讓身體愈來愈健康。"]}, {"p": "有些……有些……", "cat": "並列", "kw": ["有些", "有些"], "ex": ["這些螃蟹順利過馬路，來到了海邊。有些螃蟹繼續向前，快步走入水中，有些則在沙石灘上停下了腳步。", "一早的教室裡，有些同學在閱讀區安靜的看課外讀物，有些同學在益智區輕聲的玩桌遊。"]}]}, {"no": 7, "unit": "第參單元　用心看世界", "title": "高第的魔法建築", "patterns": [{"p": "一……就……", "cat": "連貫", "kw": ["一", "就"], "ex": ["我曾經想像一走進建築物，就能進入森林探險、在海洋中悠遊，走上天臺，就能看見屋頂上有噴火龍。", "他打完球過於疲累，一回到家，就迅速的躺在床上睡著了。"]}, {"p": "不僅……還……", "cat": "遞進", "kw": ["不僅", "還"], "ex": ["外圍高入天際的立門和高塔，不僅造型獨特，還充滿精細又生動的雕刻，讓我看得目瞪口呆。", "偏食的小玉不僅長得十分瘦小，還常常生病。"]}, {"p": "不僅……更……", "cat": "遞進", "kw": ["不僅", "更"], "ex": ["親自參觀高第的建築，讓我不僅愛上他的奇思妙想，更佩服他對作品的投入與堅持。", "故宮不僅是收藏文物的寶庫，更是知識的殿堂。"]}]}, {"no": 8, "unit": "第參單元　用心看世界", "title": "嘗嘗我的家鄉味", "patterns": [{"p": "先……再……", "cat": "連貫", "kw": ["先", "再"], "ex": ["圓滾滾的大白菜／呼朋引伴　在大缸裡玩遊戲／先和鹽巴來個暖身操／拉拉筋、出出汗／再與辣椒、大蒜和菜頭／一層一層疊羅漢。", "晚餐時，我先吃一口青菜，再喝一口美味的味噌湯，感到十分滿足。"]}]}, {"no": 9, "unit": "第參單元　用心看世界", "title": "小小力量將世界照亮", "patterns": [{"p": "只要……也能……", "cat": "條件", "kw": ["只要", "也能"], "ex": ["只要願意跨出第一步，這世界也能被你照亮。", "只要我們互相幫助，再大的困難也能克服。"]}, {"p": "當……便……", "cat": "連貫", "kw": ["當", "便"], "ex": ["他聽到以後非常難過，當知道透過捐款能幫助非洲村落開挖水井，便努力的「賺錢」。", "當微風吹過，風鈴便隨風搖擺，發出清脆悅耳的聲響。"]}, {"p": "不但……還……", "cat": "遞進", "kw": ["不但", "還"], "ex": ["小萊恩不但把零用錢全部存下來，還幫家人做雜務，為鄰居送東西、打掃環境。", "那女孩不但會唱歌，還會跳舞，真是多才多藝。"]}]}, {"no": 10, "unit": "第肆單元　作家風華", "title": "男生說，女生說", "patterns": [{"p": "只有……才……", "cat": "條件", "kw": ["只有", "才"], "ex": ["有一個同學功課不會，大家就去幫他，因為只有同學才知道他哪裡不會。", "琪琪很懶惰，只有在媽媽提醒以後，才會去整理房間。"]}, {"p": "……於是……", "cat": "連貫", "kw": ["於是"], "ex": ["有一個同學生病，大家都擔心他，於是放學後，帶著兩顆蘋果結伴去慰問。", "下雨了，於是我穿上雨衣走路回家。"]}, {"p": "只要……立刻……", "cat": "條件", "kw": ["只要", "立刻"], "ex": ["大家都講點義氣，不記仇，肯認錯，不管發生了什麼爭執，只要有人勸，說一句「大家都是同學」，立刻就能化解。", "只要我難過，朋友立刻就會到我身邊安慰我。"]}, {"p": "有的……有的……", "cat": "並列", "kw": ["有的", "有的"], "ex": ["現在，這幾個同班同學都長大成人了，有的當了父親，有的當了母親，大家還常常聯繫，互相問候。", "牧場裡的牛有的在吃草，有的在散步，好愜意。"]}]}, {"no": 11, "unit": "第肆單元　作家風華", "title": "耶誕禮物", "patterns": [{"p": "每當……總是……", "cat": "條件", "kw": ["每當", "總是"], "ex": ["每當吉姆拖著疲倦的身體下班回家，黛拉總是心疼得趕緊走過去擁抱他。", "每當週末，我們家總是出門遊山玩水。"]}, {"p": "如果……一定會……", "cat": "假設", "kw": ["如果", "一定會"], "ex": ["如果埃及豔后住在他們家對面，黛拉一定會不時把她的長頭髮垂掛在窗口外，向埃及豔后炫耀，讓豔后的珍奇珠寶都黯然失色。", "如果地球會說話，它一定會告訴人類不要再破壞環境了。"]}, {"p": "為了……", "cat": "目的", "kw": ["為了"], "ex": ["人家為了給你買耶誕禮物，才把長髮賣掉的。", "哥哥為了通過考試，回到家就專心念書，不敢鬆懈。"]}, {"p": "不是……也不是……更不是……", "cat": "遞進", "kw": ["不是", "也不是", "更不是"], "ex": ["我不是難過，也不是生氣，更不是因為你把頭髮剪短而不愛你了。", "這座檯燈不是瑕疵品，也不是沒電，更不是故障，只是有些接觸不良罷了。"]}, {"p": "……同時……", "cat": "並列", "kw": ["同時"], "ex": ["黛拉把錶鍊拿給吉姆，同時對他說：「這份禮物現在也沒有用了。」", "姐姐聽著這位歌手的新歌，同時寫下自己的感想。"]}]}, {"no": 12, "unit": "第肆單元　作家風華", "title": "漫遊詩情", "patterns": [{"p": "只要……就……", "cat": "條件", "kw": ["只要", "就"], "ex": ["一早，我告別雲彩繚繞的白帝城，只要一天的時間，就能回到千里之外的江陵。", "只要水氣充足，加上低溫，合歡山上就有機會見到雪景。"]}]}]}, "6上": {"categories": {"並列": {"def": "兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。", "tip": "像兩個好朋友手牽手，並排站。"}, "連貫": {"def": "事情按照先後順序一件接一件發生。", "tip": "先做這個，接著做那個，像排隊一樣。"}, "轉折": {"def": "後半句說的和前半句想的不一樣，意思轉了一個彎。", "tip": "看到「卻、但、不過、可是」，意思就要轉彎了。"}, "因果": {"def": "一半說原因，一半說結果。", "tip": "問問自己：為什麼？結果怎樣？"}, "條件": {"def": "有了前面的條件，才會出現後面的結果。", "tip": "條件做到了，結果就跟著來。"}, "假設": {"def": "先想像一種還沒發生的情況，再說會怎麼樣。", "tip": "「如果」就是先假裝一下。"}, "遞進": {"def": "後半句比前半句更進一步，意思一層比一層深。", "tip": "像爬樓梯，一階比一階高。"}, "目的": {"def": "說明做一件事是為了什麼，或是為了避免什麼。", "tip": "問問自己：做這件事想得到什麼？"}, "選擇": {"def": "在兩件以上的事情裡，選出其中一個。", "tip": "看到「或、或是、是……還是……、與其……不如……」，就是要做選擇。"}}, "lessons": [{"no": 1, "unit": "第壹單元　美好時刻", "title": "在天晴了的時候", "patterns": []}, {"no": 2, "unit": "第壹單元　美好時刻", "title": "珍珠鳥", "patterns": [{"p": "雖然……卻……", "cat": "轉折", "kw": ["雖然", "卻"], "ex": ["小鳥的影子就在這中間隱約閃動，雖然看不清楚（有時連籠子也看不出），牠們可愛的鮮紅小嘴兒卻不時從綠葉中伸出來。", "今天雖然天氣陰沉，卻始終沒有下雨。"]}, {"p": "起先……隨後……", "cat": "連貫", "kw": ["起先", "隨後"], "ex": ["起先，這小傢伙只在籠子四周活動，隨後就在屋裡飛來飛去。", "起先，哥哥在短跑比賽中落後，隨後奮起直追，逆轉奪冠。"]}, {"p": "一會兒……一會兒……一會兒……", "cat": "並列", "kw": ["一會兒", "一會兒", "一會兒"], "ex": ["小傢伙一會兒落在櫃頂上，一會兒神氣十足的站在書架上，啄著書背上那些大文豪的名字，一會兒把燈繩撞得來回搖動，又趕忙逃到畫框上。", "最近的天氣讓人捉摸不定，一會兒豔陽高照，一會兒烏雲密布，一會兒又颳起怪風，吹得人都站不穩了。"]}, {"p": "只要……立即……", "cat": "條件", "kw": ["只要", "立即"], "ex": ["只要大鳥在籠子裡生氣的叫一聲，小傢伙立即飛回籠裡去。", "傍晚時，只要爸爸吆喝一聲，小狗立即跑到門口，準備一起出去散步。"]}, {"p": "先是……然後……再……", "cat": "連貫", "kw": ["先是", "然後", "再"], "ex": ["這小傢伙先是離我較遠，見我不去傷害牠，便一點一點挨近，然後蹦到我的杯子上，俯下頭來喝茶，再偏過臉看看我的反應。", "起床後，小柏先是刷牙洗臉，然後穿上校服，再下樓吃早餐。"]}]}, {"no": 3, "unit": "第壹單元　美好時刻", "title": "客至", "patterns": [{"p": "……因此……", "cat": "因果", "kw": ["因此"], "ex": ["家裡距離城鎮太遠，買不到更多的食材，因此飯菜不豐盛。", "近日詐騙案件四起，因此警政署呼籲民眾提高警覺，善用諮詢專線。"]}, {"p": "因……只好……", "cat": "因果", "kw": ["因", "只好"], "ex": ["因家中貧窮，未造新酒，只好拿沒有過濾的舊酒招待你。", "因天候不佳，我們只好臨時更改旅遊行程。"]}, {"p": "如果……可以……", "cat": "假設", "kw": ["如果", "可以"], "ex": ["如果你願意與隔壁的老翁共飲，我可以隔著籬笆呼喚，請他過來和我們一起喝完這幾杯。", "如果有更多的假期能夠運用，我可以為自己安排一次極光之旅。"]}]}, {"no": 4, "unit": "第貳單元　工作圖像", "title": "贏得喝采的輸家", "patterns": [{"p": "不是……而是……", "cat": "並列", "kw": ["不是", "而是"], "ex": ["那道氣球拱門不是終點，而是主辦單位設置的頒獎地點。", "酷暑時從樹下走過，淋在頭上的不是雨水，而是蟬的尿液。"]}, {"p": "只要……就……", "cat": "條件", "kw": ["只要", "就"], "ex": ["只要再幾步，我就能反敗為勝。", "只要平時做足防災演練，災害發生時就能即時應變。"]}, {"p": "……接著……", "cat": "連貫", "kw": ["接著"], "ex": ["穆太露出訝異的表情，接著繼續往前跑了起來，跑到那原本就屬於他的勝利終點。", "打掃外掃區時，我們先把落葉聚集成堆，接著倒進垃圾袋中。"]}, {"p": "沒有……但……", "cat": "轉折", "kw": ["沒有", "但"], "ex": ["你沒有成為優秀的運動員，但成了一個更優秀的人。", "姐姐出門時沒有忘記帶鑰匙，但忘了帶手機。"]}]}, {"no": 5, "unit": "第貳單元　工作圖像", "title": "哇！原來如此", "patterns": [{"p": "……不過……", "cat": "轉折", "kw": ["不過"], "ex": ["有些職業我們耳熟能詳，能大致描繪出它們的樣貌，不足為奇。不過，有些職業的工作內容，背後隱藏了一些祕密，解開後，可能會令你大吃一驚呵！", "這些糕點非常美味可口，不過所含熱量極高。"]}, {"p": "每當……總是……", "cat": "條件", "kw": ["每當", "總是"], "ex": ["每當發生火災時，消防員總是迅速趕往現場撲滅火勢，救援受困者。", "每當心情低落時，小笙總是出門散心，調適自己的心情。"]}, {"p": "若……無疑是……", "cat": "假設", "kw": ["若", "無疑是"], "ex": ["一部影片拍完，會產生大量的影像和聲音檔案，若沒有妥善安排，要找到同一幕的影音並將它們合在一起，無疑是大海撈針。", "凡事要勇於實踐，若瞻前顧後、舉棋不定，無疑是原地踏步。"]}, {"p": "……並……", "cat": "並列", "kw": ["並"], "ex": ["在拍攝現場，工作人員會利用「場記板」註明資訊，並藉由打板的聲音，提醒錄製的起始點。", "這名搶匪對犯行供認不諱，並交代了贓款的藏匿地點。"]}]}, {"no": 6, "unit": "第貳單元　工作圖像", "title": "登月先鋒", "patterns": [{"p": "……卻……", "cat": "轉折", "kw": ["卻"], "ex": ["這是我的一小步，卻是人類的一大步。", "這些善心捐款本是為了救濟災民，卻被不肖人士中飽私囊了。"]}, {"p": "……然而……", "cat": "轉折", "kw": ["然而"], "ex": ["西元一九六五年，阿姆斯壯加入一系列太空計畫。然而，要成為太空人並不容易。", "這間商場祭出許多促銷優惠，然而生意始終不見起色。"]}, {"p": "必須……還要……", "cat": "遞進", "kw": ["必須", "還要"], "ex": ["登月前，他必須進行不斷翻轉的無重力訓練、火箭發射和衝進大氣層的衝擊訓練，適應種種令人難耐的機械聲，還要身穿沉重的太空衣走上幾個小時。", "想要維持健康體態，必須按時運動，還要控制飲食攝取，才有成效。"]}]}, {"no": 7, "unit": "第參單元　問題解決", "title": "明智的抉擇", "patterns": [{"p": "不只……還……", "cat": "遞進", "kw": ["不只", "還"], "ex": ["人生不只要有目標，有時可能還不止一個目標。", "阿芳不只買了日語文法書，還報名日語線上課程，希望掌握這門語言。"]}, {"p": "有……也有……", "cat": "並列", "kw": ["有", "也有"], "ex": ["人生有很多面向，我們也有各種潛能及才藝，多重目標讓生活變得多采多姿。", "書房裡的展示櫃擺放著許多玩具，有汽車模型，也有怪獸公仔。"]}, {"p": "除了……還……更……", "cat": "遞進", "kw": ["除了", "還", "更"], "ex": ["他除了學校的功課外，還參加心算班，星期六學跆拳道，星期日學鋼琴，更抽空看自然科學叢書，打算三個月看完它……。", "媽媽的錢包中除了放現金，還放了信用卡，更放了一張全家福合照。"]}, {"p": "……然後……", "cat": "連貫", "kw": ["然後"], "ex": ["爺爺用一個很大的水壺裝滿水放在灶上，然後將幾根木柴放入灶內點燃。", "壽星將蛋糕切成數塊，然後分給在場的每一個人。"]}, {"p": "若……就……", "cat": "假設", "kw": ["若", "就"], "ex": ["若無法擁有更多時間或才能，就必須減少目標的量。", "若你不好好學習，程度就容易落後同年齡的人。"]}, {"p": "要……就必須……", "cat": "條件", "kw": ["要", "就必須"], "ex": ["當無法兼顧目標完成的質與量時，要維持或提高品質，首先就必須犧牲「量」。", "要快速解開這道數學題，就必須運用數學公式。"]}]}, {"no": 8, "unit": "第參單元　問題解決", "title": "飢渴好「火」伴", "patterns": [{"p": "……隨後……", "cat": "連貫", "kw": ["隨後"], "ex": ["隨後布萊恩回到洞穴，將那顆樺樹皮球剝開，排放在岩石底部。", "海面顫抖湧動，隨後躍出無數飛魚，貼著海面滑翔。"]}, {"p": "直到……才……", "cat": "條件", "kw": ["直到", "才"], "ex": ["當小樹枝燃燒穩定後，他出去找較大的木頭，直到大木頭也燒得很好，才鬆了口氣。", "直到謊言被戳破，大家才知道小鄒的真面目。"]}, {"p": "要是……就……", "cat": "假設", "kw": ["要是", "就"], "ex": ["要是能維持這堆小火，就可以防止豪豬等動物闖進來。", "要是再不下雨，水庫就可能面臨缺水危機。"]}, {"p": "既是……也是……", "cat": "並列", "kw": ["既是", "也是"], "ex": ["火，既是朋友，也是守衛。", "鳳見既是我的好友，也是我的學習榜樣。"]}]}, {"no": 9, "unit": "第參單元　問題解決", "title": "火燒連環船", "patterns": [{"p": "與其……不如……", "cat": "選擇", "kw": ["與其", "不如"], "ex": ["黃蓋主張敵我軍力懸殊，與其以寡擊眾，不如投降。", "與其將暑期作業拖到最後期限，不如在假期開始時就完成。"]}, {"p": "即使……也……", "cat": "假設", "kw": ["即使", "也"], "ex": ["將戰船以數十艘排成一列，頭尾都以鐵鍊鎖起來，船和船之間釘上寬木板，士兵就能像在地面上行走一樣平穩，即使在船上操練也不會感到暈眩。", "即使今天飄著濛濛細雨，也不減音樂祭遊客的熱情。"]}, {"p": "……也……", "cat": "並列", "kw": ["也"], "ex": ["赤壁一戰，讓孫權鞏固了江南的統治，劉備也藉機占領荊州大部分地區。", "阿丹聆聽舒緩的音樂調節情緒，也緩解了壓力。"]}]}, {"no": 10, "unit": "第肆單元　文學之窗", "title": "戲術", "patterns": [{"p": "固然……但……", "cat": "轉折", "kw": ["固然", "但"], "ex": ["魔術妙趣固然能勾起好奇，令人喝采，但作者僅以不到百字的篇幅呈現表演歷程，清楚交代人物、道具、場地、過程與心得，鉅細靡遺，更教人嘖嘖稱奇。", "網路固然為人們帶來許多資訊，但流竄的假訊息讓人防不勝防。"]}, {"p": "既……亦……", "cat": "並列", "kw": ["既", "亦"], "ex": ["「旋出、即有」既描繪白米瞬間出現的神奇，亦展現魔術手法的俐落。", "柏楊既擔任高中的教務主任，亦執教數學科目。"]}, {"p": "除了……更……", "cat": "遞進", "kw": ["除了", "更"], "ex": ["「頃刻兩席皆滿」，除了點出「又取又傾」的快速流暢，「滿」字更加強使人詫異的神奇效果。", "小千的魔術表演除了手法精妙，更獨創了許多新奇的魔術。"]}]}, {"no": 11, "unit": "第肆單元　文學之窗", "title": "紀念照", "patterns": [{"p": "……反而……", "cat": "轉折", "kw": ["反而"], "ex": ["我不時擔心的用手去抓，反而讓它更加紅腫。", "過度的訓練沒有增強阿璽的體能，反而損傷了他的身體。"]}, {"p": "又是……又是……", "cat": "並列", "kw": ["又是", "又是"], "ex": ["父親見我又是用冷水敷，又是愁眉苦臉的照鏡子，責罵我：「又不是要拍你的鼻子！」", "今晚屋外特別吵雜，又是汽、機車引擎噪音，又是鞭炮聲，讓居民怒不可遏。"]}, {"p": "是……還是……", "cat": "選擇", "kw": ["是", "還是"], "ex": ["不知道是以前的人都如此，還是只有我們家的人這麼做——擤過一次鼻涕的草紙絕對不會丟掉，而是收回衣袖裡，等風乾之後再度拿出來摺疊使用。", "這件商品不知是在連鎖超商，還是在大賣場購買會比較便宜。"]}]}, {"no": 12, "unit": "第肆單元　文學之窗", "title": "少年筆耕", "patterns": [{"p": "為了……", "cat": "目的", "kw": ["為了"], "ex": ["為了增加收入，最近爸爸兼職工作，為某雜誌社抄寫訂單，每五百張訂單可賺三個銅幣。", "為了找到理想的工作，阿直多方投遞履歷，接受面試。"]}, {"p": "一面……一面……", "cat": "並列", "kw": ["一面", "一面"], "ex": ["他一面寫一面側耳細聽動靜，當寫到一百七十張，算起來值一個銅幣，才停筆熄了燈，回到床上睡覺。", "弟弟一面洗澡，一面哼著不成調的曲子，心情似乎很愉快。"]}, {"p": "當……才……", "cat": "條件", "kw": ["當", "才"], "ex": ["他一面寫一面側耳細聽動靜，當寫到一百七十張，算起來值一個銅幣，才停筆熄了燈，回到床上睡覺。", "當我回到家並坐在沙發上，才感到真正放鬆。"]}, {"p": "……所以……", "cat": "因果", "kw": ["所以"], "ex": ["敘里奧心裡一陣緊張，幸好爸爸沒多說什麼，所以他還是一直做下去。", "今天有東北季風報到，所以溫度驟降。"]}, {"p": "只要……一定……", "cat": "條件", "kw": ["只要", "一定"], "ex": ["只要爸爸能再愛我，我一定好好用功，我這次真的下定決心了！", "只要更努力的訓練，球隊的成績一定會進步。"]}]}]}}},
-  {id:"kangxuan", name:"康軒", data:{}},
-  {id:"hanlin", name:"翰林", data:{}},
-];
-const GRADES = ["1上","1下","2上","2下","3上","3下","4上","4下","5上","5下","6上","6下"];
-const gradeName = g => ["","一","二","三","四","五","六"][+g[0]]+"年級"+(g[1]==="上"?"上學期":"下學期");
-const $ = id => document.getElementById(id);
-const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const DATA={"南一":{"一上":[[1,"小船","……也……","並列",["也"]]],"二上":[[3,"勇氣樹","有……還有……","並列",["有","還有"]],[5,"小書蟲","不管……都……","條件",["不管","都"]],[6,"從自己開始","如果……","假設",["如果"]],[7,"等兔子來撞樹","也不……也不……","並列",["也不","也不"]],[8,"角和腳","……卻……","轉折",["卻"]],[9,"赤腳國王","要是……","假設",["要是"]],[9,"赤腳國王","……於是……","連貫",["於是"]],[11,"幸福湯圓","……因為……","因果",["因為"]],[11,"幸福湯圓","……接著……","連貫",["接著"]]],"三上":[[1,"你好，新朋友","……卻……","轉折",["卻"]],[1,"你好，新朋友","一邊……一邊……","並列",["一邊","一邊"]],[1,"你好，新朋友","……再……","連貫",["再"]],[2,"我們的約定","因為……","因果",["因為"]],[2,"我們的約定","……但……","轉折",["但"]],[2,"我們的約定","……不過……","轉折",["不過"]],[3,"下課十分鐘","有……也有……","並列",["有","也有"]],[3,"下課十分鐘","有……還有……","並列",["有","還有"]],[3,"下課十分鐘","有時……有時……","並列",["有時","有時"]],[3,"下課十分鐘","當……就得……","條件",["當","就得"]],[4,"一顆黑點","……於是……","連貫",["於是"]],[4,"一顆黑點","雖然……但……","轉折",["雖然","但"]],[5,"火大了","……也……","並列",["也"]],[6,"我該怎麼辦？","……不然……","假設",["不然"]],[6,"我該怎麼辦？","已經……接下來……","連貫",["已經","接下來"]],[6,"我該怎麼辦？","只要……就……","條件",["只要","就"]],[6,"我該怎麼辦？","如果……","假設",["如果"]],[7,"最年輕的奶奶","不是……也不是……","並列",["不是","也不是"]],[7,"最年輕的奶奶","雖然……可是……","轉折",["雖然","可是"]],[8,"魔「髮」哥哥","……所以……","因果",["所以"]],[10,"唉呀！誤會大了","如果……可能會……","假設",["如果","可能會"]],[10,"唉呀！誤會大了","不是……而是……","並列",["不是","而是"]],[10,"唉呀！誤會大了","因為……才……","因果",["因為","才"]],[10,"唉呀！誤會大了","如果……會……","假設",["如果","會"]],[10,"唉呀！誤會大了","不但……還……","遞進",["不但","還"]],[10,"唉呀！誤會大了","因為……所以……","因果",["因為","所以"]],[11,"石虎的告白","……還……","遞進",["還"]],[11,"石虎的告白","越來越……也越來越……","並列",["越來越","也越來越"]],[12,"昆蟲的保命妙招","……但是……","轉折",["但是"]],[12,"昆蟲的保命妙招","……因此……","因果",["因此"]],[12,"昆蟲的保命妙招","……以免……","目的",["以免"]],[12,"昆蟲的保命妙招","為了……","目的",["為了"]],[12,"昆蟲的保命妙招","是……更是……","遞進",["是","更是"]]],"四上":[[1,"窗口邊的臺灣欒樹","……然後……","連貫",["然後"]],[1,"窗口邊的臺灣欒樹","先是……幾週後……","連貫",["先是","幾週後"]],[1,"窗口邊的臺灣欒樹","……或……","選擇",["或"]],[1,"窗口邊的臺灣欒樹","……因而……","因果",["因而"]],[2,"奶奶的排骨粥","……因此……","因果",["因此"]],[2,"奶奶的排骨粥","即使……也……","假設",["即使","也"]],[2,"奶奶的排骨粥","因為……所以……","因果",["因為","所以"]],[2,"奶奶的排骨粥","……於是……","連貫",["於是"]],[2,"奶奶的排骨粥","……卻……","轉折",["卻"]],[2,"奶奶的排骨粥","一邊……一邊……","並列",["一邊","一邊"]],[3,"充滿希望的五味屋","……同時……","並列",["同時"]],[3,"充滿希望的五味屋","除了……還……","遞進",["除了","還"]],[3,"充滿希望的五味屋","讓……也讓……","並列",["讓","也讓"]],[3,"充滿希望的五味屋","只要……就……","條件",["只要","就"]],[5,"高舉臺灣之光","雖然……卻……","轉折",["雖然","卻"]],[5,"高舉臺灣之光","……然而……","轉折",["然而"]],[5,"高舉臺灣之光","無論……總有……","條件",["無論","總有"]],[5,"高舉臺灣之光","除了……也……","並列",["除了","也"]],[6,"臺灣的驕傲","雖然……但……","轉折",["雖然","但"]],[6,"臺灣的驕傲","無論……都……","條件",["無論","都"]],[6,"臺灣的驕傲","除了……更……","遞進",["除了","更"]],[6,"臺灣的驕傲","因為……","因果",["因為"]],[7,"到此「藝」遊","有人……有人……","並列",["有人","有人"]],[9,"阿白觀察記","不只是……還是……","遞進",["不只是","還是"]],[9,"阿白觀察記","像……又像……","並列",["像","又像"]],[9,"阿白觀察記","為了……","目的",["為了"]],[9,"阿白觀察記","一……立即……","連貫",["一","立即"]],[10,"老鼠嫁女兒","如果……","假設",["如果"]],[10,"老鼠嫁女兒","既然……就……","因果",["既然","就"]],[11,"豆粥婆婆","等到……再……","連貫",["等到","再"]],[11,"豆粥婆婆","即便……也……","假設",["即便","也"]],[11,"豆粥婆婆","不光……也……","並列",["不光","也"]],[11,"豆粥婆婆","先……接著……最後……","連貫",["先","接著","最後"]],[12,"戴斗笠的地藏","只有……才……","條件",["只有","才"]],[12,"戴斗笠的地藏","不但……反而……","遞進",["不但","反而"]]],"五上":[[1,"幸福筆記本","……接著……","連貫",["接著"]],[1,"幸福筆記本","即使……也……","假設",["即使","也"]],[1,"幸福筆記本","要是……就……","假設",["要是","就"]],[1,"幸福筆記本","……或是……","選擇",["或是"]],[1,"幸福筆記本","沒有……也沒有……甚至……","遞進",["沒有","也沒有","甚至"]],[2,"做人做事做長久","……才……","連貫",["才"]],[2,"做人做事做長久","……再……","連貫",["再"]],[2,"做人做事做長久","只要……可以……","條件",["只要","可以"]],[3,"孔雀錯了","……尤其……","遞進",["尤其"]],[3,"孔雀錯了","如果……那麼……","假設",["如果","那麼"]],[3,"孔雀錯了","如果……不就是……","假設",["如果","不就是"]],[4,"特別的海","是……還是……","選擇",["是","還是"]],[4,"特別的海","……因此……","因果",["因此"]],[4,"特別的海","不是……而是……","並列",["不是","而是"]],[4,"特別的海","一會兒……一會兒……","並列",["一會兒","一會兒"]],[4,"特別的海","由於……","因果",["由於"]],[5,"漫遊花東","時而……時而……","並列",["時而","時而"]],[5,"漫遊花東","……卻是……","轉折",["卻是"]],[6,"護送螃蟹過馬路","……然後……","連貫",["然後"]],[6,"護送螃蟹過馬路","……然而……","轉折",["然而"]],[6,"護送螃蟹過馬路","讓……也讓……","並列",["讓","也讓"]],[6,"護送螃蟹過馬路","有些……有些……","並列",["有些","有些"]],[7,"高第的魔法建築","一……就……","連貫",["一","就"]],[7,"高第的魔法建築","不僅……還……","遞進",["不僅","還"]],[7,"高第的魔法建築","不僅……更……","遞進",["不僅","更"]],[8,"嘗嘗我的家鄉味","先……再……","連貫",["先","再"]],[9,"小小力量將世界照亮","只要……也能……","條件",["只要","也能"]],[9,"小小力量將世界照亮","當……便……","連貫",["當","便"]],[9,"小小力量將世界照亮","不但……還……","遞進",["不但","還"]],[10,"男生說，女生說","只有……才……","條件",["只有","才"]],[10,"男生說，女生說","……於是……","連貫",["於是"]],[10,"男生說，女生說","只要……立刻……","條件",["只要","立刻"]],[10,"男生說，女生說","有的……有的……","並列",["有的","有的"]],[11,"耶誕禮物","每當……總是……","條件",["每當","總是"]],[11,"耶誕禮物","如果……一定會……","假設",["如果","一定會"]],[11,"耶誕禮物","為了……","目的",["為了"]],[11,"耶誕禮物","不是……也不是……更不是……","遞進",["不是","也不是","更不是"]],[11,"耶誕禮物","……同時……","並列",["同時"]],[12,"漫遊詩情","只要……就……","條件",["只要","就"]]],"六上":[[2,"珍珠鳥","雖然……卻……","轉折",["雖然","卻"]],[2,"珍珠鳥","起先……隨後……","連貫",["起先","隨後"]],[2,"珍珠鳥","一會兒……一會兒……一會兒……","並列",["一會兒","一會兒","一會兒"]],[2,"珍珠鳥","只要……立即……","條件",["只要","立即"]],[2,"珍珠鳥","先是……然後……再……","連貫",["先是","然後","再"]],[3,"客至","……因此……","因果",["因此"]],[3,"客至","因……只好……","因果",["因","只好"]],[3,"客至","如果……可以……","假設",["如果","可以"]],[4,"贏得喝采的輸家","不是……而是……","並列",["不是","而是"]],[4,"贏得喝采的輸家","只要……就……","條件",["只要","就"]],[4,"贏得喝采的輸家","……接著……","連貫",["接著"]],[4,"贏得喝采的輸家","沒有……但……","轉折",["沒有","但"]],[5,"哇！原來如此","……不過……","轉折",["不過"]],[5,"哇！原來如此","每當……總是……","條件",["每當","總是"]],[5,"哇！原來如此","若……無疑是……","假設",["若","無疑是"]],[5,"哇！原來如此","……並……","並列",["並"]],[6,"登月先鋒","……卻……","轉折",["卻"]],[6,"登月先鋒","……然而……","轉折",["然而"]],[6,"登月先鋒","必須……還要……","遞進",["必須","還要"]],[7,"明智的抉擇","不只……還……","遞進",["不只","還"]],[7,"明智的抉擇","有……也有……","並列",["有","也有"]],[7,"明智的抉擇","除了……還……更……","遞進",["除了","還","更"]],[7,"明智的抉擇","……然後……","連貫",["然後"]],[7,"明智的抉擇","若……就……","假設",["若","就"]],[7,"明智的抉擇","要……就必須……","條件",["要","就必須"]],[8,"飢渴好「火」伴","……隨後……","連貫",["隨後"]],[8,"飢渴好「火」伴","直到……才……","條件",["直到","才"]],[8,"飢渴好「火」伴","要是……就……","假設",["要是","就"]],[8,"飢渴好「火」伴","既是……也是……","並列",["既是","也是"]],[9,"火燒連環船","與其……不如……","選擇",["與其","不如"]],[9,"火燒連環船","即使……也……","假設",["即使","也"]],[9,"火燒連環船","……也……","並列",["也"]],[10,"戲術","固然……但……","轉折",["固然","但"]],[10,"戲術","既……亦……","並列",["既","亦"]],[10,"戲術","除了……更……","遞進",["除了","更"]],[11,"紀念照","……反而……","轉折",["反而"]],[11,"紀念照","又是……又是……","並列",["又是","又是"]],[11,"紀念照","是……還是……","選擇",["是","還是"]],[12,"少年筆耕","為了……","目的",["為了"]],[12,"少年筆耕","一面……一面……","並列",["一面","一面"]],[12,"少年筆耕","當……才……","條件",["當","才"]],[12,"少年筆耕","……所以……","因果",["所以"]],[12,"少年筆耕","只要……一定……","條件",["只要","一定"]]]},"康軒":{"一上":[[6,"小路","……也……","並列",["也"]]],"二上":[[1,"新學年新希望","要……還要……","遞進",["要","還要"]],[2,"一起做早餐","……接著……","連貫",["接著"]],[4,"運動會","……不過……","轉折",["不過"]],[5,"水上木偶戲","一邊……一邊……","並列",["一邊","一邊"]],[6,"小鎮的柿餅節","除了……也……","並列",["除了","也"]],[8,"「聰明」的小熊","……為了……","目的",["為了"]],[8,"「聰明」的小熊","……但是……","轉折",["但是"]],[9,"大象有多重？","首先……接著……然後……最後……","連貫",["首先","接著","然後","最後"]],[12,"新年快樂","……卻……","轉折",["卻"]],[12,"新年快樂","……因為……","因果",["因為"]],[12,"新年快樂","一……就……","連貫",["一","就"]],[12,"新年快樂","雖然……但是……","轉折",["雖然","但是"]]],"三上":[[2,"","……因為……","因果",["因為"]],[2,"","雖然……可是……","轉折",["雖然","可是"]],[2,"","……不過……","轉折",["不過"]],[3,"","……也……","並列",["也"]],[3,"","由於……因此……","因果",["由於","因此"]],[3,"","除了……還……","遞進",["除了","還"]],[4,"","有的……有的……","並列",["有的","有的"]],[4,"","……卻……","轉折",["卻"]],[4,"","雖然……卻……","轉折",["雖然","卻"]],[4,"","一……就……","連貫",["一","就"]],[5,"","只要……就……","條件",["只要","就"]],[6,"","是……也是……","並列",["是","也是"]],[6,"","哪怕……也……","轉折",["哪怕","也"]],[7,"","是……還是……","選擇",["是","還是"]],[8,"","有……有……還有……","並列",["有","有","還有"]],[8,"","像……又像……","並列",["像","又像"]],[8,"","雖然……還是……","轉折",["雖然","還是"]],[9,"","不是……而是……","並列",["不是","而是"]],[9,"","不用……也不用……","並列",["不用","也不用"]],[9,"","因為……所以……","因果",["因為","所以"]],[9,"","只要……就……","條件",["只要","就"]],[11,"","……也……","並列",["也"]],[11,"","……免得……","目的",["免得"]],[12,"","……可是……","轉折",["可是"]]],"四上":[[2,"","有時……有時……有時……","並列",["有時","有時","有時"]],[2,"","一邊……一邊……","並列",["一邊","一邊"]],[2,"","不管……還是……都……","條件",["不管","還是","都"]],[2,"","不論……還是……總是……","條件",["不論","還是","總是"]],[3,"","只要……就……","條件",["只要","就"]],[4,"","……也……","並列",["也"]],[4,"","當……就……","連貫",["當","就"]],[4,"","不但……還……","遞進",["不但","還"]],[4,"","除了……還……","遞進",["除了","還"]],[5,"","如果……那……","假設",["如果","那"]],[6,"","是……也是……","並列",["是","也是"]],[6,"","無論……始終……","條件",["無論","始終"]],[6,"","是……還是……","選擇",["是","還是"]],[7,"","沒想到……竟然……","轉折",["沒想到","竟然"]],[8,"","不但……更……","遞進",["不但","更"]],[8,"","假如……就……","假設",["假如","就"]],[9,"","……所以……","因果",["所以"]],[11,"","……以免……","目的",["以免"]],[11,"","如果……就……","假設",["如果","就"]],[12,"","由於……因此……","因果",["由於","因此"]],[12,"","雖然……卻……","轉折",["雖然","卻"]],[12,"","不是……就是……","選擇",["不是","就是"]],[12,"","與其……不如……","選擇",["與其","不如"]]],"五上":[[1,"","只要……就……","條件",["只要","就"]],[1,"","不但……還……","遞進",["不但","還"]],[1,"","雖然……可是……","轉折",["雖然","可是"]],[2,"","只有……才……","條件",["只有","才"]],[2,"","原本……但……","轉折",["原本","但"]],[4,"","要是……那麼……","假設",["要是","那麼"]],[5,"","為了……","目的",["為了"]],[6,"","不僅……也……","遞進",["不僅","也"]],[6,"","不僅……更……","遞進",["不僅","更"]],[6,"","由於……因此……","因果",["由於","因此"]],[7,"","只有……才……","條件",["只有","才"]],[8,"","不但……反而……","遞進",["不但","反而"]],[8,"","縱使……卻……","轉折",["縱使","卻"]],[9,"","只要……就……","條件",["只要","就"]],[9,"","……甚至……","遞進",["甚至"]],[9,"","不僅……還要……","遞進",["不僅","還要"]],[10,"","一邊……一邊……","並列",["一邊","一邊"]],[10,"","雖然……卻……","轉折",["雖然","卻"]],[11,"","時而……時而……","並列",["時而","時而"]],[11,"","除了……還……甚至……","遞進",["除了","還","甚至"]],[12,"","雖然……仍……","轉折",["雖然","仍"]]],"六上":[[1,"","只要……一定……","條件",["只要","一定"]],[1,"","雖然……卻……","轉折",["雖然","卻"]],[2,"","由於……因而……","因果",["由於","因而"]],[2,"","即便……也……","假設",["即便","也"]],[2,"","……以免……","目的",["以免"]],[3,"","只要……就……","條件",["只要","就"]],[3,"","不僅……也……","遞進",["不僅","也"]],[3,"","不是……而是……","並列",["不是","而是"]],[3,"","先……接著……最後……","連貫",["先","接著","最後"]],[5,"","……但是……","轉折",["但是"]],[5,"","一邊……一邊……","並列",["一邊","一邊"]],[6,"","不僅……更……","遞進",["不僅","更"]],[6,"","是……還是……","選擇",["是","還是"]],[7,"","無論……都……","條件",["無論","都"]],[7,"","要是……就……","假設",["要是","就"]],[7,"","即使……也……","假設",["即使","也"]],[8,"","假如……","假設",["假如"]],[8,"","一方面……另一方面……","並列",["一方面","另一方面"]],[9,"","倘若……","假設",["倘若"]],[9,"","如果……就……","假設",["如果","就"]],[10,"","……可是……","轉折",["可是"]],[10,"","要是……那麼……","假設",["要是","那麼"]],[11,"","任憑……都……","條件",["任憑","都"]],[11,"","不論……都……","條件",["不論","都"]],[11,"","雖然……可是……","轉折",["雖然","可是"]],[12,"","儘管……但是……","轉折",["儘管","但是"]],[12,"","就算……也……","假設",["就算","也"]]]},"翰林":{"一上":[[6,"秋千","一下子……一下子……","並列",["一下子","一下子"]],[7,"回音","……也……","並列",["也"]]],"二上":[[1,"我的心情","一會兒……一會兒……","並列",["一會兒","一會兒"]],[2,"彩色的天空","因為……","因果",["因為"]],[2,"彩色的天空","……最後……","連貫",["最後"]],[2,"彩色的天空","……卻……","轉折",["卻"]],[3,"國王做新衣","只要……就……","條件",["只要","就"]],[4,"水草下的呱呱","不只……還……","遞進",["不只","還"]],[4,"水草下的呱呱","是……還是……","選擇",["是","還是"]],[7,"不一樣的美食","有……有……還有……","並列",["有","有","還有"]],[7,"不一樣的美食","不但……還……","遞進",["不但","還"]],[8,"美食分享日","一邊……一邊……","並列",["一邊","一邊"]],[10,"加加減減","……可是……","轉折",["可是"]],[11,"奇怪的門","……竟然……","轉折",["竟然"]],[11,"奇怪的門","一……立刻……","連貫",["一","立刻"]],[12,"詠鵝","……接著……","連貫",["接著"]]],"三上":[[1,"","一會兒……一會兒……","並列",["一會兒","一會兒"]],[2,"","為了……","目的",["為了"]],[2,"","……而且……","遞進",["而且"]],[3,"","因為……所以……","因果",["因為","所以"]],[4,"","當……","連貫",["當"]],[4,"","……可是……","轉折",["可是"]],[5,"","不只……還要……","遞進",["不只","還要"]],[6,"","如果……","假設",["如果"]],[6,"","只要……就……","條件",["只要","就"]],[8,"","因為……只能……","因果",["因為","只能"]],[8,"","……竟然……","轉折",["竟然"]],[9,"","一邊……一邊……","並列",["一邊","一邊"]],[9,"","……才……","條件",["才"]],[10,"","先……再……","連貫",["先","再"]],[11,"","有人……有人……","並列",["有人","有人"]],[11,"","除了……還……","遞進",["除了","還"]],[11,"","……才……","條件",["才"]],[12,"","以為……沒想到……","轉折",["以為","沒想到"]]],"四上":[[2,"","以為……沒想到……","轉折",["以為","沒想到"]],[3,"","即使……也……","假設",["即使","也"]],[4,"","無論……都……","條件",["無論","都"]],[5,"","不只……而且……","遞進",["不只","而且"]],[5,"","像……又像……","並列",["像","又像"]],[6,"","就算……也……","假設",["就算","也"]],[6,"","由於……因而……","因果",["由於","因而"]],[8,"","一……就……","連貫",["一","就"]],[8,"","不是……而是……","並列",["不是","而是"]],[9,"","不論……都……","條件",["不論","都"]],[10,"","……卻……","轉折",["卻"]],[10,"","以為……但……","轉折",["以為","但"]],[10,"","不但……更……","遞進",["不但","更"]],[10,"","……所以……","因果",["所以"]]],"五上":[[2,"","有的……有些……","並列",["有的","有些"]],[3,"","如果……","假設",["如果"]],[3,"","……更何況……","遞進",["更何況"]],[3,"","……以免……","目的",["以免"]],[4,"","不論……就……","條件",["不論","就"]],[4,"","由於……所以……","因果",["由於","所以"]],[4,"","雖然……但……","轉折",["雖然","但"]],[5,"","如果……那麼……","假設",["如果","那麼"]],[5,"","不論……都……","條件",["不論","都"]],[6,"","雖……卻……","轉折",["雖","卻"]],[7,"","除了……也……","遞進",["除了","也"]],[8,"","不但……也……","遞進",["不但","也"]],[9,"","一……就……","連貫",["一","就"]],[9,"","……但是……","轉折",["但是"]],[10,"","如果……那……","假設",["如果","那"]],[10,"","不是……而是……","並列",["不是","而是"]],[10,"","雖然……卻……","轉折",["雖然","卻"]],[10,"","為了……","目的",["為了"]],[12,"","有時……有時……","並列",["有時","有時"]],[12,"","……但是……","轉折",["但是"]]],"六上":[[2,"","只要……就……","條件",["只要","就"]],[2,"","不管……一定……","條件",["不管","一定"]],[2,"","雖然……卻……","轉折",["雖然","卻"]],[3,"","有時……有時……","並列",["有時","有時"]],[3,"","不論……都……","條件",["不論","都"]],[4,"","若是……","假設",["若是"]],[5,"","不只是……而是……","遞進",["不只是","而是"]],[5,"","雖然……可是……","轉折",["雖然","可是"]],[5,"","……卻……","轉折",["卻"]],[6,"","如果……","假設",["如果"]],[6,"","不僅……也……","遞進",["不僅","也"]],[6,"","是……更是……","遞進",["是","更是"]],[7,"","若……就……","假設",["若","就"]],[7,"","一方面……另一方面……","並列",["一方面","另一方面"]],[8,"","即使……也……","假設",["即使","也"]],[8,"","如果……就……","假設",["如果","就"]],[9,"","一邊……一邊……","並列",["一邊","一邊"]],[9,"","……甚至……","遞進",["甚至"]],[9,"","不但……更……","遞進",["不但","更"]],[10,"","先……再……最後……","連貫",["先","再","最後"]],[10,"","除了……也……","遞進",["除了","也"]],[11,"","即便……也……","假設",["即便","也"]],[11,"","不是……而是……","並列",["不是","而是"]],[12,"","一……就……","連貫",["一","就"]],[12,"","……竟然……","轉折",["竟然"]]]}};
+const CATS={
+  "並列":{def:"兩件以上的事情排在一起說，彼此地位一樣，沒有誰比較重要。",tip:"像兩個好朋友手牽手，並排站。"},
+  "連貫":{def:"事情按照先後順序一件接一件發生（也叫承接複句）。",tip:"先做這個，接著做那個，像排隊一樣。"},
+  "轉折":{def:"後半句說的和前半句想的不一樣，意思轉了一個彎。",tip:"看到「卻、但、不過、可是」，意思就要轉彎了。"},
+  "因果":{def:"一半說原因，一半說結果。",tip:"像骨牌：推倒第一張（原因），最後一張就倒下（結果）。"},
+  "條件":{def:"有了前面的條件，才會出現後面的結果。",tip:"條件像鑰匙，插對了，鎖就打開。"},
+  "假設":{def:"先想像一種還沒發生的情況，再說會怎麼樣。",tip:"「如果」就是先在腦袋裡假裝一下。"},
+  "遞進":{def:"後半句比前半句更進一步，意思一層比一層深。",tip:"像爬樓梯，一階比一階高。"},
+  "目的":{def:"說明做一件事是為了什麼，或是為了避免什麼。",tip:"像射箭，先瞄準想要的目標。"},
+  "選擇":{def:"在兩件以上的事情裡，選出其中一個。",tip:"走到岔路口，要選一條路走。"}
+};
+const CAT_ORDER=Object.keys(CATS);
+const VERSIONS=["南一","康軒","翰林"];
+const GRADES=["一上","一下","二上","二下","三上","三下","四上","四下","五上","五下","六上","六下"];
+const col=c=>`var(--c-${c})`;
 
-let state = {ver:"nani", grade:"3上", from:1, to:6, view:"lesson"};
-try{ const s = JSON.parse(store.get("sp-state")||"null"); if(s) Object.assign(state,s); }catch(e){}
+/* ---------- 動畫 SVG ---------- */
+const SVG={
+"並列":`<svg viewBox="0 0 240 130"><g class="a bounce"><circle cx="85" cy="40" r="14" fill="#3b82c4"/><rect x="73" y="56" width="24" height="34" rx="10" fill="#3b82c4"/><rect x="75" y="88" width="7" height="24" rx="3" fill="#3b82c4"/><rect x="88" y="88" width="7" height="24" rx="3" fill="#3b82c4"/></g>
+<g class="a bounce"><circle cx="155" cy="40" r="14" fill="#5fa3e0"/><rect x="143" y="56" width="24" height="34" rx="10" fill="#5fa3e0"/><rect x="145" y="88" width="7" height="24" rx="3" fill="#5fa3e0"/><rect x="158" y="88" width="7" height="24" rx="3" fill="#5fa3e0"/></g>
+<path class="a bounce" d="M97 66 Q120 84 143 66" stroke="#3b82c4" stroke-width="6" fill="none" stroke-linecap="round"/>
+<text x="120" y="18" text-anchor="middle" font-size="22" class="a heart">💙</text>
+<text x="85" y="45" text-anchor="middle" font-size="12" fill="#fff">甲</text><text x="155" y="45" text-anchor="middle" font-size="12" fill="#fff">乙</text></svg>`,
+"連貫":`<svg viewBox="0 0 240 130"><g font-size="22" text-anchor="middle">
+<circle cx="64" cy="92" r="20" fill="#d9f0e2"/><circle cx="120" cy="92" r="20" fill="#d9f0e2"/><circle cx="176" cy="92" r="20" fill="#d9f0e2"/>
+<circle cx="64" cy="92" r="20" fill="#2e9d5b" class="lit1"/><circle cx="120" cy="92" r="20" fill="#2e9d5b" class="lit2"/><circle cx="176" cy="92" r="20" fill="#2e9d5b" class="lit3"/>
+<text x="64" y="100" fill="#fff">1</text><text x="120" y="100" fill="#fff">2</text><text x="176" y="100" fill="#fff">3</text>
+<text x="92" y="98" fill="#2e9d5b" font-size="18">➜</text><text x="148" y="98" fill="#2e9d5b" font-size="18">➜</text></g>
+<circle cx="64" cy="58" r="9" fill="#f2b632" class="a hop" style="--d:0"/>
+<text x="120" y="30" text-anchor="middle" font-size="18" fill="#2e9d5b">先→接著→最後</text></svg>`,
+"轉折":`<svg viewBox="0 0 240 130"><path d="M20 90 H140 Q190 90 190 55 Q190 22 150 22 H110" stroke="#f6c7a8" stroke-width="16" fill="none" stroke-linecap="round"/>
+<path class="draw" style="--len:330;stroke-dasharray:330" d="M20 90 H140 Q190 90 190 55 Q190 22 150 22 H110" stroke="#e2703a" stroke-width="7" fill="none" stroke-linecap="round"/>
+<path class="arrowhead" d="M112 12 L96 22 L112 32 Z" fill="#e2703a"/>
+<g class="a turnsign"><rect x="196" y="40" width="38" height="30" rx="8" fill="#e2703a"/><text x="215" y="62" text-anchor="middle" font-size="20" fill="#fff">卻</text></g>
+<text x="60" y="118" text-anchor="middle" font-size="16" fill="#b8501f">原本想的</text><text x="60" y="44" text-anchor="middle" font-size="16" fill="#b8501f">結果相反</text></svg>`,
+"因果":`<svg viewBox="0 0 240 130"><line x1="20" y1="104" x2="220" y2="104" stroke="#e6c3c3" stroke-width="4"/>
+<rect class="a dom1" style="transform-origin:right bottom" x="50" y="44" width="16" height="60" rx="3" fill="#d64545"/>
+<rect class="a dom2" style="transform-origin:right bottom" x="96" y="44" width="16" height="60" rx="3" fill="#e46a6a"/>
+<rect class="a dom3" style="transform-origin:right bottom" x="142" y="44" width="16" height="60" rx="3" fill="#ef9090"/>
+<text x="58" y="124" text-anchor="middle" font-size="16" fill="#d64545">原因</text>
+<g class="a res"><text x="200" y="80" text-anchor="middle" font-size="30">💥</text><text x="200" y="124" text-anchor="middle" font-size="16" fill="#d64545">結果</text></g>
+<text x="40" y="34" font-size="22" class="a">👉</text></svg>`,
+"條件":`<svg viewBox="0 0 240 130"><g><path class="a shackle" d="M138 58 V40 a22 22 0 0 1 44 0 V58" stroke="#8a63d2" stroke-width="9" fill="none"/>
+<rect x="128" y="56" width="64" height="52" rx="10" fill="#8a63d2"/><circle cx="160" cy="78" r="7" fill="#fff"/><rect x="157" y="80" width="6" height="14" fill="#fff"/></g>
+<g class="a key"><circle cx="80" cy="82" r="13" fill="none" stroke="#f2b632" stroke-width="7"/><rect x="92" y="78" width="58" height="8" rx="3" fill="#f2b632"/><rect x="134" y="86" width="6" height="10" fill="#f2b632"/><rect x="144" y="86" width="6" height="7" fill="#f2b632"/></g>
+<text x="214" y="40" font-size="26" text-anchor="middle" class="a star">⭐</text>
+<text x="70" y="40" text-anchor="middle" font-size="16" fill="#8a63d2">只要…就…</text></svg>`,
+"假設":`<svg viewBox="0 0 240 130"><circle cx="58" cy="92" r="24" fill="#1e9fb0"/><circle cx="50" cy="88" r="3" fill="#fff"/><circle cx="66" cy="88" r="3" fill="#fff"/><path d="M50 100 Q58 106 66 100" stroke="#fff" stroke-width="3" fill="none"/>
+<circle cx="88" cy="62" r="5" fill="#9ed8df" class="dot1"/><circle cx="102" cy="48" r="7" fill="#9ed8df" class="dot2"/>
+<g class="a cloud"><path d="M118 52 a18 18 0 0 1 22 -24 a22 22 0 0 1 40 -4 a18 18 0 0 1 30 18 a16 16 0 0 1 -8 30 h-78 a16 16 0 0 1 -6 -20 z" fill="#fff" stroke="#1e9fb0" stroke-width="3" stroke-dasharray="6 5"/>
+<text x="166" y="58" text-anchor="middle" font-size="22" fill="#1e9fb0">如果…？</text></g></svg>`,
+"遞進":`<svg viewBox="0 0 240 130"><path d="M40 118 H86 V88 H122 V58 H158 V28 H200 V118 Z" fill="#f7d3e5"/>
+<path d="M40 118 H86 V88 H122 V58 H158 V28 H200" stroke="#d4508f" stroke-width="4" fill="none"/>
+<text x="104" y="110" font-size="15" text-anchor="middle" fill="#d4508f">不但</text><text x="140" y="110" font-size="15" text-anchor="middle" fill="#d4508f">還</text><text x="178" y="110" font-size="15" text-anchor="middle" fill="#d4508f">更</text>
+<circle cx="64" cy="106" r="10" fill="#d4508f" class="a climb"/><text x="204" y="26" font-size="22" class="a flag">🚩</text></svg>`,
+"目的":`<svg viewBox="0 0 240 130"><g class="a target" style="transform-origin:center"><circle cx="180" cy="66" r="44" fill="#fff" stroke="#b8860b" stroke-width="4"/><circle cx="180" cy="66" r="30" fill="#f6e3b0"/><circle cx="180" cy="66" r="16" fill="#b8860b"/><circle cx="180" cy="66" r="6" fill="#fff"/></g>
+<g class="a arrow"><line x1="60" y1="66" x2="176" y2="66" stroke="#6b4e1a" stroke-width="5"/><path d="M176 58 L190 66 L176 74 Z" fill="#6b4e1a"/><path d="M60 66 L48 56 M60 66 L48 76 M70 66 L58 56 M70 66 L58 76" stroke="#d64545" stroke-width="4"/></g>
+<text x="60" y="30" text-anchor="middle" font-size="16" fill="#b8860b">為了…</text></svg>`,
+"選擇":`<svg viewBox="0 0 240 130"><path d="M120 128 V80 L80 36 M120 80 L160 36" stroke="#cdd3f5" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="signA"><rect x="44" y="8" width="56" height="28" rx="8" fill="#4c5fd5"/><text x="72" y="28" text-anchor="middle" font-size="18" fill="#fff">A 路</text></g>
+<g class="signB"><rect x="140" y="8" width="56" height="28" rx="8" fill="#8a97e8"/><text x="168" y="28" text-anchor="middle" font-size="18" fill="#fff">B 路</text></g>
+<circle cx="120" cy="118" r="10" fill="#4c5fd5" class="a walker"/><text x="190" y="104" text-anchor="middle" font-size="16" fill="#4c5fd5">選一條</text></svg>`
+};
+function playAnim(el){el.classList.remove("play");void el.offsetWidth;el.classList.add("play");}
 
-function book(){ const v = VERSIONS.find(v=>v.id===state.ver); return v && v.data[state.grade]; }
+/* ---------- 工具 ---------- */
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=a=>a[Math.random()*a.length|0];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function patHTML(p){return '<span class="pat">'+p.split("……").map(s=>s?`<span class="kw">${esc(s)}</span>`:"").join('<span class="dots">……</span>')+'</span>';}
+const badge=c=>`<span class="badge" style="background:${col(c)}">${c}</span>`;
 
-function fillSelectors(){
-  const has = v => Object.keys(v.data).length>0;
-  if(!VERSIONS.some(v=>v.id===state.ver && has(v))) state.ver = VERSIONS.find(has).id;
-  $("selVer").innerHTML = VERSIONS.map(v=>`<option value="${v.id}" ${has(v)?"":"disabled"}>${v.name}${has(v)?"":"（尚未建立）"}</option>`).join("");
-  $("selVer").value = state.ver;
-  const v = VERSIONS.find(v=>v.id===state.ver) || VERSIONS[0];
-  $("selGrade").innerHTML = GRADES.map(g=>`<option value="${g}" ${v.data[g]?"":"disabled"}>${gradeName(g)}${v.data[g]?"":"（尚未建立）"}</option>`).join("");
-  if(!v.data[state.grade]) state.grade = Object.keys(v.data)[0];
-  $("selGrade").value = state.grade;
-  const ls = book().lessons;
-  const opt = ls.map(l=>`<option value="${l.no}">第${l.no}課 ${l.title}</option>`).join("");
-  $("selFrom").innerHTML = opt; $("selTo").innerHTML = opt;
-  const max = ls[ls.length-1].no;
-  state.from = Math.min(Math.max(1,state.from),max); state.to = Math.min(Math.max(state.from,state.to),max);
-  $("selFrom").value = state.from; $("selTo").value = state.to;
+/* 全部資料的句型字串（用來避免填空題干擾選項也是正確句型） */
+const ALL_PATTERNS=new Set(), ALL_KWS=new Set();
+for(const v in DATA)for(const g in DATA[v])for(const r of DATA[v][g]){ALL_PATTERNS.add(r[2]);r[2].split("……").filter(Boolean).forEach(k=>ALL_KWS.add(k));}
+
+/* ---------- 音效 ---------- */
+let soundOn=true,actx=null;
+function beep(type){
+  if(!soundOn)return;
+  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const notes=type==="good"?[660,880]:type==="win"?[523,659,784,1046]:[220,180];
+    notes.forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type=type==="bad"?"square":"sine";o.frequency.value=f;
+      g.gain.setValueAtTime(.12,actx.currentTime+i*.1);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+i*.1+.18);
+      o.connect(g);g.connect(actx.destination);o.start(actx.currentTime+i*.1);o.stop(actx.currentTime+i*.1+.2);});
+  }catch(e){}
 }
+$("#soundBtn").onclick=()=>{soundOn=!soundOn;$("#soundBtn").textContent=soundOn?"🔊":"🔇";};
+function confetti(){const cs=["#e2703a","#2f8f83","#f2b632","#d4508f","#3b82c4","#8a63d2"];
+  for(let i=0;i<60;i++){const d=document.createElement("div");d.className="confetti";d.style.left=Math.random()*100+"vw";
+    d.style.background=pick(cs);d.style.animationDuration=(1.8+Math.random()*1.8)+"s";d.style.animationDelay=Math.random()*.5+"s";
+    document.body.appendChild(d);setTimeout(()=>d.remove(),4200);}}
 
-function selected(){
-  const b = book(); const out = [];
-  b.lessons.filter(l=>l.no>=state.from && l.no<=state.to).forEach(l=>l.patterns.forEach(p=>out.push({...p, lesson:l})));
+/* ---------- 狀態 ---------- */
+const state={ver:"南一",grades:new Set(),from:1,to:12};
+function hasData(v,g){return !!(DATA[v]&&DATA[v][g]&&DATA[v][g].length)}
+function rowsFor(ver,grades,from,to){
+  const out=[];
+  for(const g of GRADES){if(!grades.has(g)||!hasData(ver,g))continue;
+    for(const r of DATA[ver][g]){if(grades.size===1&&(r[0]<from||r[0]>to))continue;
+      out.push({g,l:r[0],t:r[1],p:r[2],cat:r[3],kws:r[4]});}}
   return out;
 }
+function poolOf(rows){const m=new Map();
+  for(const r of rows){if(!m.has(r.p))m.set(r.p,{p:r.p,cat:r.cat,where:[]});m.get(r.p).where.push(r.g+"第"+r.l+"課");}
+  return [...m.values()];}
 
-function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-// 依序在句子中找出關鍵詞位置
-function locate(s, kws){
-  const pos=[]; let from=0;
-  for(const k of kws){ const i=s.indexOf(k,from); if(i<0) return null; pos.push([i,i+k.length]); from=i+k.length; }
-  return pos;
+/* ---------- 首頁 ---------- */
+function renderHome(){
+  $("#verChoices").innerHTML=VERSIONS.map(v=>{const ok=!!DATA[v];
+    return `<button class="choice ${state.ver===v?"on":""}" data-v="${v}" ${ok?"":"disabled"}>${v}${ok?"":"<small>資料準備中</small>"}</button>`}).join("");
+  $("#gradeChoices").innerHTML=GRADES.map(g=>{const ok=hasData(state.ver,g);
+    return `<button class="choice ${state.grades.has(g)?"on":""}" data-g="${g}" ${ok?"":"disabled"}>${g}<small>${ok?DATA[state.ver][g].length+" 個":"準備中"}</small></button>`}).join("");
+  document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{state.ver=b.dataset.v;state.grades.clear();renderHome();});
+  document.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{const g=b.dataset.g;state.grades.has(g)?state.grades.delete(g):state.grades.add(g);renderHome();});
+  $("#goBtn").disabled=state.grades.size===0;$("#wsHomeBtn").disabled=state.grades.size===0;
+  const one=state.grades.size===1;
+  $("#rangeBox").classList.toggle("hidden",!one);
+  if(one){const g=[...state.grades][0];const ls=[...new Set(DATA[state.ver][g].map(r=>r[0]))].sort((a,b)=>a-b);
+    const mx=Math.max(...ls),mn=Math.min(...ls);
+    if(state.from<mn||state.from>mx)state.from=mn; if(state.to>mx||state.to<mn)state.to=mx;
+    const opts=sel=>Array.from({length:mx-mn+1},(_,i)=>i+mn).map(n=>`<option ${n===sel?"selected":""}>${n}</option>`).join("");
+    $("#fromL").innerHTML=opts(state.from);$("#toL").innerHTML=opts(state.to);}
+  $("#brawlBtn").disabled=!DATA[state.ver];
 }
-function highlight(s,kws){
-  let pos = locate(s,kws);
-  if(!pos){ pos=[]; let from=0; for(const k of kws){const i=s.indexOf(k,from); if(i>=0){pos.push([i,i+k.length]);from=i+k.length;}} }
-  let out="",last=0; for(const [a,b] of pos){ out+=esc(s.slice(last,a))+"<mark>"+esc(s.slice(a,b))+"</mark>"; last=b; }
-  return out+esc(s.slice(last));
-}
-const cc = cat => `style="--cc:var(--c-${cat})"`;
+$("#fromL").onchange=e=>{state.from=+e.target.value;if(state.to<state.from)state.to=state.from;renderHome();};
+$("#toL").onchange=e=>{state.to=+e.target.value;if(state.from>state.to)state.from=state.to;renderHome();};
+$("#allGrades").onclick=()=>{GRADES.forEach(g=>hasData(state.ver,g)&&state.grades.add(g));renderHome();};
+$("#noGrades").onclick=()=>{state.grades.clear();renderHome();};
+$("#goBtn").onclick=()=>{state.from=+$("#fromL").value||1;state.to=+$("#toL").value||12;openMain();};
+$("#brawlBtn").onclick=()=>startBrawl("home");
+$("#backHome").onclick=()=>show("home");
+$("#logo").onclick=()=>show("home");
 
-function renderSummary(){
-  const pats = selected(); const cats = [...new Set(pats.map(p=>p.cat))];
-  const v = VERSIONS.find(v=>v.id===state.ver);
-  $("summary").innerHTML = `目前範圍：<b>${v.name}版・${gradeName(state.grade)}・第${state.from}～${state.to}課</b>，共 <b>${pats.length}</b> 個句型，包含 ${cats.length} 種複句。`;
-}
+function show(id){["home","main","game"].forEach(s=>$("#"+s).classList.toggle("hidden",s!==id));window.scrollTo(0,0);
+  if(id==="home")renderHome();}
 
-function renderLearn(){
-  const pats = selected(); const C = book().categories;
-  if(!pats.length){ $("panelLearn").innerHTML = `<div class="card empty">這個範圍沒有句型，換幾課看看吧！</div>`; return; }
-  const cats = Object.keys(C).filter(c=>pats.some(p=>p.cat===c));
-  let h = `<div class="card intro"><h2>什麼是複句？</h2>
-    <p>把兩個（或更多）意思相關的句子，用<b>關鍵詞</b>連起來，變成一個比較長、意思更完整的句子，就叫做<b>複句</b>。</p>
-    <div class="formula"><span class="box">句子一</span><span class="glue">關鍵詞</span><span class="box">句子二</span><span>＝ 複句</span></div>
-    <p>看到關鍵詞，就能猜出兩個句子是什麼關係。這個範圍會學到 ${cats.length} 種：</p>
-    <div class="catgrid">${cats.map(c=>`<button class="cat" data-anim="${c}" ${cc(c)}><b>${c}複句</b><p>${C[c].def}</p><p class="tip">小提示：${C[c].tip}</p><span class="play">▶ 點我看記憶動畫</span></button>`).join("")}</div></div>`;
-  h += `<div class="viewtoggle">排列方式：<button class="chipbtn" data-view="lesson" aria-pressed="${state.view==="lesson"}">依課次</button><button class="chipbtn" data-view="cat" aria-pressed="${state.view==="cat"}">依複句類別</button></div>`;
-  const patHTML = (p,showLesson) => `<div class="pat" ${cc(p.cat)}>
-      <div><div class="name">${p.p}</div><span class="pill">${p.cat}複句</span>${showLesson?`<span class="lessontag">第${p.lesson.no}課</span>`:""}</div>
-      <div>${p.ex.map((e,i)=>`<p class="ex"><span class="src">${p.srcs?p.srcs[i]:(i?"補充":"課文")}</span>${highlight(e,p.kw)}</p>`).join("")}
-      ${p.note?`<p class="note">注意：${p.note}</p>`:""}</div></div>`;
-  if(state.view==="lesson"){
-    book().lessons.filter(l=>l.no>=state.from&&l.no<=state.to).forEach(l=>{
-      h += `<div class="card"><div class="group-h"><h3>第${l.no}課　${l.title}</h3><small>${l.unit}</small></div>
-        ${l.patterns.length? l.patterns.map(p=>patHTML({...p,lesson:l},false)).join("") : `<p class="note">這一課沒有列出句型。</p>`}</div>`;
-    });
-  } else {
-    cats.forEach(c=>{
-      const ps = pats.filter(p=>p.cat===c);
-      h += `<div class="card"><div class="group-h"><h3 style="color:var(--c-${c})">${c}複句</h3><small>${C[c].def}</small></div>${ps.map(p=>patHTML(p,true)).join("")}</div>`;
-    });
+/* ---------- 學習頁 ---------- */
+let ROWS=[],POOL=[],listMode="cat";
+function openMain(){
+  ROWS=rowsFor(state.ver,state.grades,state.from,state.to);POOL=poolOf(ROWS);
+  const gs=GRADES.filter(g=>state.grades.has(g));
+  let tags=`<span class="tag">${state.ver}</span> `+gs.map(g=>`<span class="tag">${g}</span>`).join(" ");
+  if(gs.length===1)tags+=` <span class="tag">第${state.from}～${state.to}課</span>`;
+  tags+=` <span class="tag">共 ${POOL.length} 個句型</span>`;
+  $("#crumbTags").innerHTML=tags;
+  renderList();renderCards();renderGames();setTab("list");show("main");
+}
+function setTab(t){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
+  ["list","cards","games"].forEach(x=>$("#tab-"+x).classList.toggle("hidden",x!==t));
+  if(t==="cards")document.querySelectorAll(".ccard .stage").forEach((s,i)=>setTimeout(()=>playAnim(s),i*150));}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+document.querySelectorAll("#listMode button").forEach(b=>b.onclick=()=>{listMode=b.dataset.m;
+  document.querySelectorAll("#listMode button").forEach(x=>x.classList.toggle("on",x===b));renderList();});
+
+function renderList(){
+  let h="";
+  if(listMode==="cat"){
+    for(const c of CAT_ORDER){const ps=POOL.filter(x=>x.cat===c);if(!ps.length)continue;
+      h+=`<div class="group"><div class="group-h" style="background:${col(c)}">${c}複句<span class="cnt">${ps.length} 個</span></div><ul class="plist">`+
+        ps.map(x=>`<li>${patHTML(x.p)}<span class="where">${x.where.join("、")}</span></li>`).join("")+`</ul></div>`;}
+  }else{
+    const groups=new Map();
+    for(const r of ROWS){const k=r.g+"|"+r.l;if(!groups.has(k))groups.set(k,{g:r.g,l:r.l,t:r.t,items:[]});groups.get(k).items.push(r);}
+    for(const gp of groups.values())
+      h+=`<div class="group"><div class="group-h plain">${gp.g}　第 ${gp.l} 課${gp.t?"　"+esc(gp.t):""}<span class="cnt" style="background:#e8d9bd">${gp.items.length} 個</span></div><ul class="plist">`+
+        gp.items.map(r=>`<li>${patHTML(r.p)}${badge(r.cat)}</li>`).join("")+`</ul></div>`;
   }
-  $("panelLearn").innerHTML = h;
-  $("panelLearn").querySelectorAll("[data-anim]").forEach(b=>b.onclick=()=>openAnim(b.dataset.anim));
-  $("panelLearn").querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{state.view=b.dataset.view;save();renderLearn();});
+  $("#listBox").innerHTML=h||"<p>這個範圍沒有句型。</p>";
+}
+function renderCards(){
+  $("#cardBox").innerHTML=CAT_ORDER.map(c=>{const ps=POOL.filter(x=>x.cat===c);
+    return `<div class="ccard" style="--cc:${col(c)}"><div class="stage" data-c="${c}">${SVG[c]}<span class="replay">↻ 再看一次</span></div>
+    <div class="body"><h3>${c}複句</h3><div class="def">${CATS[c].def}</div><div class="tip">💡 ${CATS[c].tip}</div>
+    ${ps.length?`<div class="chips">${ps.map(x=>`<span>${esc(x.p)}</span>`).join("")}</div>`:`<div class="none">這個範圍還沒有出現${c}複句。</div>`}</div></div>`}).join("");
+  document.querySelectorAll(".ccard .stage").forEach(s=>s.onclick=()=>playAnim(s));
 }
 
-/* ---------- 測驗 ---------- */
-const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
-// 填空題時，意思容易互通的類別不拿來當干擾選項
-const CLOSE = [["假設","條件"],["並列","遞進"],["因果","目的"]];
-// 太萬用的單字（很多句子放進去都通），不當干擾選項
-const FLEX = ["也","還","再","但","不過"];
-const close = (a,b) => a===b || CLOSE.some(([x,y])=>(a===x&&b===y)||(a===y&&b===x));
-const kwLabel = p => p.kw.join("……");
+/* ---------- 遊戲區 ---------- */
+const GAMES=[
+  {id:"mc",em:"⚡",name:"快問快答",desc:"看句型，選出它是哪一種複句。"},
+  {id:"sort",em:"🧺",name:"分類籃",desc:"點句型，再點籃子，把句型放回家。"},
+  {id:"mem",em:"🃏",name:"翻牌配對",desc:"翻開兩張牌，句型和複句類別配成一對。"},
+  {id:"bub",em:"🫧",name:"泡泡抓抓樂",desc:"限時！只戳破指定類別的泡泡。"},
+  {id:"brawl",em:"🏆",name:"學力檢測大亂鬥",desc:"111～115 年學力檢測考過的複句題，三顆愛心闖關。"}
+];
+function renderGames(){
+  $("#gameBox").innerHTML=GAMES.map(g=>`<button class="gtile ${g.id==="brawl"?"brawl":""}" data-game="${g.id}"><div class="em">${g.em}</div><b>${g.name}</b><span>${g.desc}</span></button>`).join("");
+  document.querySelectorAll("[data-game]").forEach(b=>b.onclick=()=>startGame(b.dataset.game,POOL));
+}
+let G=null; // 目前遊戲
+let backTo="main";
+function clearTimers(){if(G&&G.timers)G.timers.forEach(t=>{clearInterval(t);clearTimeout(t)});}
+$("#quitGame").onclick=()=>{clearTimers();G=null;show(backTo);};
+function startGame(id,pool,opts={}){
+  clearTimers();
+  if(id==="brawl")return startBrawl("main");
+  backTo="main";
+  const fn={mc:gameMC,sort:gameSort,mem:gameMem,fill:gameFill,bub:gameBubble}[id];
+  $("#gHearts").textContent="";setProg(0);
+  $("#gTitle").textContent=GAMES.find(g=>g.id===id).name;
+  show("game");fn(pool,opts);
+}
+function setProg(r){$("#gProg").style.width=Math.round(r*100)+"%";}
+function notEnough(msg){$("#gBody").innerHTML=`<div class="panel"><p style="font-size:22px">${msg}</p><button class="btn2" onclick="document.getElementById('quitGame').click()">回上一頁</button></div>`;}
 
-function buildQuiz(){
-  const pats = selected(); if(!pats.length) return [];
-  const all = book().lessons.flatMap(l=>l.patterns);
-  const cats = Object.keys(book().categories);
-  const items = [];
-  pats.forEach(p=>p.ex.forEach(e=>{
-    items.push({kind:"cat",p,e});
-    if(locate(e,p.kw)) items.push({kind:"fill",p,e});
-  }));
-  // 盡量讓每個句型都出現、兩種題型混合
-  let pool = shuffle(items), chosen=[], usedEx=new Set(), usedPat=new Map();
-  for(const round of [1,2,3]){
-    for(const it of pool){
-      if(chosen.length>=10) break;
-      if(chosen.includes(it)) continue;
-      const n = usedPat.get(it.p.p)||0;
-      if(round===1 && (n>0 || usedEx.has(it.e))) continue;
-      if(round===2 && usedEx.has(it.e)) continue;
-      chosen.push(it); usedEx.add(it.e); usedPat.set(it.p.p,n+1);
-    }
+/* 題目產生器 */
+function catOptions(ans,pool){
+  const present=[...new Set(pool.map(x=>x.cat))];
+  const base=present.length>=4?present:CAT_ORDER;
+  return shuffle([ans,...shuffle(base.filter(c=>c!==ans)).slice(0,3)]);
+}
+function makeMC(x,pool){return {type:"mc",x,ask:"這個句型是哪一種複句？",show:patHTML(x.p),opts:catOptions(x.cat,pool),ans:x.cat};}
+function fillable(pool){return pool.filter(x=>x.p.split("……").filter(Boolean).length>=2);}
+function makeFill(x){
+  const seg=x.p.split("……");const idxs=seg.map((s,i)=>s?i:-1).filter(i=>i>=0);
+  const bi=pick(idxs.slice(1).length?idxs.slice(1):idxs);const ans=seg[bi];
+  const cand=shuffle([...ALL_KWS]).filter(k=>{if(k===ans)return false;const t=seg.slice();t[bi]=k;return !ALL_PATTERNS.has(t.join("……"));});
+  const showH='<span class="pat">'+seg.map((s,i)=>i===bi?'<span class="blank">？</span>':(s?`<span class="kw">${esc(s)}</span>`:"")).join('<span class="dots">……</span>')+'</span>';
+  return {type:"fill",x,ask:"空格裡應該填哪一個關鍵詞？",show:showH,opts:shuffle([ans,...cand.slice(0,3)]),ans};
+}
+function makeTF(x){const truth=Math.random()<.5;const claim=truth?x.cat:pick(CAT_ORDER.filter(c=>c!==x.cat));
+  return {type:"tf",x,ask:`這個句型是「${claim}複句」嗎？`,show:patHTML(x.p),opts:["⭕","❌"],ans:truth?"⭕":"❌"};}
+function makeOdd(pool){
+  const by={};pool.forEach(x=>(by[x.cat]=by[x.cat]||[]).push(x));
+  const big=Object.keys(by).filter(c=>by[c].length>=3);if(!big.length)return null;
+  const c=pick(big);const three=shuffle(by[c]).slice(0,3);const others=pool.filter(x=>x.cat!==c);if(!others.length)return null;
+  const odd=pick(others);
+  return {type:"odd",x:odd,ask:"哪一個句型和其他三個「不是同一類」？",show:"",opts:shuffle([...three,odd].map(y=>y.p)),ans:odd.p,group:c};
+}
+
+/* 通用問答流程（快問快答、接龍、大亂鬥共用） */
+function runQuiz(qs,{title,hearts=0,onEnd}){
+  let i=0,score=0,combo=0,life=hearts;const wrongs=[];
+  const H=()=>{$("#gHearts").textContent=hearts?"❤️".repeat(life)+"🤍".repeat(hearts-life):"";};
+  H();
+  function render(){
+    if(i>=qs.length||(hearts&&life<=0))return onEnd({score,total:qs.length,answered:i,wrongs,life});
+    setProg(i/qs.length);const q=qs[i];
+    const optsH=q.type==="exam"?`<div class="opts1">${q.opts.map((o,k)=>`<button class="opt" data-o="${k}"><b>${CIRC[k]}</b> ${esc(o)}</button>`).join("")}</div>`
+      :q.type==="tf"?`<div class="tf">${q.opts.map(o=>`<button class="opt" data-o="${esc(o)}">${o}</button>`).join("")}</div>`
+      :`<div class="${q.type==="odd"?"oddgrid":"opts"}">${q.opts.map(o=>`<button class="opt" data-o="${esc(o)}">${q.type==="odd"?patHTML(o):esc(o)}</button>`).join("")}</div>`;
+    $("#gBody").innerHTML=q.type==="exam"?`<div class="panel exam"><div class="qlabel">第 ${i+1} / ${qs.length} 題</div>
+      <div class="examtag">📝 ${q.y} 年學力檢測・${q.g}年級・第 ${q.no} 題</div><div class="stem">${q.stem}</div>${q.box?`<div class="examBox">${esc(q.box)}</div>`:""}
+      ${optsH}<div class="feedback" id="fb"></div></div>`:`<div class="panel"><div class="qlabel">第 ${i+1} / ${qs.length} 題　${q.ask}</div>
+      ${q.show?`<div class="qbig">${q.show}</div>`:"<div style='height:14px'></div>"}${optsH}<div class="feedback" id="fb"></div></div>`;
+    document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(b,q));
   }
-  return shuffle(chosen).map(it=>{
-    if(it.kind==="cat"){
-      const opts = shuffle([it.p.cat, ...shuffle(cats.filter(c=>c!==it.p.cat)).slice(0,3)]);
-      return {...it, q:highlight(it.e,it.p.kw), opts:opts.map(c=>c+"複句"), ans:it.p.cat+"複句",
-        why:`關鍵詞是「${kwLabel(it.p)}」，${book().categories[it.p.cat].def}`};
-    }
-    const pos = locate(it.e,it.p.kw); let q="",last=0;
-    pos.forEach(([a,b])=>{ q+=esc(it.e.slice(last,a))+`<span class="blank">？</span>`; last=b; }); q+=esc(it.e.slice(last));
-    const right = it.p.kw.join("／");
-    const seen = new Set([right]);
-    // 干擾選項：不同類別、空格數一樣的優先；單一個字太萬用，不拿來當干擾
-    const cands = shuffle(all.filter(o=>!close(o.cat,it.p.cat)));
-    const same = cands.filter(o=>o.kw.length===it.p.kw.length), rest = cands.filter(o=>o.kw.length!==it.p.kw.length);
-    const wrong=[]; for(const o of [...same,...rest]){ const s=o.kw.join("／"); if(!seen.has(s) && s.length>1 && !FLEX.includes(s)){seen.add(s);wrong.push(s);} if(wrong.length===3) break; }
-    return {...it, q, opts:shuffle([right,...wrong]), ans:right,
-      why:`這是「${it.p.p}」的${it.p.cat}複句。完整句子：${it.e}`};
+  function answer(b,q){
+    document.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+    const ok=b.dataset.o===String(q.ans);
+    document.querySelectorAll(".opt").forEach(x=>{if(x.dataset.o===String(q.ans))x.classList.add("right")});
+    let exp="";
+    if(q.type==="exam")exp=`正確答案是 <b>${CIRC[q.ans]}</b>。${q.exp}`;
+    else if(q.type==="odd")exp=`其他三個都是${badge(q.group)}，${patHTML(q.ans)} 是 ${badge(q.x.cat)}。`;
+    else if(q.type==="fill")exp=`完整句型：${patHTML(q.x.p)} ${badge(q.x.cat)}`;
+    else exp=`${patHTML(q.x.p)} 是 ${badge(q.x.cat)}：${CATS[q.x.cat].tip}`;
+    if(ok){score++;combo++;beep("good");}
+    else{b.classList.add("wrong");combo=0;beep("bad");wrongs.push(q.type==="exam"?q:q.x);if(hearts){life--;H();}}
+    $("#fb").innerHTML=(ok?`<div class="ok">答對了！${combo>=3?`<span class="combo">🔥 連續 ${combo} 題</span>`:""}</div>`:`<div class="no">再想想看</div>`)+
+      `<div>${exp}</div><button class="nextbtn" id="nx">${i+1>=qs.length||(hearts&&life<=0)?"看成績":"下一題 →"}</button>`;
+    $("#nx").onclick=()=>{i++;render();};
+  }
+  render();
+}
+
+function resultPanel({title,line,stars,rank,wrongs=[],retry,retryWrong}){
+  setProg(1);
+  const uniq=[...new Map(wrongs.map(w=>[w.p||w.id,w])).values()];
+  const isExam=uniq.length&&uniq[0].type==="exam";
+  $("#gBody").innerHTML=`<div class="panel result">
+    ${stars!=null?`<div class="stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div>`:""}
+    <h3>${title}</h3>${rank?`<div class="rank">${rank}</div>`:""}<p style="font-size:22px">${line}</p>
+    ${uniq.length?`<div class="wronglist"><b>${isExam?"要再看一次的考題：":"要再複習的句型："}</b><ul>${uniq.map(w=>isExam?`<li>${w.y} 年${w.g}年級第 ${w.no} 題：答案 ${CIRC[w.ans]}，${w.key}</li>`:`<li>${patHTML(w.p)} ${badge(w.cat)}</li>`).join("")}</ul></div>`:""}
+    <div class="btnrow">${uniq.length&&retryWrong?`<button class="btn2 primary" id="rw">${isExam?"只練錯的考題":"只練錯的句型"}</button>`:""}
+    <button class="btn2 ${uniq.length&&retryWrong?"":"primary"}" id="ra">再玩一次</button><button class="btn2" id="rb">回去</button></div></div>`;
+  if(stars===3||(rank&&stars>=2))confetti();beep("win");
+  $("#ra").onclick=retry;$("#rb").onclick=()=>$("#quitGame").click();
+  if($("#rw"))$("#rw").onclick=()=>retryWrong(uniq);
+}
+const starOf=(s,t)=>t?(s/t>=.9?3:s/t>=.6?2:s/t>0?1:0):0;
+
+/* 1. 快問快答 */
+function gameMC(pool){
+  if(pool.length<1)return notEnough("句型太少，請多選幾個年段或課次。");
+  const qs=shuffle(pool).slice(0,10).map(x=>makeMC(x,pool));
+  runQuiz(qs,{onEnd:r=>resultPanel({title:"快問快答完成！",line:`答對 ${r.score} / ${r.total} 題`,stars:starOf(r.score,r.total),wrongs:r.wrongs,
+    retry:()=>startGame("mc",pool),retryWrong:w=>{$("#gTitle").textContent="快問快答（錯題再練）";gameMC2(w,pool)}})});
+}
+function gameMC2(w,pool){const qs=shuffle(w).map(x=>makeMC(x,pool));
+  runQuiz(qs,{onEnd:r=>resultPanel({title:"錯題再練完成！",line:`答對 ${r.score} / ${r.total} 題`,stars:starOf(r.score,r.total),wrongs:r.wrongs,
+    retry:()=>startGame("mc",pool),retryWrong:ww=>gameMC2(ww,pool)})});}
+
+/* 4. 關鍵詞接龍 */
+function gameFill(pool){
+  const fp=fillable(pool);if(fp.length<2)return notEnough("這個範圍可以接龍的句型太少，請多選幾個年段或課次。");
+  const qs=shuffle(fp).slice(0,10).map(makeFill);
+  runQuiz(qs,{onEnd:r=>resultPanel({title:"接龍完成！",line:`答對 ${r.score} / ${r.total} 題`,stars:starOf(r.score,r.total),wrongs:r.wrongs,
+    retry:()=>startGame("fill",pool),retryWrong:w=>{const q2=shuffle(w).map(makeFill);runQuiz(q2,{onEnd:r2=>resultPanel({title:"錯題再練完成！",line:`答對 ${r2.score} / ${r2.total} 題`,stars:starOf(r2.score,r2.total),wrongs:r2.wrongs,retry:()=>startGame("fill",pool)})})}})});
+}
+
+/* 2. 分類籃 */
+function gameSort(pool){
+  const by={};pool.forEach(x=>(by[x.cat]=by[x.cat]||[]).push(x));
+  let cs=shuffle(Object.keys(by).filter(c=>by[c].length>=2)).slice(0,3);
+  if(cs.length<2)cs=shuffle(Object.keys(by)).slice(0,3);
+  if(cs.length<2)return notEnough("這個範圍的複句種類太少，請多選幾個年段或課次。");
+  const items=shuffle(cs.flatMap(c=>shuffle(by[c]).slice(0,3)));
+  let sel=null,done=0,miss=0;const wrongs=[];
+  $("#gBody").innerHTML=`<p class="hint" style="text-align:center">先點一個句型，再點它屬於的籃子。</p>
+    <div class="baskets" style="grid-template-columns:repeat(${cs.length},1fr)">${cs.map(c=>`<button class="basket" data-c="${c}" style="--cc:${col(c)}"><span class="bi">🧺</span>${c}<div class="got"></div></button>`).join("")}</div>
+    <div class="tiles">${items.map((x,i)=>`<button class="tile" data-i="${i}">${esc(x.p)}</button>`).join("")}</div><div class="feedback" id="fb" style="text-align:center"></div>`;
+  document.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tile").forEach(x=>x.classList.remove("sel"));
+    t.classList.add("sel");sel=t;document.querySelectorAll(".basket").forEach(b=>b.classList.add("ready"));});
+  document.querySelectorAll(".basket").forEach(b=>b.onclick=()=>{
+    if(!sel)return;const x=items[+sel.dataset.i];
+    if(x.cat===b.dataset.c){beep("good");sel.classList.add("bye");const t=sel;setTimeout(()=>t.remove(),400);
+      b.querySelector(".got").insertAdjacentHTML("beforeend",`<span>${esc(x.p)}</span>`);done++;setProg(done/items.length);
+      $("#fb").innerHTML=`<span class="ok" style="color:var(--good)">放對了！</span>`;
+      sel=null;document.querySelectorAll(".basket").forEach(k=>k.classList.remove("ready"));
+      if(done===items.length)setTimeout(()=>resultPanel({title:"全部分類完成！",line:`放錯 ${miss} 次`,stars:miss===0?3:miss<=2?2:1,wrongs,
+        retry:()=>startGame("sort",pool)}),600);
+    }else{beep("bad");miss++;if(!wrongs.includes(x))wrongs.push(x);sel.classList.remove("sel");void sel.offsetWidth;sel.style.animation="shake .4s";
+      const t=sel;setTimeout(()=>t.style.animation="",400);
+      $("#fb").innerHTML=`<span style="color:var(--bad)">「${esc(x.p)}」不是${b.dataset.c}複句，再試試看！</span>`;
+      sel=null;document.querySelectorAll(".basket").forEach(k=>k.classList.remove("ready"));}
   });
 }
 
-let quiz=null;
-function startQuiz(){ quiz={qs:buildQuiz(), i:0, res:[]}; renderQuiz(); }
-function renderQuiz(){
-  const P = $("panelQuiz");
-  if(!quiz || !quiz.qs.length){ P.innerHTML = `<div class="card empty">這個範圍沒有句型可以出題，換幾課看看吧！</div>`; return; }
-  const {qs,i,res} = quiz;
-  const dots = qs.map((_,k)=>`<span class="dot ${res[k]===true?"ok":res[k]===false?"bad":k===i?"now":""}"></span>`).join("");
-  if(i>=qs.length){
-    const n = res.filter(Boolean).length;
-    const msg = n===qs.length?"全對！你是句型小達人":n>=qs.length*0.8?"很棒！再看一下錯的題目就更完美了。":n>=qs.length*0.6?"不錯喔！回到教學頁複習一下吧。":"別灰心，先回教學頁看看關鍵詞，再來挑戰！";
-    const wrongs = qs.map((q,k)=>({q,k})).filter(x=>res[x.k]===false);
-    P.innerHTML = `<div class="card" style="text-align:center"><div class="qtype">測驗結果</div>
-      <div class="score">${n} / ${qs.length}</div><p>${msg}</p><div class="progress" style="justify-content:center">${dots}</div>
-      ${wrongs.length?`<div class="review" style="text-align:left"><b>訂正一下：</b>${wrongs.map(({q})=>`<div class="item"><div class="s">${highlight(q.e,q.p.kw)}</div>正確答案：${q.ans}</div>`).join("")}</div>`:""}
-      <div class="actions" style="justify-content:center"><button class="btn ghost" id="goLearn">回教學複習</button><button class="btn" id="again">再測一次</button></div></div>`;
-    $("again").onclick=startQuiz; $("goLearn").onclick=()=>switchTab("learn");
-    return;
-  }
-  const q = qs[i]; const done = res[i]!==undefined;
-  P.innerHTML = `<div class="card"><div class="qhead"><span class="qtype">第 ${i+1} 題／共 ${qs.length} 題・${q.kind==="cat"?"判斷複句類別":"填入關鍵詞"}</span><div class="progress">${dots}</div></div>
-    <p style="margin:10px 0 0;color:var(--muted);font-size:15px">${q.kind==="cat"?"下面這個句子是哪一種複句？（黃色是關鍵詞）":"空格裡應該填入哪一組關鍵詞？"}</p>
-    <div class="qtext">${q.q}</div>
-    <div class="opts">${q.opts.map((o,k)=>`<button class="opt" data-o="${esc(o)}" ${done?"disabled":""}><span class="k">${"ABCD"[k]}</span><span>${esc(o)}</span></button>`).join("")}</div>
-    <div id="fb"></div>
-    <div class="actions"><button class="btn" id="next" ${done?"":"hidden"}>${i===qs.length-1?"看結果":"下一題"}</button></div></div>`;
-  P.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
-    if(quiz.res[i]!==undefined) return;
-    const ok = b.dataset.o===q.ans; quiz.res[i]=ok;
-    P.querySelectorAll(".opt").forEach(x=>{x.disabled=true; if(x.dataset.o===q.ans) x.classList.add("right");});
-    if(!ok) b.classList.add("wrong");
-    $("fb").innerHTML = `<div class="feedback ${ok?"ok":"bad"}"><b>${ok?"答對了！":"再想想，正確答案是「"+esc(q.ans)+"」"}</b><span class="why">${esc(q.why)}</span></div>`;
-    P.querySelector(".progress").innerHTML = qs.map((_,k)=>`<span class="dot ${quiz.res[k]===true?"ok":quiz.res[k]===false?"bad":k===i?"now":""}"></span>`).join("");
-    $("next").hidden=false; $("next").focus();
+/* 3. 翻牌配對 */
+function gameMem(pool){
+  const by={};pool.forEach(x=>(by[x.cat]=by[x.cat]||[]).push(x));
+  const cs=shuffle(Object.keys(by)).slice(0,6);
+  if(cs.length<3)return notEnough("這個範圍的複句種類太少，請多選幾個年段或課次。");
+  const pairs=cs.map(c=>pick(by[c]));
+  const cards=shuffle([...pairs.map(x=>({k:x.cat,kind:"p",txt:x.p})),...cs.map(c=>({k:c,kind:"c",txt:c}))]);
+  let open=[],moves=0,matched=0,lock=false,sec=0;
+  $("#gBody").innerHTML=`<div class="stat"><span>翻牌次數：<b id="mv">0</b></span><span>時間：<b id="tm">0</b> 秒</span></div>
+    <div class="mem">${cards.map((c,i)=>`<button class="mcard" data-i="${i}"><div class="in"><div class="f">？</div>
+      <div class="b ${c.kind==="c"?"cat":""}" ${c.kind==="c"?`style="background:${col(c.k)}"`:""}>${c.kind==="c"?c.txt+"複句":esc(c.txt)}</div></div></button>`).join("")}</div>`;
+  G={timers:[setInterval(()=>{sec++;const t=$("#tm");if(t)t.textContent=sec;},1000)]};
+  document.querySelectorAll(".mcard").forEach(el=>el.onclick=()=>{
+    if(lock||el.classList.contains("flip")||el.classList.contains("done"))return;
+    el.classList.add("flip");open.push(el);
+    if(open.length===2){moves++;$("#mv").textContent=moves;lock=true;
+      const [a,b]=open.map(e=>cards[+e.dataset.i]);
+      if(a.k===b.k&&a.kind!==b.kind){beep("good");setTimeout(()=>{open.forEach(e=>{e.classList.remove("flip");e.classList.add("done")});open=[];lock=false;matched++;setProg(matched/cs.length);
+        if(matched===cs.length){clearTimers();setTimeout(()=>resultPanel({title:"全部配對成功！",line:`翻了 ${moves} 次，用了 ${sec} 秒`,stars:moves<=cs.length+2?3:moves<=cs.length*2?2:1,retry:()=>startGame("mem",pool)}),500);}},450);}
+      else{setTimeout(()=>{beep("bad");open.forEach(e=>e.classList.remove("flip"));open=[];lock=false;},900);}
+    }
   });
-  $("next").onclick=()=>{quiz.i++; renderQuiz(); window.scrollTo({top:$("panelQuiz").offsetTop-20});};
 }
 
-function switchTab(t){
-  const learn = t==="learn";
-  $("tabLearn").setAttribute("aria-selected",learn); $("tabQuiz").setAttribute("aria-selected",!learn);
-  $("panelLearn").hidden=!learn; $("panelQuiz").hidden=learn;
-  if(!learn && !quiz) startQuiz();
+/* 5. 泡泡抓抓樂 */
+function gameBubble(pool){
+  const by={};pool.forEach(x=>(by[x.cat]=by[x.cat]||[]).push(x));
+  const targets=shuffle(Object.keys(by).filter(c=>by[c].length>=1)).slice(0,3);
+  if(Object.keys(by).length<2)return notEnough("這個範圍的複句種類太少，請多選幾個年段或課次。");
+  let round=0,score=0,good=0,bad=0;const wrongs=[];G={timers:[]};
+  function startRound(){
+    if(round>=targets.length){clearTimers();return resultPanel({title:"泡泡抓抓樂結束！",line:`得分 ${score}（戳對 ${good} 個、戳錯 ${bad} 個）`,stars:score>=good*0.8&&good>=10?3:score>=6?2:score>0?1:0,wrongs,retry:()=>startGame("bub",pool)});}
+    const tc=targets[round];let left=20;
+    $("#gBody").innerHTML=`<div class="targetbar">第 ${round+1} 回：只戳 ${badge(tc)} 的泡泡！　<span class="countdown">⏱ <b id="cd">${left}</b></span>　得分 <b id="sc">${score}</b></div>
+      <div class="pond" id="pond"><div style="position:absolute;inset:0;display:grid;place-items:center;font-size:40px;color:#4a8ea0" id="ready">準備…</div></div>`;
+    const pond=$("#pond");
+    const t0=setTimeout(()=>{$("#ready").remove();
+      const spawn=setInterval(()=>{
+        const isT=Math.random()<.45;const src=isT?by[tc]:pool.filter(x=>x.cat!==tc);const x=pick(src);
+        const b=document.createElement("button");b.className="bubble";b.innerHTML=esc(x.p);
+        const w=pond.clientWidth;const size=w<500?104:124;
+        b.style.left=Math.random()*(w-size)+"px";b.style.animationDuration=(5.5+Math.random()*2)+"s";
+        b.onclick=e=>{const r=pond.getBoundingClientRect();const fx=e.clientX-r.left,fy=e.clientY-r.top;
+          if(x.cat===tc){score++;good++;beep("good");b.classList.add("popgood");floatTxt(pond,fx,fy,"+1","var(--good)");}
+          else{score=Math.max(0,score-1);bad++;beep("bad");b.classList.add("popbad");floatTxt(pond,fx,fy,x.cat,"var(--bad)");if(!wrongs.includes(x))wrongs.push(x);}
+          b.onclick=null;$("#sc").textContent=score;setTimeout(()=>b.remove(),500);};
+        b.addEventListener("animationend",ev=>{if(ev.animationName==="rise")b.remove();});
+        pond.appendChild(b);
+      },850);
+      const tick=setInterval(()=>{left--;const c=$("#cd");if(c)c.textContent=left;setProg((round+(20-left)/20)/targets.length);
+        if(left<=0){clearInterval(spawn);clearInterval(tick);round++;setTimeout(startRound,600);}},1000);
+      G.timers.push(spawn,tick);
+    },1200);
+    G.timers.push(t0);
+  }
+  startRound();
 }
-function save(){ store.set("sp-state", JSON.stringify(state)); }
-const PDF_URL = "worksheet-nani-3a-L1-6.pdf";
-function updateDl(){ const b=$("dlBtn"); if(!b) return; b.hidden = !(PDF_URL.endsWith(".pdf") && state.ver==="nani" && state.grade==="3上"); }
-function refresh(){ updateDl(); fillSelectors(); renderSummary(); renderLearn(); quiz=null; if(!$("panelQuiz").hidden) startQuiz(); save(); }
+function floatTxt(p,x,y,t,c){const s=document.createElement("div");s.className="scorefloat";s.style.left=x+"px";s.style.top=y+"px";s.style.color=c;s.textContent=t;p.appendChild(s);setTimeout(()=>s.remove(),800);}
 
-$("selVer").onchange=e=>{state.ver=e.target.value;refresh();};
-$("selGrade").onchange=e=>{state.grade=e.target.value;refresh();};
-$("selFrom").onchange=e=>{state.from=+e.target.value; if(state.to<state.from) state.to=state.from; refresh();};
-$("selTo").onchange=e=>{state.to=+e.target.value; if(state.to<state.from) state.from=state.to; refresh();};
-$("tabLearn").onclick=()=>switchTab("learn");
-$("tabQuiz").onclick=()=>switchTab("quiz");
-
-// QR code
-if(SHARE_URL.startsWith("http") && window.QRCode){
-  $("qrBtn").hidden=false;
-  new QRCode($("qrSmall"),{text:SHARE_URL,width:152,height:152,correctLevel:QRCode.CorrectLevel.M});
-  let big=false;
-  const open=()=>{ $("overlay").hidden=false; if(!big){ new QRCode($("qrBig"),{text:SHARE_URL,width:480,height:480,correctLevel:QRCode.CorrectLevel.M}); big=true; } };
-  $("qrBtn").onclick=open; $("qrBtn").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}};
-  $("overlay").onclick=()=>{$("overlay").hidden=true;};
+/* 6. 學力檢測大亂鬥 */
+const CIRC=["①","②","③","④"];
+const EXAM=[
+ {y:111,g:"四",no:7,stem:"上述句子屬於哪一種句型？",box:"哥哥「雖然」已經很累了，「但是」為了準備明天的考試，他還是努力的複習課程內容。",
+  opts:["轉折句","條件句","假設句","並列句"],ans:0,
+  key:"判斷「雖然……但是……」",exp:"已經很累了，卻還是努力複習，意思轉了一個彎，「雖然……但是……」是轉折句。"},
+ {y:111,g:"五",no:7,stem:"「假設複句」是指一個分句假設狀況，另一個分句說明假設的狀況實現後的結果。請問下列哪一個句子屬於「假設複句」？",
+  opts:["倘若人們持續肆意踐踏生態環境，遲早會面臨自然的反撲。","無論最終結果是否如願，總是要全力以赴才不會徒留遺憾。","與其在這裡抱怨，不如趕緊想辦法，才能避免事態更嚴重。","儘管他已經在日本生活了六十年，但中文仍然說得很流利。"],ans:0,
+  key:"找出假設複句",exp:"「倘若」就是「如果」，先假設一種情況，再說會有什麼結果，是假設複句。②「無論……總……」是條件，③「與其……不如……」是選擇，④「儘管……但……」是轉折。"},
+ {y:111,g:"六",no:6,stem:"從「與其……不如……」來判斷，上面的句子屬於哪種句型？",box:"與其考試前才臨時抱佛腳，你還不如平時就做好準備。",
+  opts:["因果句","選擇句","並列句","轉折句"],ans:1,
+  key:"判斷「與其……不如……」",exp:"「與其……不如……」是比較兩件事，選後面那一件，是選擇句。（這題原本公布的答案是④，後來依試題疑義更正為②。）"},
+ {y:112,g:"三",no:7,stem:"提供兩種以上的狀況讓人選擇的句型，就是「選擇句」。請問下列哪一個選項是「選擇句」？",
+  opts:["爺爺雖然退休了，卻過得比以前還忙碌。","因為今天下大雨，運動會只好臨時取消。","你想要吃咖哩飯，還是要吃蝦仁蛋炒飯？","請你仔細的想想，不努力會有好成績嗎？"],ans:2,
+  key:"找出選擇句",exp:"「……還是……」讓人在咖哩飯和蝦仁蛋炒飯裡選一個，是選擇句。①是轉折，②是因果。"},
+ {y:112,g:"四",no:7,stem:"上述句子屬於哪一種句型？",box:"「只有」每天注意飲食，並且持之以恆的運動，「才能」擁有健康的身體。",
+  opts:["轉折句","條件句","假設句","並列句"],ans:1,
+  key:"判斷「只有……才能……」",exp:"要先做到注意飲食和運動這個條件，才會有健康的身體，「只有……才……」是條件句。"},
+ {y:112,g:"五",no:7,stem:"「選擇複句」就是「寫出兩種以上的情況，並從中做出選擇」的複句。下列哪一個選項屬於「選擇複句」？",
+  opts:["爺爺每天辛苦工作，為的是養活一家大小。","戰士寧可戰死沙場，也不願放下武器投降。","不管媽媽怎麼勸說，她還是常常不寫作業。","假如可以再選一次，我會選擇勇敢的面對。"],ans:1,
+  key:"找出選擇複句",exp:"「寧可……也不願……」在戰死和投降兩件事裡選了一件，是選擇複句。①是目的，③是條件，④是假設。"},
+ {y:112,g:"五",no:12,stem:"有些句子就算省略連接詞「因為……所以……」，仍然可以表達前後的「因果關係」，例如「他生病了，今天沒有來上學。」下列哪一個句子，也具有這種「因果關係」？",
+  opts:["他不僅各科成績優異，還是個運動健將。","我回家後先寫學校作業，然後才去洗澡。","無論他再怎麼用力，都打不開這個瓶子。","外面正在下大雨，我只能乖乖待在家裡。"],ans:3,
+  key:"找出省略連接詞的因果句",exp:"因為下大雨（原因），所以只能待在家（結果），雖然沒寫「因為……所以……」，還是因果關係。①是遞進，②是承接，③是條件。"},
+ {y:112,g:"六",no:6,stem:"從「……何況……」來判斷，上面的句子屬於哪種句型？",box:"這條山路，天氣好的時候就很難走了，何況是天氣不好的時候！",
+  opts:["選擇句","因果句","遞進句","轉折句"],ans:2,
+  key:"判斷「……何況……」",exp:"天氣好都很難走，天氣不好更難走，意思更進一層，「……何況……」是遞進句。"},
+ {y:113,g:"三",no:8,stem:"句子前後具有原因和結果關係的句型，就是「因果句」。請問下列哪一個選項是「因果句」？",
+  opts:["雖然現在正在下著大雨，但逛街的人仍然很多。","因為剛才下大雨，所以現在操場上才沒有學生。","現在外面不但下著大雨，而且雷聲還隆隆作響。","如果能下一場大雨，水庫缺水的問題就解決了。"],ans:1,
+  key:"找出因果句",exp:"「因為……所以……」前面說原因，後面說結果，是因果句。①是轉折，③是遞進，④是假設。"},
+ {y:113,g:"四",no:8,stem:"「轉折複句」由兩個以上的單句組成，前後單句的意思、情況相反或相對。請問下列哪一個選項是「轉折複句」？",
+  opts:["除了考試前多複習，我們平時還要多練習各科考卷。","雖然外面陰雨綿綿，但妹妹仍堅持去海洋遊樂園玩。","如果爸爸多做家事，就能夠有效的分擔媽媽的負擔。","因為大家合作無間，所以贏得這次拔河比賽的冠軍。"],ans:1,
+  key:"找出轉折複句",exp:"下雨卻還是堅持去玩，意思轉了一個彎，「雖然……但……」是轉折。①是遞進，③是假設，④是因果。"},
+ {y:113,g:"五",no:6,stem:"「承接複句」是幾個分句一個接一個的敘述連續發生的動作或事情，分句之間有先後的順序。請問下列哪一個句子屬於「承接複句」？",
+  opts:["與其抱怨黑暗，不如成為點燈的人。","下課鐘聲一響，同學紛紛走出教室。","她寧願把垃圾帶走，也不願意亂丟。","哥哥不是去踢球，就是去圖書館了。"],ans:1,
+  key:"找出承接（連貫）複句",exp:"鐘聲先響，同學才走出教室，有先後順序，是承接（連貫）複句。①③④都是在兩件事裡選一件，是選擇複句。"},
+ {y:113,g:"六",no:7,stem:"從「雖然……但……」來判斷，上面的句子屬於哪種句型？",box:"雖然他今天不能來，但我們還是會幫他保留一個位置。",
+  opts:["選擇句","轉折句","遞進句","假設句"],ans:1,
+  key:"判斷「雖然……但……」",exp:"「雖然……但……」後半句和前半句想的不一樣，是轉折句。"},
+ {y:114,g:"四",no:7,stem:"上面的句子屬於「並列句」，下列哪一個選項也是「並列句」？",box:"妹妹一邊騎腳踏車，一邊哼歌。",
+  opts:["我每次吃東西前，一定會先洗手。","他因為沒寫作業，而被禁止下課。","哥哥喜歡吃水果，也喜歡吃蔬菜。","你放學後是回家，還是去安親班？"],ans:2,
+  key:"找出並列句",exp:"喜歡水果和喜歡蔬菜一樣重要，用「也」並排在一起，是並列句。②是因果，④是選擇。"},
+ {y:114,g:"五",no:6,stem:"「遞進複句」由兩個或以上的分句組成，前一個分句表示一個意思，後一個分句在範圍、數量、程度、時間等方面所表示的意思則比前句更進一層。請問下列哪一個句子<u>不屬於</u>「遞進複句」？",
+  opts:["小華不僅擅長蒐集各類資料，還精通資料分析和整合。","圖書館既是查閱資料的寶庫，也是安靜閱讀的好地方。","老師不僅傳授我們知識，還教導我們做人處事的道理。","爸爸不但關心我的學業，還鼓勵我多多參與體育活動。"],ans:1,
+  key:"找出不是遞進的句子",exp:"「既是……也是……」兩件事一樣重要，是並列複句。其他三句都是「不僅／不但……還……」，是遞進。"},
+ {y:114,g:"五",no:9,stem:"上句的「與其……不如」屬於哪種句型？",box:"你與其擔心明天被老師責罵，不如現在趕緊把功課寫完。",
+  opts:["並列句","選擇句","轉折句","因果句"],ans:1,
+  key:"判斷「與其……不如……」",exp:"「與其……不如……」是比較兩件事，選後面那一件，是選擇句。"},
+ {y:114,g:"六",no:7,stem:"下列選項中，何者的「語句」和「句型」對應正確？",
+  opts:["這件工作除非有整個團隊的合作，否則是不可能完成的。／遞進複句","黃小姐不僅是一位暢銷書作家，還是田徑場上的常勝軍。／假設複句","這部電影既有濃厚的情感，又傳達了極深刻的教育意義。／並列複句","飛行員如果沒有充足的訓練跟知識，是無法完成任務的。／轉折複句"],ans:2,
+  key:"語句和句型配對",exp:"「既……又……」是並列複句。①「除非……否則……」是條件，②「不僅……還……」是遞進，④「如果……」是假設。"},
+ {y:115,g:"四",no:6,stem:"由兩個以上的單句組成，且按照動作或事情發生的順序，一句接著一句敘述出來的複句，就是「承接複句」。請問下列哪一個句子屬於「承接複句」？",
+  opts:["天空先是烏雲密布，然後便下起了傾盆大雨。","雖然外面下雨，但仍然不減我想出遊的興致。","運動既能強身健體，又能讓我們的心情舒暢。","如果我能早一點出門，就不會趕不上公車了。"],ans:0,
+  key:"找出承接（連貫）複句",exp:"「先是……然後……」照時間先後說，是承接（連貫）複句。②是轉折，③是並列，④是假設。"},
+ {y:115,g:"六",no:7,stem:"下列哪一個選項的「語句」和「句型」的對應正確？",
+  opts:["小戴不僅是我國的羽球好手，更曾經是世界羽球球后。（轉折複句）","我放學以後不是在完成回家作業，就是在看課外讀物。（選擇複句）","他昨天摔壞了爸爸心愛的收藏，因此非常擔心被責怪。（遞進複句）","儘管我和陳同學現在不同班，但我們還是很好的朋友。（並列複句）"],ans:1,
+  key:"語句和句型配對",exp:"「不是……就是……」兩件事選一件，是選擇複句。①「不僅……更……」是遞進，③「因此」是因果，④「儘管……但……」是轉折。"}
+].map((q,i)=>({...q,id:"e"+i,type:"exam"}));
+let examG="全部";
+function startBrawl(from){
+  clearTimers();backTo=from;
+  $("#gTitle").textContent="🏆 學力檢測大亂鬥";setProg(0);$("#gHearts").textContent="";show("game");
+  const gs=["全部","三","四","五","六"];
+  const list=EXAM.filter(q=>examG==="全部"||q.g===examG);
+  $("#gBody").innerHTML=`<div class="panel"><div style="font-size:56px">🏆</div><h3 style="font-size:30px;margin:4px 0">學力檢測大亂鬥</h3>
+    <p style="font-size:19px;margin:6px 0 14px">這些都是 111～115 年縣市學力檢測真的考過的複句題！<br>只有 3 顆愛心 ❤️❤️❤️，答錯扣一顆，愛心用完就結束。</p>
+    <div class="choices" style="justify-content:center;margin-bottom:12px">${gs.map(g=>`<button class="choice ${examG===g?"on":""}" data-eg="${g}" style="min-width:86px;min-height:52px">${g==="全部"?"全部":g+"年級"}<small>${EXAM.filter(q=>g==="全部"||q.g===g).length} 題</small></button>`).join("")}</div>
+    <table class="examlist"><tr><th>哪一年的考題</th><th>考什麼</th></tr>
+    ${list.map(q=>`<tr><td class="nw">${q.y} 年・${q.g}年級<br><small>第 ${q.no} 題</small></td><td>${q.key}</td></tr>`).join("")}</table>
+    <button class="bigbtn brawl" id="bgo" style="max-width:320px;width:100%;margin-top:16px">開戰！</button></div>`;
+  document.querySelectorAll("[data-eg]").forEach(b=>b.onclick=()=>{examG=b.dataset.eg;startBrawl(from);});
+  $("#bgo").onclick=()=>runExam(shuffle(list),from);
 }
-/* ---------- 類別記憶動畫 ---------- */
-const ANIM = {
-  "並列": {memo:"兩個好朋友手牽手，一樣高、一樣重要", svg:`
-    <line x1="20" y1="128" x2="300" y2="128" class="ln dim"/>
-    <g class="parL"><circle cx="118" cy="88" r="36" class="shape"/><text x="118" y="94">事情一</text></g>
-    <g class="parR"><circle cx="202" cy="88" r="36" class="shape"/><text x="202" y="94">事情二</text></g>
-    <line class="ln hand" pathLength="1" x1="144" y1="114" x2="176" y2="114"/>
-    <text class="lab" x="160" y="156">並排站，沒有誰比較大</text>`},
-  "連貫": {memo:"先做這個，接著做那個，像排隊一樣", svg:`
-    <g class="s1"><rect x="18" y="45" width="76" height="52" rx="10" class="shape"/><text x="56" y="77">先</text></g>
-    <g class="s2"><path class="ln" d="M100 71 H114 M108 64 L115 71 L108 78"/><rect x="122" y="45" width="76" height="52" rx="10" class="shape"/><text x="160" y="77">接著</text></g>
-    <g class="s3"><path class="ln" d="M204 71 H218 M212 64 L219 71 L212 78"/><rect x="226" y="45" width="76" height="52" rx="10" class="shape"/><text x="264" y="77">最後</text></g>
-    <circle class="solid walker" cx="50" cy="125" r="9"/>
-    <text class="lab" x="160" y="158">一件接一件，順序不能亂</text>`},
-  "轉折": {memo:"看到「卻、但、不過」，意思就要轉彎", svg:`
-    <path class="ln draw" pathLength="1" d="M20 62 H185 Q200 62 200 80 V140 M188 128 L200 142 L212 128"/>
-    <text class="lab" x="95" y="48">前半句往這邊說</text>
-    <text class="lab" x="258" y="112">後半句轉彎了</text>
-    <g class="sign"><circle cx="200" cy="62" r="22" class="solid"/><text x="200" y="68" style="fill:var(--paper);font-weight:700">但</text></g>`},
-  "因果": {memo:"推倒第一塊（原因），第二塊就倒了（結果）", svg:`
-    <line x1="40" y1="130" x2="290" y2="130" class="ln dim"/>
-    <rect class="shape domA" x="92" y="50" width="24" height="80" rx="4"/>
-    <rect class="shape domB" x="192" y="50" width="24" height="80" rx="4"/>
-    <text x="104" y="156">原因</text><text x="204" y="156" class="s3">結果</text>
-    <text class="lab s2" x="160" y="38">所以……</text>`},
-  "條件": {memo:"條件做到了（鑰匙插進去），結果就跟著來（燈亮了）", svg:`
-    <g class="key"><circle cx="70" cy="80" r="16" class="shape"/><path class="ln" d="M86 80 H140 M126 80 V92 M138 80 V90"/></g>
-    <rect x="146" y="52" width="56" height="58" rx="10" class="shape"/><circle cx="174" cy="76" r="7" class="solid"/><path class="ln" d="M174 80 V94"/>
-    <path class="ln" d="M202 81 H232"/>
-    <circle cx="262" cy="72" r="24" class="shape bulb" style="stroke:#c79a00"/><rect x="252" y="96" width="20" height="12" rx="3" class="shape"/>
-    <g class="rays"><path class="ln" style="stroke:#e0a800" d="M262 36 V26 M290 46 L298 38 M234 46 L226 38 M298 72 H308 M226 72 H216"/></g>
-    <text x="120" y="146">條件</text><text x="262" y="146" class="rays">結果</text>`},
-  "假設": {memo:"「如果」就是先假裝一下，虛線表示還沒發生", svg:`
-    <circle cx="58" cy="122" r="22" class="shape"/><circle cx="51" cy="118" r="3" class="solid"/><circle cx="65" cy="118" r="3" class="solid"/>
-    <circle cx="92" cy="96" r="5" class="shape s1"/><circle cx="110" cy="80" r="8" class="shape s2"/>
-    <ellipse cx="215" cy="66" rx="95" ry="48" class="shape think"/>
-    <text x="215" y="60" class="s3">如果……</text><text x="215" y="86" class="s4">會怎麼樣？</text>`},
-  "遞進": {memo:"像爬樓梯，一階比一階高", svg:`
-    <path class="ln" d="M20 150 H90 V115 H160 V80 H230 V45 H305"/>
-    <circle class="solid ball" cx="55" cy="139" r="10"/>
-    <text class="lab" x="55" y="168">第一層</text><text class="lab s2" x="125" y="133">更進一層</text><text class="lab s3" x="195" y="98">再更進一層</text>`},
-  "目的": {memo:"箭射向靶心：做這件事，就是為了它", svg:`
-    <g class="target"><circle cx="265" cy="85" r="50" class="shape"/><circle cx="265" cy="85" r="32" class="shape"/><circle cx="265" cy="85" r="13" class="solid"/></g>
-    <g class="arrow"><path class="ln" d="M104 85 H258"/><path class="ln" d="M244 75 L258 85 L244 95"/><path class="ln" d="M96 74 L108 85 L96 96 M108 74 L120 85 L108 96"/></g>
-    <text class="lab" x="70" y="60">做這件事</text><text x="265" y="158">為了這個</text>`},
-  "選擇": {memo:"走到岔路，兩條路只能選一條", svg:`
-    <path class="ln" d="M20 100 H150"/>
-    <path class="ln notpick" d="M150 100 L295 148"/>
-    <path class="ln dim" d="M150 100 L295 52"/><path class="ln pick" pathLength="1" d="M150 100 L295 52"/>
-    <circle class="solid chooser" cx="30" cy="100" r="10"/>
-    <g class="q"><circle cx="150" cy="55" r="17" class="shape"/><text x="150" y="61">？</text></g>
-    <text class="lab" x="280" y="32">選這條</text><text class="lab" x="280" y="168">或那條</text>`}
+function runExam(qs,from){
+  const n=qs.length;
+  runQuiz(qs,{hearts:3,onEnd:r=>{
+    const s=r.score,ratio=s/n;
+    const rank=ratio===1?"👑 學力檢測大師":ratio>=.8?"🥇 複句高手":ratio>=.5?"🥈 複句達人":ratio>0?"🥉 複句小學徒":"🌱 複句新芽";
+    const line=r.life<=0?`愛心用完了！闖到第 ${r.answered} 題，答對 ${s} 題`:`${n} 題全部完成，答對 ${s} 題，剩下 ${"❤️".repeat(r.life)}`;
+    resultPanel({title:r.life>0?"闖關成功！":"再接再厲！",rank,line,stars:starOf(s,n),wrongs:r.wrongs,
+      retry:()=>startBrawl(from),retryWrong:w=>runExam(shuffle(w),from)});
+  }});
+}
+
+/* ---------- A4 學習單 ---------- */
+function wsBuild(){
+  const gs=GRADES.filter(g=>state.grades.has(g));const one=gs.length===1;
+  const rows=rowsFor(state.ver,state.grades,state.from,state.to);const pool=poolOf(rows);
+  const range=one?`第 ${state.from}～${state.to} 課`:"";
+  const sub=`${state.ver}版　${gs.join("、")}　${range}`;
+  const loc=w=>one?w.replace(gs[0],""):w.replace("第","").replace("課","");
+  if(!pool.length){$("#wsPaper").innerHTML="<p>這個範圍沒有句型。</p>";return sub;}
+  // 連連看：盡量涵蓋不同類別，最多 8 題
+  const by={};shuffle(pool).forEach(x=>(by[x.cat]=by[x.cat]||[]).push(x));
+  const cs=shuffle(Object.keys(by));const n=Math.min(8,pool.length);const picked=[];
+  for(let k=0;picked.length<n;k++){const c=cs[k%cs.length];if(by[c].length)picked.push(by[c].shift());}
+  const right=shuffle([...new Set(picked.map(x=>x.cat))]);const AB="ABCDEFGHI";
+  const leftH=picked.map((x,i)=>`<div class="it">(${i+1}) ${patHTML(x.p)}<span class="dot"></span></div>`).join("");
+  const rightH=right.map((c,i)=>`<div class="it"><span class="dot"></span>${AB[i]}　${c}複句</div>`).join("");
+  // 造句表格：依複句類別排列
+  const sorted=CAT_ORDER.flatMap(c=>pool.filter(x=>x.cat===c));
+  const trs=sorted.map(x=>`<tr><td class="c">${x.cat}</td><td>${patHTML(x.p)}</td><td class="c">${x.where.map(loc).join("<br>")}</td><td><div class="wl"></div><div class="wl"></div></td></tr>`).join("");
+  const ans=picked.map((x,i)=>`<div>(${i+1}) ${esc(x.p)} → ${AB[right.indexOf(x.cat)]} ${x.cat}複句</div>`).join("");
+  $("#wsPaper").innerHTML=`<h1>複句句型學習單</h1><div class="sub">${sub}</div>
+    <div class="who">班級<span></span>座號<span style="min-width:14mm"></span>姓名<span style="min-width:30mm"></span></div>
+    <h2>一、連連看：把左邊的句型和右邊的複句類別用線連起來。</h2>
+    <div class="wsmatch"><div class="col l">${leftH}</div><div class="col r">${rightH}</div></div>
+    <h2>二、句型造句：看看每個句型屬於哪一種複句，再用這個句型造一個句子。</h2>
+    <table class="wstable"><colgroup><col style="width:13%"><col style="width:25%"><col style="width:14%"><col></colgroup>
+    <thead><tr><th>複句類別</th><th>句型</th><th>${one?"課次":"出處"}</th><th>造句練習</th></tr></thead><tbody>${trs}</tbody></table>
+    <div class="anspage"><h2>連連看解答</h2><div class="sub" style="text-align:left">${sub}</div><div class="anslist">${ans}</div></div>`;
+  return sub;
+}
+let wsTitle="";
+function openWS(){wsTitle=`複句句型學習單 ${wsBuild().replace(/\s+/g," ")}`;$("#ws").classList.add("open");$("#ws").scrollTop=0;}
+$("#wsBtn").onclick=openWS;
+$("#wsHomeBtn").onclick=()=>{state.from=+$("#fromL").value||1;state.to=+$("#toL").value||12;openWS();};
+$("#wsShuffle").onclick=()=>wsBuild();
+$("#wsAns").onchange=e=>$("#ws").classList.toggle("noans",!e.target.checked);
+$("#wsClose").onclick=()=>$("#ws").classList.remove("open");
+$("#wsPrint").onclick=async()=>{
+  const old=document.title;document.title=wsTitle;
+  try{await Promise.race([document.fonts.load('16px "EduKai"',"複句"),new Promise(r=>setTimeout(r,3000))]);await document.fonts.ready;}catch(e){}
+  window.print();setTimeout(()=>document.title=old,1000);
 };
-function openAnim(cat){
-  const A = ANIM[cat], C = book().categories[cat]; if(!A) return;
-  const ex = selected().find(p=>p.cat===cat);
-  $("aBox").style.setProperty("--cc",`var(--c-${cat})`);
-  $("aBox").innerHTML = `<h3>${cat}複句</h3><p class="d">${C.def}</p>
-    <div class="stage" id="aStage"></div>
-    <p class="memo">${A.memo}</p>
-    ${ex?`<div class="exs"><small>這個範圍的例句・${ex.p}（第${ex.lesson.no}課）</small>${highlight(ex.ex[0],ex.kw)}</div>`:""}
-    <div class="actions"><button class="btn ghost" id="aAgain">再播一次</button><button class="btn" id="aClose">知道了</button></div>`;
-  const play = () => { $("aStage").innerHTML = `<svg viewBox="0 0 320 175" role="img" aria-label="${cat}複句記憶動畫"><g class="go">${A.svg}</g></svg>`; };
-  play();
-  $("aAgain").onclick = play;
-  $("aClose").onclick = closeAnim;
-  $("aModal").hidden = false; $("aClose").focus();
-}
-function closeAnim(){ $("aModal").hidden = true; $("aStage") && ($("aStage").innerHTML=""); }
-$("aModal").onclick = e => { if(e.target.id==="aModal") closeAnim(); };
-document.addEventListener("keydown", e => { if(e.key==="Escape" && !$("aModal").hidden) closeAnim(); });
 
-refresh();
+/* ---------- QR code ---------- */
+$("#qrBtn").onclick=()=>{$("#qrModal").classList.remove("hidden");const box=$("#qrbox");box.innerHTML="";
+  const url=location.href.split("#")[0];
+  if(window.QRCode)new QRCode(box,{text:url,width:240,height:240});else box.textContent=url;};
+$("#qrClose").onclick=()=>$("#qrModal").classList.add("hidden");
+$("#qrModal").onclick=e=>{if(e.target.id==="qrModal")$("#qrModal").classList.add("hidden");};
+
+renderHome();
 </script>
-
 </body>
 </html>
